@@ -17,7 +17,7 @@
                 <input
                   type="radio"
                   name="dought"
-                  value="light"
+                  :value="doughStatuses[dough.id]"
                   class="visually-hidden"
                   checked
                 />
