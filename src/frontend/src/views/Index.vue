@@ -17,7 +17,7 @@
                 <RadioButton
                   name="dought"
                   :value="doughStatuses[dough.id]"
-                  v-model="doughRadioButton"
+                  v-model="doughCurrent"
                 />
 
                 <b>{{ dough.name }}</b>
@@ -70,7 +70,7 @@
                   <RadioButton
                     name="sauce"
                     :value="sauceStatuses[sauce.id]"
-                    v-model="sauceRadioButton"
+                    v-model="sauceCurrent"
                   />
                   <span>{{ sauce.name }}</span>
                 </label>
@@ -109,7 +109,7 @@
           </label>
 
           <div class="content__constructor">
-            <div class="pizza pizza--foundation--big-tomato">
+            <div class="pizza" :class="pizzaFoundation">
               <div class="pizza__wrapper">
                 <div class="pizza__filling pizza__filling--ananas"></div>
                 <div class="pizza__filling pizza__filling--bacon"></div>
@@ -152,11 +152,24 @@ export default {
       sizeStatuses,
       sauceStatuses,
       ingredientStatuses,
-      selectedDough: 1,
-      doughRadioButton: "light",
+      doughCurrent: "light",
       diameterRadioButton: "small",
-      sauceRadioButton: "tomato",
+      sauceCurrent: "tomato",
     };
+  },
+  computed: {
+    pizzaFoundation: function () {
+      return {
+        "pizza--foundation--big-creamy":
+          this.doughCurrent === "large" && this.sauceCurrent === "creamy",
+        "pizza--foundation--big-tomato":
+          this.doughCurrent === "large" && this.sauceCurrent === "tomato",
+        "pizza--foundation--small-creamy":
+          this.doughCurrent === "light" && this.sauceCurrent === "creamy",
+        "pizza--foundation--small-tomato":
+          this.doughCurrent === "light" && this.sauceCurrent === "tomato",
+      };
+    },
   },
 };
 </script>
