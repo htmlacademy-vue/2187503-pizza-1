@@ -90,28 +90,7 @@
                       :class="`filling--${ingredientStatuses[ingredient.id]}`"
                       >{{ ingredient.name }}</span
                     >
-
-                    <div class="counter counter--orange ingredients__counter">
-                      <button
-                        type="button"
-                        class="counter__button counter__button--minus"
-                        disabled
-                      >
-                        <span class="visually-hidden">Меньше</span>
-                      </button>
-                      <input
-                        type="text"
-                        name="counter"
-                        class="counter__input"
-                        value="0"
-                      />
-                      <button
-                        type="button"
-                        class="counter__button counter__button--plus"
-                      >
-                        <span class="visually-hidden">Больше</span>
-                      </button>
-                    </div>
+                    <ItemCounter />
                   </li>
                 </ul>
               </div>
@@ -157,10 +136,12 @@ import sizeStatuses from "@/common/enums/sizeStatuses";
 import sauceStatuses from "@/common/enums/sauceStatuses";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
 import RadioButton from "@/common/components/RadioButton";
+import ItemCounter from "../common/components/ItemCounter.vue";
 export default {
   name: "IndexHome",
   components: {
     RadioButton,
+    ItemCounter,
   },
   data() {
     return {
