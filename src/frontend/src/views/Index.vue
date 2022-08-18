@@ -14,13 +14,12 @@
                 class="dough__input"
                 :class="`dough__input--${doughStatuses[dough.id]}`"
               >
-                <input
-                  type="radio"
+                <RadioButton
                   name="dought"
                   :value="doughStatuses[dough.id]"
-                  class="visually-hidden"
-                  checked
+                  v-model="doughRadioButton"
                 />
+
                 <b>{{ dough.name }}</b>
                 <span>{{ dough.description }}</span>
               </label>
@@ -41,12 +40,12 @@
                   sizeStatuses[size.id]
                 }`"
               >
-                <input
-                  type="radio"
+                <RadioButton
                   name="diameter"
                   :value="sizeStatuses[size.id]"
-                  class="visually-hidden"
+                  v-model="diameterRadioButton"
                 />
+
                 <span>{{ size.name }}</span>
               </label>
             </div>
@@ -68,11 +67,10 @@
                   :key="sauce.id"
                   class="radio ingredients__input"
                 >
-                  <input
-                    type="radio"
+                  <RadioButton
                     name="sauce"
                     :value="sauceStatuses[sauce.id]"
-                    checked
+                    v-model="sauceRadioButton"
                   />
                   <span>{{ sauce.name }}</span>
                 </label>
@@ -158,8 +156,12 @@ import doughStatuses from "@/common/enums/doughStatuses";
 import sizeStatuses from "@/common/enums/sizeStatuses";
 import sauceStatuses from "@/common/enums/sauceStatuses";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
+import RadioButton from "@/common/components/RadioButton";
 export default {
   name: "IndexHome",
+  components: {
+    RadioButton,
+  },
   data() {
     return {
       misc,
@@ -169,6 +171,10 @@ export default {
       sizeStatuses,
       sauceStatuses,
       ingredientStatuses,
+      selectedDough: 1,
+      doughRadioButton: "light",
+      diameterRadioButton: "small",
+      sauceRadioButton: "tomato",
     };
   },
 };
