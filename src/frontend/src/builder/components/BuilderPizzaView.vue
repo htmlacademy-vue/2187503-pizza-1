@@ -18,13 +18,19 @@
         </div>
       </div>
     </div>
+
+    <BuilderPriceCounter />
   </div>
 </template>
 
 <script>
+import BuilderPriceCounter from "@/builder/components/BuilderPriceCounter";
 import pizza from "@/static/pizza.json";
 export default {
   name: "BuilderPizzaView",
+  components: {
+    BuilderPriceCounter,
+  },
   props: {
     doughCurrent: {
       type: String,

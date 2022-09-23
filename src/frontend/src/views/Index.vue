@@ -10,24 +10,16 @@
 
         <BuilderIngredientsSelector v-model="sauceCurrent" />
 
-        <div>
-          <BuilderPizzaView
-            :doughCurrent="doughCurrent"
-            :sauceCurrent="sauceCurrent"
-          />
-
-          <div class="content__result">
-            <p>Итого: 0 ₽</p>
-            <button type="button" class="button" disabled>Готовьте!</button>
-          </div>
-        </div>
+        <BuilderPizzaView
+          :doughCurrent="doughCurrent"
+          :sauceCurrent="sauceCurrent"
+        />
       </div>
     </form>
   </main>
 </template>
 <script>
 import misc from "@/static/misc.json";
-import pizza from "@/static/pizza.json";
 import user from "@/static/user.json";
 import BuilderDoughSelector from "@/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "@/builder/components/BuilderSizeSelector";
@@ -44,7 +36,6 @@ export default {
   data() {
     return {
       misc,
-      pizza,
       user,
       doughCurrent: "light",
       diameterRadioButton: "small",
