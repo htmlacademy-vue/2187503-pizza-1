@@ -10,25 +10,11 @@
 
         <BuilderIngredientsSelector v-model="sauceCurrent" />
 
-        <div class="content__pizza">
-          <label class="input">
-            <span class="visually-hidden">Название пиццы</span>
-            <input
-              type="text"
-              name="pizza_name"
-              placeholder="Введите название пиццы"
-            />
-          </label>
-
-          <div class="content__constructor">
-            <div class="pizza" :class="pizzaFoundation">
-              <div class="pizza__wrapper">
-                <div class="pizza__filling pizza__filling--ananas"></div>
-                <div class="pizza__filling pizza__filling--bacon"></div>
-                <div class="pizza__filling pizza__filling--cheddar"></div>
-              </div>
-            </div>
-          </div>
+        <div>
+          <BuilderPizzaView
+            :doughCurrent="doughCurrent"
+            :sauceCurrent="sauceCurrent"
+          />
 
           <div class="content__result">
             <p>Итого: 0 ₽</p>
@@ -46,12 +32,14 @@ import user from "@/static/user.json";
 import BuilderDoughSelector from "@/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "@/builder/components/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/builder/components/BuilderIngredientsSelector";
+import BuilderPizzaView from "@/builder/components/BuilderPizzaView";
 export default {
   name: "IndexHome",
   components: {
     BuilderDoughSelector,
     BuilderSizeSelector,
     BuilderIngredientsSelector,
+    BuilderPizzaView,
   },
   data() {
     return {
