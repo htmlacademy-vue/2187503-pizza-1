@@ -29,7 +29,7 @@ import RadioButton from "@/common/components/RadioButton";
 import sizeStatuses from "@/common/enums/sizeStatuses";
 import pizza from "@/static/pizza.json";
 export default {
-  name: "IndexHome",
+  name: "BuilderSizeSelector",
   props: {
     value: {
       type: String,

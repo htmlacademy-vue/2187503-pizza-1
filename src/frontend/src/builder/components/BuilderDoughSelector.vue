@@ -29,7 +29,7 @@ import RadioButton from "@/common/components/RadioButton";
 import doughStatuses from "@/common/enums/doughStatuses";
 import pizza from "@/static/pizza.json";
 export default {
-  name: "IndexHome",
+  name: "BuilderDoughSelector",
   props: {
     value: {
       type: String,

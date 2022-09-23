@@ -8,51 +8,7 @@
 
         <BuilderSizeSelector v-model="diameterRadioButton" />
 
-        <div class="content__ingredients">
-          <div class="sheet">
-            <h2 class="title title--small sheet__title">
-              Выберите ингредиенты
-            </h2>
-
-            <div class="sheet__content ingredients">
-              <div class="ingredients__sauce">
-                <p>Основной соус:</p>
-
-                <label
-                  v-for="sauce in pizza.sauces"
-                  :key="sauce.id"
-                  class="radio ingredients__input"
-                >
-                  <RadioButton
-                    name="sauce"
-                    :value="sauceStatuses[sauce.id]"
-                    v-model="sauceCurrent"
-                  />
-                  <span>{{ sauce.name }}</span>
-                </label>
-              </div>
-
-              <div class="ingredients__filling">
-                <p>Начинка:</p>
-
-                <ul class="ingredients__list">
-                  <li
-                    v-for="ingredient in pizza.ingredients"
-                    :key="ingredient.id"
-                    class="ingredients__item"
-                  >
-                    <span
-                      class="filling"
-                      :class="`filling--${ingredientStatuses[ingredient.id]}`"
-                      >{{ ingredient.name }}</span
-                    >
-                    <ItemCounter />
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        <BuilderIngredientsSelector v-model="sauceCurrent" />
 
         <div class="content__pizza">
           <label class="input">
@@ -87,29 +43,21 @@
 import misc from "@/static/misc.json";
 import pizza from "@/static/pizza.json";
 import user from "@/static/user.json";
-import sizeStatuses from "@/common/enums/sizeStatuses";
-import sauceStatuses from "@/common/enums/sauceStatuses";
-import ingredientStatuses from "@/common/enums/ingredientStatuses";
-import RadioButton from "@/common/components/RadioButton";
 import BuilderDoughSelector from "@/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "@/builder/components/BuilderSizeSelector";
-import ItemCounter from "../common/components/ItemCounter.vue";
+import BuilderIngredientsSelector from "@/builder/components/BuilderIngredientsSelector";
 export default {
   name: "IndexHome",
   components: {
-    RadioButton,
-    ItemCounter,
     BuilderDoughSelector,
     BuilderSizeSelector,
+    BuilderIngredientsSelector,
   },
   data() {
     return {
       misc,
       pizza,
       user,
-      sizeStatuses,
-      sauceStatuses,
-      ingredientStatuses,
       doughCurrent: "light",
       diameterRadioButton: "small",
       sauceCurrent: "tomato",
