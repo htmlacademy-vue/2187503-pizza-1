@@ -6,30 +6,7 @@
 
         <BuilderDoughSelector v-model="doughCurrent" />
 
-        <div class="content__diameter">
-          <div class="sheet">
-            <h2 class="title title--small sheet__title">Выберите размер</h2>
-
-            <div class="sheet__content diameter">
-              <label
-                v-for="size in pizza.sizes"
-                :key="size.id"
-                class="diameter__input"
-                :class="`diameter__input diameter__input--${
-                  sizeStatuses[size.id]
-                }`"
-              >
-                <RadioButton
-                  name="diameter"
-                  :value="sizeStatuses[size.id]"
-                  v-model="diameterRadioButton"
-                />
-
-                <span>{{ size.name }}</span>
-              </label>
-            </div>
-          </div>
-        </div>
+        <BuilderSizeSelector v-model="diameterRadioButton" />
 
         <div class="content__ingredients">
           <div class="sheet">
@@ -115,6 +92,7 @@ import sauceStatuses from "@/common/enums/sauceStatuses";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
 import RadioButton from "@/common/components/RadioButton";
 import BuilderDoughSelector from "@/builder/components/BuilderDoughSelector";
+import BuilderSizeSelector from "@/builder/components/BuilderSizeSelector";
 import ItemCounter from "../common/components/ItemCounter.vue";
 export default {
   name: "IndexHome",
@@ -122,6 +100,7 @@ export default {
     RadioButton,
     ItemCounter,
     BuilderDoughSelector,
+    BuilderSizeSelector,
   },
   data() {
     return {
