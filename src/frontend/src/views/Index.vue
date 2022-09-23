@@ -4,16 +4,13 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
 
-        <BuilderDoughSelector v-model="doughCurrent" />
+        <BuilderDoughSelector v-model="recipe.dough" />
 
-        <BuilderSizeSelector v-model="diameterRadioButton" />
+        <BuilderSizeSelector v-model="recipe.diameter" />
 
-        <BuilderIngredientsSelector v-model="sauceCurrent" />
+        <BuilderIngredientsSelector v-model="recipe" />
 
-        <BuilderPizzaView
-          :doughCurrent="doughCurrent"
-          :sauceCurrent="sauceCurrent"
-        />
+        <BuilderPizzaView :recipe="recipe" />
       </div>
     </form>
   </main>
@@ -37,24 +34,13 @@ export default {
     return {
       misc,
       user,
-      doughCurrent: "light",
-      diameterRadioButton: "small",
-      sauceCurrent: "tomato",
+      recipe: {
+        dough: "light",
+        diameter: "small",
+        sauce: "tomato",
+        ingredients: [],
+      },
     };
-  },
-  computed: {
-    pizzaFoundation: function () {
-      return {
-        "pizza--foundation--big-creamy":
-          this.doughCurrent === "large" && this.sauceCurrent === "creamy",
-        "pizza--foundation--big-tomato":
-          this.doughCurrent === "large" && this.sauceCurrent === "tomato",
-        "pizza--foundation--small-creamy":
-          this.doughCurrent === "light" && this.sauceCurrent === "creamy",
-        "pizza--foundation--small-tomato":
-          this.doughCurrent === "light" && this.sauceCurrent === "tomato",
-      };
-    },
   },
 };
 </script>

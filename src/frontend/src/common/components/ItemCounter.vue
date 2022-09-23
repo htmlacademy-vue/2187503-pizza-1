@@ -3,7 +3,7 @@
     <button
       type="button"
       class="counter__button counter__button--minus"
-      @click="count -= 1"
+      @click="DropItem"
       :disabled="count == 0"
     >
       <span class="visually-hidden">Меньше</span>
@@ -12,7 +12,7 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
-      @click="count += 1"
+      @click="AddItem"
       :disabled="count == 3"
     >
       <span class="visually-hidden">Больше</span>
@@ -27,9 +27,20 @@ export default {
       count: 0,
     };
   },
+  props: {
+    ingredientId: {
+      type: Number,
+      required: true,
+    },
+  },
   methods: {
     AddItem() {
       this.count += 1;
+      this.$emit("setItemCount", this.ingredientId, this.count);
+    },
+    DropItem() {
+      this.count -= 1;
+      this.$emit("setItemCount", this.ingredientId, this.count);
     },
   },
 };

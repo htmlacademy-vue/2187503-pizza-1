@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <BuilderPriceCounter />
+    <BuilderPriceCounter :recipe="recipe" />
   </div>
 </template>
 
@@ -32,12 +32,8 @@ export default {
     BuilderPriceCounter,
   },
   props: {
-    doughCurrent: {
-      type: String,
-      required: true,
-    },
-    sauceCurrent: {
-      type: String,
+    recipe: {
+      type: Object,
       required: true,
     },
   },
@@ -50,13 +46,13 @@ export default {
     pizzaFoundation: function () {
       return {
         "pizza--foundation--big-creamy":
-          this.doughCurrent === "large" && this.sauceCurrent === "creamy",
+          this.recipe.dough === "large" && this.recipe.sauce === "creamy",
         "pizza--foundation--big-tomato":
-          this.doughCurrent === "large" && this.sauceCurrent === "tomato",
+          this.recipe.dough === "large" && this.recipe.sauce === "tomato",
         "pizza--foundation--small-creamy":
-          this.doughCurrent === "light" && this.sauceCurrent === "creamy",
+          this.recipe.dough === "light" && this.recipe.sauce === "creamy",
         "pizza--foundation--small-tomato":
-          this.doughCurrent === "light" && this.sauceCurrent === "tomato",
+          this.recipe.dough === "light" && this.recipe.sauce === "tomato",
       };
     },
   },

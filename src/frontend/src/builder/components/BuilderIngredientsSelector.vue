@@ -15,7 +15,7 @@
             <RadioButton
               name="sauce"
               :value="sauceStatuses[sauce.id]"
-              :modelValue="value"
+              :modelValue="value.sauce"
               @change="setSauce"
             />
             <span>{{ sauce.name }}</span>
@@ -36,7 +36,10 @@
                 :class="`filling--${ingredientStatuses[ingredient.id]}`"
                 >{{ ingredient.name }}</span
               >
-              <ItemCounter />
+              <ItemCounter
+                :ingredientId="ingredient.id"
+                @setItemCount="setItemCount"
+              />
             </li>
           </ul>
         </div>
@@ -55,7 +58,7 @@ export default {
   name: "BuilderIngredientsSelector",
   props: {
     value: {
-      type: String,
+      type: Object,
       required: true,
     },
   },
@@ -68,12 +71,33 @@ export default {
       pizza,
       ingredientStatuses,
       sauceStatuses,
+      itemCount: null,
+      ingredients: [],
     };
   },
 
   methods: {
     setSauce(sauce) {
-      this.$emit("input", sauce);
+      this.value.sauce = sauce;
+    },
+    setItemCount(ingredientId, itemCount) {
+      this.itemCount = itemCount;
+
+      var findedInd = -1;
+      for (var i = 0; i < this.value.ingredients.length; i = i + 1) {
+        if (this.value.ingredients[i].ingredientId === ingredientId) {
+          findedInd = i;
+          this.value.ingredients[i].itemCount = itemCount;
+        }
+      }
+      if (findedInd === -1 && itemCount != 0) {
+        this.value.ingredients.push({
+          ingredientId: ingredientId,
+          itemCount: itemCount,
+        });
+      } else if (findedInd > -1 && itemCount === 0) {
+        this.value.ingredients.splice(findedInd, 1);
+      }
     },
   },
 };
