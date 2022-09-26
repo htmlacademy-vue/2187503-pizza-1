@@ -11,7 +11,7 @@
         >
           <RadioButton
             name="dought"
-            :value="doughStatuses[dough.id]"
+            :value="dough.id"
             :modelValue="value"
             @change="setDoughCurrent"
           />
@@ -32,7 +32,7 @@ export default {
   name: "BuilderDoughSelector",
   props: {
     value: {
-      type: String,
+      type: Number,
       required: true,
     },
   },

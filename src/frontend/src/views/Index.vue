@@ -4,9 +4,9 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
 
-        <BuilderDoughSelector v-model="recipe.dough" />
+        <BuilderDoughSelector v-model="recipe.doughId" />
 
-        <BuilderSizeSelector v-model="recipe.diameter" />
+        <BuilderSizeSelector v-model="recipe.sizeId" />
 
         <BuilderIngredientsSelector v-model="recipe" />
 
@@ -35,9 +35,9 @@ export default {
       misc,
       user,
       recipe: {
-        dough: "light",
-        diameter: "small",
-        sauce: "tomato",
+        doughId: 1,
+        sizeId: 1,
+        sauceId: 1,
         ingredients: [],
       },
     };

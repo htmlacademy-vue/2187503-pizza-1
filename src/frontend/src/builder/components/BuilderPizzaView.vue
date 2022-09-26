@@ -12,7 +12,10 @@
     <div class="content__constructor">
       <div class="pizza" :class="pizzaFoundation">
         <div class="pizza__wrapper">
-          <div class="pizza__filling pizza__filling--ananas"></div>
+          <div
+            v-if="'a' === 'a'"
+            class="pizza__filling pizza__filling--ananas"
+          ></div>
           <div class="pizza__filling pizza__filling--bacon"></div>
           <div class="pizza__filling pizza__filling--cheddar"></div>
         </div>
@@ -26,6 +29,8 @@
 <script>
 import BuilderPriceCounter from "@/builder/components/BuilderPriceCounter";
 import pizza from "@/static/pizza.json";
+import doughStatuses from "@/common/enums/doughStatuses";
+import sauceStatuses from "@/common/enums/sauceStatuses";
 export default {
   name: "BuilderPizzaView",
   components: {
@@ -40,19 +45,25 @@ export default {
   data() {
     return {
       pizza,
+      doughStatuses,
+      sauceStatuses,
     };
   },
   computed: {
     pizzaFoundation: function () {
       return {
         "pizza--foundation--big-creamy":
-          this.recipe.dough === "large" && this.recipe.sauce === "creamy",
+          doughStatuses[this.recipe.doughId] === "large" &&
+          sauceStatuses[this.recipe.sauceId] === "creamy",
         "pizza--foundation--big-tomato":
-          this.recipe.dough === "large" && this.recipe.sauce === "tomato",
+          doughStatuses[this.recipe.doughId] === "large" &&
+          sauceStatuses[this.recipe.sauceId] === "tomato",
         "pizza--foundation--small-creamy":
-          this.recipe.dough === "light" && this.recipe.sauce === "creamy",
+          doughStatuses[this.recipe.doughId] === "light" &&
+          sauceStatuses[this.recipe.sauceId] === "creamy",
         "pizza--foundation--small-tomato":
-          this.recipe.dough === "light" && this.recipe.sauce === "tomato",
+          doughStatuses[this.recipe.doughId] === "light" &&
+          sauceStatuses[this.recipe.sauceId] === "tomato",
       };
     },
   },

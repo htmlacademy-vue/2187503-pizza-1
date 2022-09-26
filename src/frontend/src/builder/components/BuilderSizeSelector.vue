@@ -12,9 +12,9 @@
         >
           <RadioButton
             name="diameter"
-            :value="sizeStatuses[size.id]"
+            :value="size.id"
             :modelValue="value"
-            @change="setDiameter"
+            @change="setSize"
           />
 
           <span>{{ size.name }}</span>
@@ -32,7 +32,7 @@ export default {
   name: "BuilderSizeSelector",
   props: {
     value: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
@@ -47,8 +47,8 @@ export default {
   },
 
   methods: {
-    setDiameter(diameter) {
-      this.$emit("input", diameter);
+    setSize(sizeId) {
+      this.$emit("input", sizeId);
     },
   },
 };

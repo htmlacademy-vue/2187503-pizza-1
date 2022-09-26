@@ -14,8 +14,8 @@
           >
             <RadioButton
               name="sauce"
-              :value="sauceStatuses[sauce.id]"
-              :modelValue="value.sauce"
+              :value="sauce.id"
+              :modelValue="value.sauceId"
               @change="setSauce"
             />
             <span>{{ sauce.name }}</span>
@@ -77,8 +77,8 @@ export default {
   },
 
   methods: {
-    setSauce(sauce) {
-      this.value.sauce = sauce;
+    setSauce(sauceId) {
+      this.value.sauceId = sauceId;
     },
     setItemCount(ingredientId, itemCount) {
       this.itemCount = itemCount;

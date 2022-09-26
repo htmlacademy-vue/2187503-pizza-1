@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import pizza from "@/static/pizza.json";
+import doughStatuses from "@/common/enums/doughStatuses";
 export default {
   name: "BuilderPriceCounter",
   props: {
@@ -15,71 +17,37 @@ export default {
     },
   },
   data() {
-    return {};
+    return { pizza, doughStatuses };
   },
   methods: {
     getDoughPrice() {
       var doughPrice = 0;
-      if (this.recipe.dough === "light") {
-        doughPrice = 300;
-      } else if (this.recipe.dough === "large") {
-        doughPrice = 300;
-      }
+      doughPrice = pizza.dough.find(
+        (el) => el.id === this.recipe.doughId
+      ).price;
       return doughPrice;
     },
     getSaucePrice() {
       var saucePrice = 0;
-      if (this.recipe.sauce === "tomato") {
-        saucePrice = 50;
-      } else if (this.recipe.sauce === "creamy") {
-        saucePrice = 50;
-      }
+      saucePrice = pizza.sauces.find(
+        (el) => el.id === this.recipe.sauceId
+      ).price;
       return saucePrice;
     },
     getSizeCoeff() {
-      var diameterCoeff = 0;
-      if (this.recipe.diameter === "small") {
-        diameterCoeff = 1;
-      } else if (this.recipe.diameter === "normal") {
-        diameterCoeff = 2;
-      } else if (this.recipe.diameter === "big") {
-        diameterCoeff = 3;
-      }
-      return diameterCoeff;
+      var multiplier = 0;
+
+      multiplier = pizza.sizes.find(
+        (el) => el.id === this.recipe.sizeId
+      ).multiplier;
+
+      return multiplier;
     },
     calcPriceByIngredient(ingredientId) {
       var ingredientPrice = 0;
-      if (ingredientId === 1) {
-        ingredientPrice = 33;
-      } else if (ingredientId === 2) {
-        ingredientPrice = 42;
-      } else if (ingredientId === 3) {
-        ingredientPrice = 42;
-      } else if (ingredientId === 4) {
-        ingredientPrice = 42;
-      } else if (ingredientId === 5) {
-        ingredientPrice = 25;
-      } else if (ingredientId === 6) {
-        ingredientPrice = 42;
-      } else if (ingredientId === 7) {
-        ingredientPrice = 35;
-      } else if (ingredientId === 8) {
-        ingredientPrice = 21;
-      } else if (ingredientId === 9) {
-        ingredientPrice = 21;
-      } else if (ingredientId === 10) {
-        ingredientPrice = 25;
-      } else if (ingredientId === 11) {
-        ingredientPrice = 25;
-      } else if (ingredientId === 12) {
-        ingredientPrice = 50;
-      } else if (ingredientId === 13) {
-        ingredientPrice = 35;
-      } else if (ingredientId === 14) {
-        ingredientPrice = 35;
-      } else if (ingredientId === 15) {
-        ingredientPrice = 50;
-      }
+      ingredientPrice = pizza.ingredients.find(
+        (el) => el.id === ingredientId
+      ).price;
       return ingredientPrice;
     },
 
