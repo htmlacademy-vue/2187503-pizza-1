@@ -12,12 +12,9 @@
     <div class="content__constructor">
       <div class="pizza" :class="pizzaFoundation">
         <div class="pizza__wrapper">
-          <div
-            v-if="'a' === 'a'"
-            class="pizza__filling pizza__filling--ananas"
-          ></div>
-          <div class="pizza__filling pizza__filling--bacon"></div>
-          <div class="pizza__filling pizza__filling--cheddar"></div>
+          <div v-for="item in recipe.ingredients" :key="item">
+            <div class="pizza__filling" :class="calcIngredient(item)"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -31,6 +28,7 @@ import BuilderPriceCounter from "@/builder/components/BuilderPriceCounter";
 import pizza from "@/static/pizza.json";
 import doughStatuses from "@/common/enums/doughStatuses";
 import sauceStatuses from "@/common/enums/sauceStatuses";
+import ingredientStatuses from "@/common/enums/ingredientStatuses";
 export default {
   name: "BuilderPizzaView",
   components: {
@@ -47,7 +45,27 @@ export default {
       pizza,
       doughStatuses,
       sauceStatuses,
+      ingredientStatuses,
+      bacon: "pizza__filling--bacon",
     };
+  },
+  methods: {
+    getIngredientCountStyle(itemCount) {
+      var result = "";
+      if (itemCount === 2) {
+        result = " pizza__filling--second";
+      } else if (itemCount === 3) {
+        result = " pizza__filling--third";
+      }
+      return result;
+    },
+    calcIngredient(ingredient) {
+      return (
+        "pizza__filling--" +
+        ingredientStatuses[ingredient.ingredientId] +
+        this.getIngredientCountStyle(ingredient.itemCount)
+      );
+    },
   },
   computed: {
     pizzaFoundation: function () {
