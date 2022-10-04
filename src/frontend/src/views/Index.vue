@@ -10,7 +10,7 @@
 
         <BuilderIngredientsSelector v-model="recipe" />
 
-        <BuilderPizzaView :recipe="recipe" />
+        <BuilderPizzaView :recipe="recipe" @onCook="onCook" />
       </div>
     </form>
   </main>
@@ -41,6 +41,11 @@ export default {
         ingredients: [],
       },
     };
+  },
+  methods: {
+    onCook(pizzaOrder) {
+      this.$emit("onCook", pizzaOrder);
+    },
   },
 };
 </script>

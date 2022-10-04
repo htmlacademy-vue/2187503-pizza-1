@@ -6,6 +6,8 @@
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
+        v-model="pizzaName"
+        required
       />
     </label>
 
@@ -19,7 +21,11 @@
       </div>
     </div>
 
-    <BuilderPriceCounter :recipe="recipe" />
+    <BuilderPriceCounter
+      :recipe="recipe"
+      :pizzaName="pizzaName"
+      @onCook="onCook"
+    />
   </div>
 </template>
 
@@ -43,10 +49,10 @@ export default {
   data() {
     return {
       pizza,
+      pizzaName: null,
       doughStatuses,
       sauceStatuses,
       ingredientStatuses,
-      bacon: "pizza__filling--bacon",
     };
   },
   methods: {
@@ -65,6 +71,9 @@ export default {
         ingredientStatuses[ingredient.ingredientId] +
         this.getIngredientCountStyle(ingredient.itemCount)
       );
+    },
+    onCook(pizzaOrder) {
+      this.$emit("onCook", pizzaOrder);
     },
   },
   computed: {
