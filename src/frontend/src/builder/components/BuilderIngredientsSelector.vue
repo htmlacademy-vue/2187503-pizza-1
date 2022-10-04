@@ -31,15 +31,14 @@
               :key="ingredient.id"
               class="ingredients__item"
             >
-              <span
-                class="filling"
-                :class="`filling--${ingredientStatuses[ingredient.id]}`"
-                >{{ ingredient.name }}</span
-              >
-              <ItemCounter
-                :ingredientId="ingredient.id"
-                @setItemCount="setItemCount"
-              />
+              <AppDrag :transfer-data="ingredient.id">
+                <span
+                  class="filling"
+                  :class="`filling--${ingredientStatuses[ingredient.id]}`"
+                  >{{ ingredient.name }}</span
+                >
+              </AppDrag>
+              <ItemCounter :ingredientId="ingredient.id" :recipe="value" />
             </li>
           </ul>
         </div>
@@ -54,6 +53,7 @@ import ItemCounter from "@/common/components/ItemCounter.vue";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
 import sauceStatuses from "@/common/enums/sauceStatuses";
 import pizza from "@/static/pizza.json";
+import AppDrag from "@/common/components/AppDrag";
 export default {
   name: "BuilderIngredientsSelector",
   props: {
@@ -65,6 +65,7 @@ export default {
   components: {
     RadioButton,
     ItemCounter,
+    AppDrag,
   },
   data() {
     return {
@@ -79,25 +80,6 @@ export default {
   methods: {
     setSauce(sauceId) {
       this.value.sauceId = sauceId;
-    },
-    setItemCount(ingredientId, itemCount) {
-      this.itemCount = itemCount;
-
-      var findedInd = -1;
-      for (var i = 0; i < this.value.ingredients.length; i = i + 1) {
-        if (this.value.ingredients[i].ingredientId === ingredientId) {
-          findedInd = i;
-          this.value.ingredients[i].itemCount = itemCount;
-        }
-      }
-      if (findedInd === -1 && itemCount != 0) {
-        this.value.ingredients.push({
-          ingredientId: ingredientId,
-          itemCount: itemCount,
-        });
-      } else if (findedInd > -1 && itemCount === 0) {
-        this.value.ingredients.splice(findedInd, 1);
-      }
     },
   },
 };

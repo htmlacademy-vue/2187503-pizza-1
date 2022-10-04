@@ -21,11 +21,11 @@ export default {
       required: true,
     },
     modelValue: {
-      type: String,
+      type: Number,
       required: true,
     },
     value: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
