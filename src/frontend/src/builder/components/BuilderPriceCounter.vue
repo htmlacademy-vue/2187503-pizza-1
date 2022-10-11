@@ -98,15 +98,11 @@ export default {
       );
     },
     buttonCookDisabled: function () {
-      if (
+      return (
         this.getIngredientsPrice() === 0 ||
         this.pizzaName === null ||
         this.pizzaName === ""
-      ) {
-        return true;
-      } else {
-        return false;
-      }
+      );
     },
   },
 };

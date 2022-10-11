@@ -15,7 +15,7 @@
             <RadioButton
               name="sauce"
               :value="sauce.id"
-              :modelValue="value.sauceId"
+              :modelValue="recipe.sauceId"
               @change="setSauce"
             />
             <span>{{ sauce.name }}</span>
@@ -38,7 +38,12 @@
                   >{{ ingredient.name }}</span
                 >
               </AppDrag>
-              <ItemCounter :ingredientId="ingredient.id" :recipe="value" />
+              <ItemCounter
+                :ingredientId="ingredient.id"
+                :recipe="recipe"
+                @AddItem="AddItem"
+                @DropItem="DropItem"
+              />
             </li>
           </ul>
         </div>
@@ -57,7 +62,7 @@ import AppDrag from "@/common/components/AppDrag";
 export default {
   name: "BuilderIngredientsSelector",
   props: {
-    value: {
+    recipe: {
       type: Object,
       required: true,
     },
@@ -73,13 +78,39 @@ export default {
       ingredientStatuses,
       sauceStatuses,
       itemCount: null,
-      ingredients: [],
     };
   },
 
   methods: {
     setSauce(sauceId) {
-      this.value.sauceId = sauceId;
+      this.$emit("setSauce", sauceId);
+    },
+    AddItem(ingredientId) {
+      var cnt = 0;
+      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
+        if (this.recipe.ingredients[i].ingredientId === ingredientId) {
+          cnt = this.recipe.ingredients[i].itemCount;
+          this.$emit("AddItemCount", i);
+        }
+      }
+      if (cnt === 0) {
+        this.$emit("AddNewItem", ingredientId);
+      }
+    },
+    DropItem(ingredientId) {
+      var cnt = 0;
+      var findedInd = -1;
+      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
+        if (this.recipe.ingredients[i].ingredientId === ingredientId) {
+          this.$emit("DropItemCount", i);
+
+          findedInd = i;
+          cnt = this.recipe.ingredients[i].itemCount;
+        }
+      }
+      if (findedInd > -1 && cnt === 0) {
+        this.$emit("DropItem", findedInd);
+      }
     },
   },
 };

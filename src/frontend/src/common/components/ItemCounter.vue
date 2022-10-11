@@ -28,9 +28,7 @@
 export default {
   name: "ItemCounter",
   data() {
-    return {
-      count: 0,
-    };
+    return {};
   },
   props: {
     ingredientId: {
@@ -44,41 +42,21 @@ export default {
   },
   methods: {
     AddItem() {
-      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
-        if (this.recipe.ingredients[i].ingredientId === this.ingredientId) {
-          this.recipe.ingredients[i].itemCount += 1;
-        }
-      }
-      if (this.count === 0) {
-        this.recipe.ingredients.push({
-          ingredientId: this.ingredientId,
-          itemCount: 1,
-        });
-      }
+      this.$emit("AddItem", this.ingredientId);
     },
     DropItem() {
-      var cnt = 0;
-      var findedInd = -1;
-      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
-        if (this.recipe.ingredients[i].ingredientId === this.ingredientId) {
-          this.recipe.ingredients[i].itemCount -= 1;
-          findedInd = i;
-          cnt = this.recipe.ingredients[i].itemCount;
-        }
-      }
-      if (findedInd > -1 && cnt === 0) {
-        this.recipe.ingredients.splice(findedInd, 1);
-      }
+      this.$emit("DropItem", this.ingredientId);
     },
   },
   computed: {
     itemCount: function () {
-      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
-        if (this.recipe.ingredients[i].ingredientId === this.ingredientId) {
-          return this.recipe.ingredients[i].itemCount;
+      var itemCount = 0;
+      this.recipe.ingredients.forEach((element) => {
+        if (element.ingredientId === this.ingredientId) {
+          itemCount = element.itemCount;
         }
-      }
-      return 0;
+      });
+      return itemCount;
     },
   },
 };

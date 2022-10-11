@@ -16,7 +16,18 @@
         <div class="pizza" :class="pizzaFoundation">
           <div class="pizza__wrapper">
             <div v-for="item in recipe.ingredients" :key="item.id">
-              <div class="pizza__filling" :class="calcIngredient(item)"></div>
+              <div
+                class="pizza__filling"
+                :class="calcIngredient(item, 1)"
+              ></div>
+              <div
+                class="pizza__filling"
+                :class="calcIngredient(item, 2)"
+              ></div>
+              <div
+                class="pizza__filling"
+                :class="calcIngredient(item, 3)"
+              ></div>
             </div>
           </div>
         </div>
@@ -60,20 +71,22 @@ export default {
     };
   },
   methods: {
-    getIngredientCountStyle(itemCount) {
+    getIngredientCountStyle(itemCount, divNum) {
       var result = "";
-      if (itemCount === 2) {
+      if (divNum === 1) {
+        result = "";
+      } else if ((itemCount === 2 || itemCount === 3) && divNum === 2) {
         result = " pizza__filling--second";
-      } else if (itemCount === 3) {
+      } else if (itemCount === 3 && divNum === 3) {
         result = " pizza__filling--third";
       }
       return result;
     },
-    calcIngredient(ingredient) {
+    calcIngredient(ingredient, divNum) {
       return (
         "pizza__filling--" +
         ingredientStatuses[ingredient.ingredientId] +
-        this.getIngredientCountStyle(ingredient.itemCount)
+        this.getIngredientCountStyle(ingredient.itemCount, divNum)
       );
     },
     onCook(pizzaOrder) {
@@ -85,16 +98,12 @@ export default {
         if (this.recipe.ingredients[i].ingredientId === ingredientId) {
           findedInd = i;
           if (this.recipe.ingredients[i].itemCount < 3) {
-            this.recipe.ingredients[i].itemCount =
-              this.recipe.ingredients[i].itemCount + 1;
+            this.$emit("AddItemCount", i);
           }
         }
       }
       if (findedInd === -1) {
-        this.recipe.ingredients.push({
-          ingredientId: ingredientId,
-          itemCount: 1,
-        });
+        this.$emit("AddNewItem", ingredientId);
       }
     },
   },

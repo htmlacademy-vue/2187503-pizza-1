@@ -12,8 +12,8 @@
           <RadioButton
             name="dought"
             :value="dough.id"
-            :modelValue="value"
-            @change="setDoughCurrent"
+            :modelValue="doughId"
+            @change="setDough"
           />
 
           <b>{{ dough.name }}</b>
@@ -31,7 +31,7 @@ import pizza from "@/static/pizza.json";
 export default {
   name: "BuilderDoughSelector",
   props: {
-    value: {
+    doughId: {
       type: Number,
       required: true,
     },
@@ -47,8 +47,8 @@ export default {
   },
 
   methods: {
-    setDoughCurrent(doughCurrent) {
-      this.$emit("input", doughCurrent);
+    setDough(doughCurrent) {
+      this.$emit("setDough", doughCurrent);
     },
   },
 };

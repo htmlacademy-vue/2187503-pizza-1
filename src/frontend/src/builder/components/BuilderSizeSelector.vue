@@ -13,7 +13,7 @@
           <RadioButton
             name="diameter"
             :value="size.id"
-            :modelValue="value"
+            :modelValue="sizeId"
             @change="setSize"
           />
 
@@ -31,7 +31,7 @@ import pizza from "@/static/pizza.json";
 export default {
   name: "BuilderSizeSelector",
   props: {
-    value: {
+    sizeId: {
       type: Number,
       required: true,
     },
@@ -48,7 +48,7 @@ export default {
 
   methods: {
     setSize(sizeId) {
-      this.$emit("input", sizeId);
+      this.$emit("setSize", sizeId);
     },
   },
 };

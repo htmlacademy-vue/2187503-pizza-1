@@ -4,13 +4,25 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
 
-        <BuilderDoughSelector v-model="recipe.doughId" />
+        <BuilderDoughSelector :doughId="recipe.doughId" @setDough="setDough" />
 
-        <BuilderSizeSelector v-model="recipe.sizeId" />
+        <BuilderSizeSelector :sizeId="recipe.sizeId" @setSize="setSize" />
 
-        <BuilderIngredientsSelector v-model="recipe" />
+        <BuilderIngredientsSelector
+          :recipe="recipe"
+          @setSauce="setSauce"
+          @AddItemCount="AddItemCount"
+          @AddNewItem="AddNewItem"
+          @DropItemCount="DropItemCount"
+          @DropItem="DropItem"
+        />
 
-        <BuilderPizzaView :recipe="recipe" @onCook="onCook" />
+        <BuilderPizzaView
+          :recipe="recipe"
+          @onCook="onCook"
+          @AddItemCount="AddItemCount"
+          @AddNewItem="AddNewItem"
+        />
       </div>
     </form>
   </main>
@@ -45,6 +57,33 @@ export default {
   methods: {
     onCook(pizzaOrder) {
       this.$emit("onCook", pizzaOrder);
+    },
+    setDough(doughId) {
+      this.recipe.doughId = doughId;
+    },
+    setSize(sizeId) {
+      this.recipe.sizeId = sizeId;
+    },
+    setIngredients(recipe) {
+      this.recipe = recipe;
+    },
+    setSauce(sauceId) {
+      this.recipe.sauceId = sauceId;
+    },
+    AddItemCount(i) {
+      this.recipe.ingredients[i].itemCount += 1;
+    },
+    AddNewItem(ingredientId) {
+      this.recipe.ingredients.push({
+        ingredientId: ingredientId,
+        itemCount: 1,
+      });
+    },
+    DropItemCount(i) {
+      this.recipe.ingredients[i].itemCount -= 1;
+    },
+    DropItem(i) {
+      this.recipe.ingredients.splice(i, 1);
     },
   },
 };
