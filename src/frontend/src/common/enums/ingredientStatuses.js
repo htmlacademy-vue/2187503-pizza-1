@@ -13,5 +13,5 @@ export default {
   12: "salmon",
   13: "mozzarella",
   14: "parmesan",
-  15: "fillinge",
+  15: "blue_cheese",
 };
