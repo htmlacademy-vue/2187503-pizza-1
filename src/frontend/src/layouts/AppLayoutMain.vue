@@ -2,7 +2,7 @@
   <div class="app-layout-main">
     <AppLayoutHeader :pizzaOrder="pizzaOrder" />
     <div class="content">
-      <router-view />
+      <slot />
     </div>
   </div>
 </template>
@@ -14,14 +14,10 @@ export default {
   components: {
     AppLayoutHeader,
   },
-  data() {
-    return {
-      pizzaOrder: { name: null, recipe: null, price: 0 },
-    };
-  },
-  methods: {
-    onCook(pizzaOrder) {
-      this.pizzaOrder = pizzaOrder;
+  props: {
+    pizzaOrder: {
+      type: Object,
+      required: true,
     },
   },
 };

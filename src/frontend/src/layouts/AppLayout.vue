@@ -1,5 +1,5 @@
 <template>
-  <component :is="layout">
+  <component :is="layout" :pizzaOrder="pizzaOrder" @onCook="onCook">
     <slot />
   </component>
 </template>
@@ -9,10 +9,11 @@ const defaultLayout = "AppLayoutDefault";
 
 export default {
   name: "AppLayout",
-  data() {
-    return {
-      pizzaOrder: { name: null, recipe: null, price: 0 },
-    };
+  props: {
+    pizzaOrder: {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
     onCook(pizzaOrder) {
