@@ -6,12 +6,18 @@ export default [
     meta: { layout: "AppLayoutMain" },
     children: [
       {
-        path: "/login",
+        path: "/loginModel",
         name: "Login",
         component: () => import("../views/Login.vue"),
         meta: { layout: "AppLayoutMain" },
       },
     ],
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue"),
+    meta: { layout: "AppLayoutDefault" },
   },
   {
     path: "/cart",
@@ -29,12 +35,6 @@ export default [
     path: "/profile",
     name: "Profile",
     component: () => import("../views/Profile.vue"),
-    meta: { layout: "AppLayoutDefault" },
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/Login.vue"),
     meta: { layout: "AppLayoutDefault" },
   },
 ];

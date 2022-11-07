@@ -14,7 +14,10 @@
       <router-link to="/cart">{{ pizzaOrder.price }} ₽</router-link>
     </div>
     <div class="header__user">
-      <router-link to="/login" class="header__login"
+      <router-link v-if="auth" to="/login" class="header__login"
+        ><span>Войти</span></router-link
+      >
+      <router-link v-else to="/profile" class="header__login"
         ><span>Войти</span></router-link
       >
     </div>
@@ -27,6 +30,15 @@ export default {
     pizzaOrder: {
       type: Object,
       required: true,
+    },
+    auth: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  methods: {
+    pushOnEnter() {
+      return this.auth;
     },
   },
 };

@@ -1,5 +1,10 @@
 <template>
-  <component :is="layout" :pizzaOrder="pizzaOrder" @onCook="onCook">
+  <component
+    :is="layout"
+    :auth="auth"
+    :pizzaOrder="pizzaOrder"
+    @onCook="onCook"
+  >
     <slot />
   </component>
 </template>
@@ -12,6 +17,10 @@ export default {
   props: {
     pizzaOrder: {
       type: Object,
+      required: true,
+    },
+    auth: {
+      type: Boolean,
       required: true,
     },
   },
