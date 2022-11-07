@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <AppLayout />
+    <AppLayout :pizzaOrder="pizzaOrder" :auth="auth">
+      <router-view @onCook="onCook" />
+    </AppLayout>
   </div>
 </template>
 
@@ -11,6 +13,18 @@ export default {
   name: "App",
   components: {
     AppLayout,
+  },
+  data() {
+    return {
+      pizzaOrder: { name: null, recipe: null, price: 0 },
+      auth: false,
+    };
+  },
+  computed: {},
+  methods: {
+    onCook(pizzaOrder) {
+      this.pizzaOrder = pizzaOrder;
+    },
   },
 };
 </script>
