@@ -16,7 +16,7 @@
             @change="setDough"
           />
 
-          <b>{{ dough.name }}</b>
+          <b>{{ dough.name }} {{ getBuilder }}</b>
           <span>{{ dough.description }}</span>
         </label>
       </div>
@@ -28,6 +28,7 @@
 import RadioButton from "@/common/components/RadioButton";
 import doughStatuses from "@/common/enums/doughStatuses";
 import pizza from "@/static/pizza.json";
+import { mapGetters } from "vuex";
 export default {
   name: "BuilderDoughSelector",
   props: {
@@ -39,6 +40,7 @@ export default {
   components: {
     RadioButton,
   },
+  computed: mapGetters(["getBuilder"]),
   data() {
     return {
       pizza,

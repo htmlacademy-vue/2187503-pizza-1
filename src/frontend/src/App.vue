@@ -14,6 +14,10 @@ export default {
   components: {
     AppLayout,
   },
+  created() {
+    // Note: fetch initial data
+    this.$store.dispatch("fetchPizza");
+  },
   data() {
     return {
       pizzaOrder: { name: null, recipe: null, price: 0 },
