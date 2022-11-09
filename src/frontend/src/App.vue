@@ -16,7 +16,7 @@ export default {
   },
   created() {
     // Note: fetch initial data
-    this.$store.dispatch("fetchPizza");
+    this.$store.dispatch("init");
   },
   data() {
     return {

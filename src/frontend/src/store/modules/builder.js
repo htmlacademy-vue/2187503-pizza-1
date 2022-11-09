@@ -1,35 +1,30 @@
 import jsonPizza from "@/static/pizza.json";
 
+const entity = "pizza";
+const module = "Builder";
+const namespace = { entity, module };
+
 export default {
+  namespaced: true,
   state: {
-    builder: "BuilderTest",
+    pizza: "",
   },
   getters: {
-    getBuilder(state) {
-      return state.builder;
-    },
-  },
-  mutations: {
-    /* ["SET_ENTITY"](state, { module, entity, value }) {
-      module ? (state[module][entity] = value) : (state[entity] = value);
-    }, */
-    fetchPizza(state, pizza) {
-      state.builder = pizza;
+    getPizza(state) {
+      return state.pizza;
     },
   },
   actions: {
-    /* fetchPizza({ commit }) {
+    fetchPizza({ commit }) {
       const pizza = jsonPizza;
-
-      commit("SET_ENTITY", {
-        module: null,
-        entity: "pizza",
-        value: pizza,
-      });
-    }, */
-    fetchPizza(ctx) {
-      const pizza = jsonPizza;
-      ctx.commit("fetchPizza", pizza);
+      commit(
+        "SET_ENTITY",
+        {
+          ...namespace,
+          value: pizza,
+        },
+        { root: true }
+      );
     },
   },
 };
