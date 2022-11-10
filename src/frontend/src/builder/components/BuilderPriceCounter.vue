@@ -36,9 +36,7 @@ export default {
   methods: {
     getDoughPrice() {
       var doughPrice = 0;
-      doughPrice = this.pizza.dough.find(
-        (el) => el.id === this.recipe.doughId
-      ).price;
+      doughPrice = this.pizza.dough.find((el) => el.id === this.doughId).price;
       return doughPrice;
     },
     getSaucePrice() {
@@ -87,7 +85,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", ["pizza"]),
+    ...mapState("Builder", ["pizza", "doughId"]),
     price: function () {
       return (
         //мультипликатор размера х (стоимость теста + соус + ингредиенты).

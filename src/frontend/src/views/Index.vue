@@ -5,7 +5,7 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
 
-        <BuilderDoughSelector :doughId="recipe.doughId" @setDough="setDough" />
+        <BuilderDoughSelector />
 
         <BuilderSizeSelector :sizeId="recipe.sizeId" @setSize="setSize" />
 
@@ -58,9 +58,6 @@ export default {
   methods: {
     onCook(pizzaOrder) {
       this.$emit("onCook", pizzaOrder);
-    },
-    setDough(doughId) {
-      this.recipe.doughId = doughId;
     },
     setSize(sizeId) {
       this.recipe.sizeId = sizeId;

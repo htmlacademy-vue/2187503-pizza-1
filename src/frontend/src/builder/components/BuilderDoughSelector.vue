@@ -27,19 +27,13 @@
 <script>
 import RadioButton from "@/common/components/RadioButton";
 import doughStatuses from "@/common/enums/doughStatuses";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "BuilderDoughSelector",
-  props: {
-    doughId: {
-      type: Number,
-      required: true,
-    },
-  },
   components: {
     RadioButton,
   },
-  computed: mapState("Builder", ["pizza"]),
+  computed: mapState("Builder", ["pizza", "doughId"]),
   data() {
     return {
       doughStatuses,
@@ -47,8 +41,9 @@ export default {
   },
 
   methods: {
-    setDough(doughCurrent) {
-      this.$emit("setDough", doughCurrent);
+    ...mapMutations("Builder", ["updateDoughId"]),
+    setDough(doughId) {
+      this.updateDoughId(doughId);
     },
   },
 };

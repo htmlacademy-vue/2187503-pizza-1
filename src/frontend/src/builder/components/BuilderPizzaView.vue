@@ -48,6 +48,7 @@ import doughStatuses from "@/common/enums/doughStatuses";
 import sauceStatuses from "@/common/enums/sauceStatuses";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
 import AppDrop from "@/common/components/AppDrop";
+import { mapState } from "vuex";
 export default {
   name: "BuilderPizzaView",
   components: {
@@ -106,19 +107,20 @@ export default {
     },
   },
   computed: {
+    ...mapState("Builder", ["doughId"]),
     pizzaFoundation: function () {
       return {
         "pizza--foundation--big-creamy":
-          doughStatuses[this.recipe.doughId] === "large" &&
+          doughStatuses[this.doughId] === "large" &&
           sauceStatuses[this.recipe.sauceId] === "creamy",
         "pizza--foundation--big-tomato":
-          doughStatuses[this.recipe.doughId] === "large" &&
+          doughStatuses[this.doughId] === "large" &&
           sauceStatuses[this.recipe.sauceId] === "tomato",
         "pizza--foundation--small-creamy":
-          doughStatuses[this.recipe.doughId] === "light" &&
+          doughStatuses[this.doughId] === "light" &&
           sauceStatuses[this.recipe.sauceId] === "creamy",
         "pizza--foundation--small-tomato":
-          doughStatuses[this.recipe.doughId] === "light" &&
+          doughStatuses[this.doughId] === "light" &&
           sauceStatuses[this.recipe.sauceId] === "tomato",
       };
     },
