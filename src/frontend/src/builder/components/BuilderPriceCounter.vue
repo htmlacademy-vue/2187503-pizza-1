@@ -41,9 +41,7 @@ export default {
     },
     getSaucePrice() {
       var saucePrice = 0;
-      saucePrice = this.pizza.sauces.find(
-        (el) => el.id === this.recipe.sauceId
-      ).price;
+      saucePrice = this.pizza.sauces.find((el) => el.id === this.sauceId).price;
       return saucePrice;
     },
     getSizeCoeff() {
@@ -85,7 +83,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", ["pizza", "doughId", "sizeId"]),
+    ...mapState("Builder", ["pizza", "doughId", "sizeId", "sauceId"]),
     price: function () {
       return (
         //мультипликатор размера х (стоимость теста + соус + ингредиенты).

@@ -15,7 +15,7 @@
             <RadioButton
               name="sauce"
               :value="sauce.id"
-              :modelValue="recipe.sauceId"
+              :modelValue="sauceId"
               @change="setSauce"
             />
             <span>{{ sauce.name }}</span>
@@ -57,7 +57,7 @@ import RadioButton from "@/common/components/RadioButton";
 import ItemCounter from "@/common/components/ItemCounter.vue";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
 import sauceStatuses from "@/common/enums/sauceStatuses";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import AppDrag from "@/common/components/AppDrag";
 export default {
   name: "BuilderIngredientsSelector",
@@ -72,7 +72,7 @@ export default {
     ItemCounter,
     AppDrag,
   },
-  computed: mapState("Builder", ["pizza"]),
+  computed: mapState("Builder", ["pizza", "sauceId"]),
   data() {
     return {
       ingredientStatuses,
@@ -82,8 +82,9 @@ export default {
   },
 
   methods: {
+    ...mapMutations("Builder", ["updateSauceId"]),
     setSauce(sauceId) {
-      this.$emit("setSauce", sauceId);
+      this.updateSauceId(sauceId);
     },
     AddItem(ingredientId) {
       var cnt = 0;

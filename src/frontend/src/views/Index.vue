@@ -11,7 +11,6 @@
 
         <BuilderIngredientsSelector
           :recipe="recipe"
-          @setSauce="setSauce"
           @AddItemCount="AddItemCount"
           @AddNewItem="AddNewItem"
           @DropItemCount="DropItemCount"
@@ -48,7 +47,6 @@ export default {
       misc,
       user,
       recipe: {
-        sauceId: 1,
         ingredients: [],
       },
     };
@@ -59,9 +57,6 @@ export default {
     },
     setIngredients(recipe) {
       this.recipe = recipe;
-    },
-    setSauce(sauceId) {
-      this.recipe.sauceId = sauceId;
     },
     AddItemCount(i) {
       this.recipe.ingredients[i].itemCount += 1;

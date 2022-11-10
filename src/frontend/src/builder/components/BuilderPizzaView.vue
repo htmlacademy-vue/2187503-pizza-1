@@ -107,21 +107,21 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", ["doughId"]),
+    ...mapState("Builder", ["doughId", "sauceId"]),
     pizzaFoundation: function () {
       return {
         "pizza--foundation--big-creamy":
           doughStatuses[this.doughId] === "large" &&
-          sauceStatuses[this.recipe.sauceId] === "creamy",
+          sauceStatuses[this.sauceId] === "creamy",
         "pizza--foundation--big-tomato":
           doughStatuses[this.doughId] === "large" &&
-          sauceStatuses[this.recipe.sauceId] === "tomato",
+          sauceStatuses[this.sauceId] === "tomato",
         "pizza--foundation--small-creamy":
           doughStatuses[this.doughId] === "light" &&
-          sauceStatuses[this.recipe.sauceId] === "creamy",
+          sauceStatuses[this.sauceId] === "creamy",
         "pizza--foundation--small-tomato":
           doughStatuses[this.doughId] === "light" &&
-          sauceStatuses[this.recipe.sauceId] === "tomato",
+          sauceStatuses[this.sauceId] === "tomato",
       };
     },
   },

@@ -10,6 +10,7 @@ export default {
     pizza: {},
     doughId: 1,
     sizeId: 1,
+    sauceId: 1,
     /* recipe: {
       sizeId: 1,
       sauceId: 1,
@@ -27,6 +28,9 @@ export default {
     },
     updateSizeId(state, sizeId) {
       state.sizeId = sizeId;
+    },
+    updateSauceId(state, sauceId) {
+      state.sauceId = sauceId;
     },
   },
   actions: {
