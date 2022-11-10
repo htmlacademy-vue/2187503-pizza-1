@@ -50,7 +50,7 @@ export default {
       var multiplier = 0;
 
       multiplier = this.pizza.sizes.find(
-        (el) => el.id === this.recipe.sizeId
+        (el) => el.id === this.sizeId
       ).multiplier;
 
       return multiplier;
@@ -85,7 +85,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", ["pizza", "doughId"]),
+    ...mapState("Builder", ["pizza", "doughId", "sizeId"]),
     price: function () {
       return (
         //мультипликатор размера х (стоимость теста + соус + ингредиенты).

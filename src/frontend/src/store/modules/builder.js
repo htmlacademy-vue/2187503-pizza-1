@@ -9,6 +9,7 @@ export default {
   state: {
     pizza: {},
     doughId: 1,
+    sizeId: 1,
     /* recipe: {
       sizeId: 1,
       sauceId: 1,
@@ -19,12 +20,13 @@ export default {
     getPizza(state) {
       return state.pizza;
     },
-    /* getRecipeDoughId: (state) => (id) =>
-      state.recipe.find((task) => +task.id === +id), */
   },
   mutations: {
     updateDoughId(state, doughId) {
       state.doughId = doughId;
+    },
+    updateSizeId(state, sizeId) {
+      state.sizeId = sizeId;
     },
   },
   actions: {

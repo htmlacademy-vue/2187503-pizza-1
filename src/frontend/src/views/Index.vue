@@ -7,7 +7,7 @@
 
         <BuilderDoughSelector />
 
-        <BuilderSizeSelector :sizeId="recipe.sizeId" @setSize="setSize" />
+        <BuilderSizeSelector />
 
         <BuilderIngredientsSelector
           :recipe="recipe"
@@ -48,8 +48,6 @@ export default {
       misc,
       user,
       recipe: {
-        doughId: 1,
-        sizeId: 1,
         sauceId: 1,
         ingredients: [],
       },
@@ -58,9 +56,6 @@ export default {
   methods: {
     onCook(pizzaOrder) {
       this.$emit("onCook", pizzaOrder);
-    },
-    setSize(sizeId) {
-      this.recipe.sizeId = sizeId;
     },
     setIngredients(recipe) {
       this.recipe = recipe;
