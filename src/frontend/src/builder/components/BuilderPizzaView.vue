@@ -44,7 +44,6 @@
 
 <script>
 import BuilderPriceCounter from "@/builder/components/BuilderPriceCounter";
-import pizza from "@/static/pizza.json";
 import doughStatuses from "@/common/enums/doughStatuses";
 import sauceStatuses from "@/common/enums/sauceStatuses";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
@@ -63,7 +62,6 @@ export default {
   },
   data() {
     return {
-      pizza,
       pizzaName: "",
       doughStatuses,
       sauceStatuses,

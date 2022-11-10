@@ -27,7 +27,7 @@
 <script>
 import RadioButton from "@/common/components/RadioButton";
 import doughStatuses from "@/common/enums/doughStatuses";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "BuilderDoughSelector",
   props: {
@@ -39,7 +39,7 @@ export default {
   components: {
     RadioButton,
   },
-  computed: mapGetters("Builder", { pizza: "getPizza" }),
+  computed: mapState("Builder", ["pizza"]),
   data() {
     return {
       doughStatuses,

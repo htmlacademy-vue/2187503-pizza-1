@@ -57,7 +57,7 @@ import RadioButton from "@/common/components/RadioButton";
 import ItemCounter from "@/common/components/ItemCounter.vue";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
 import sauceStatuses from "@/common/enums/sauceStatuses";
-import pizza from "@/static/pizza.json";
+import { mapState } from "vuex";
 import AppDrag from "@/common/components/AppDrag";
 export default {
   name: "BuilderIngredientsSelector",
@@ -72,9 +72,9 @@ export default {
     ItemCounter,
     AppDrag,
   },
+  computed: mapState("Builder", ["pizza"]),
   data() {
     return {
-      pizza,
       ingredientStatuses,
       sauceStatuses,
       itemCount: null,

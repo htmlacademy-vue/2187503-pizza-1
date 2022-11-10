@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import pizza from "@/static/pizza.json";
+import { mapState } from "vuex";
 import doughStatuses from "@/common/enums/doughStatuses";
 export default {
   name: "BuilderPriceCounter",
@@ -29,7 +29,6 @@ export default {
   },
   data() {
     return {
-      pizza,
       doughStatuses,
       pizzaOrder: { name: null, recipe: null, price: 0 },
     };
@@ -37,14 +36,14 @@ export default {
   methods: {
     getDoughPrice() {
       var doughPrice = 0;
-      doughPrice = pizza.dough.find(
+      doughPrice = this.pizza.dough.find(
         (el) => el.id === this.recipe.doughId
       ).price;
       return doughPrice;
     },
     getSaucePrice() {
       var saucePrice = 0;
-      saucePrice = pizza.sauces.find(
+      saucePrice = this.pizza.sauces.find(
         (el) => el.id === this.recipe.sauceId
       ).price;
       return saucePrice;
@@ -52,7 +51,7 @@ export default {
     getSizeCoeff() {
       var multiplier = 0;
 
-      multiplier = pizza.sizes.find(
+      multiplier = this.pizza.sizes.find(
         (el) => el.id === this.recipe.sizeId
       ).multiplier;
 
@@ -60,7 +59,7 @@ export default {
     },
     calcPriceByIngredient(ingredientId) {
       var ingredientPrice = 0;
-      ingredientPrice = pizza.ingredients.find(
+      ingredientPrice = this.pizza.ingredients.find(
         (el) => el.id === ingredientId
       ).price;
       return ingredientPrice;
@@ -88,6 +87,7 @@ export default {
     },
   },
   computed: {
+    ...mapState("Builder", ["pizza"]),
     price: function () {
       return (
         //мультипликатор размера х (стоимость теста + соус + ингредиенты).

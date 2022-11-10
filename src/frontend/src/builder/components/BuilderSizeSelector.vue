@@ -27,7 +27,7 @@
 <script>
 import RadioButton from "@/common/components/RadioButton";
 import sizeStatuses from "@/common/enums/sizeStatuses";
-import pizza from "@/static/pizza.json";
+import { mapState } from "vuex";
 export default {
   name: "BuilderSizeSelector",
   props: {
@@ -41,11 +41,10 @@ export default {
   },
   data() {
     return {
-      pizza,
       sizeStatuses,
     };
   },
-
+  computed: mapState("Builder", ["pizza"]),
   methods: {
     setSize(sizeId) {
       this.$emit("setSize", sizeId);
