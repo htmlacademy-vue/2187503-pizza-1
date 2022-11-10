@@ -11,11 +11,7 @@ export default {
     doughId: 1,
     sizeId: 1,
     sauceId: 1,
-    /* recipe: {
-      sizeId: 1,
-      sauceId: 1,
-      ingredients: [],
-    }, */
+    ingredients: [],
   },
   getters: {
     getPizza(state) {
@@ -31,6 +27,38 @@ export default {
     },
     updateSauceId(state, sauceId) {
       state.sauceId = sauceId;
+    },
+    addItem(state, ingredientId) {
+      var cnt = 0;
+      for (var i = 0; i < state.ingredients.length; i = i + 1) {
+        if (state.ingredients[i].ingredientId === ingredientId) {
+          cnt = state.ingredients[i].itemCount;
+          if (state.ingredients[i].itemCount < 3) {
+            state.ingredients[i].itemCount += 1;
+          }
+        }
+      }
+      if (cnt === 0) {
+        state.ingredients.push({
+          ingredientId: ingredientId,
+          itemCount: 1,
+        });
+      }
+    },
+    dropItem(state, ingredientId) {
+      var cnt = 0;
+      var findedInd = -1;
+      for (var i = 0; i < state.ingredients.length; i = i + 1) {
+        if (state.ingredients[i].ingredientId === ingredientId) {
+          state.ingredients[i].itemCount -= 1;
+
+          findedInd = i;
+          cnt = state.ingredients[i].itemCount;
+        }
+      }
+      if (findedInd > -1 && cnt === 0) {
+        state.ingredients.splice(findedInd, 1);
+      }
     },
   },
   actions: {

@@ -38,12 +38,7 @@
                   >{{ ingredient.name }}</span
                 >
               </AppDrag>
-              <ItemCounter
-                :ingredientId="ingredient.id"
-                :recipe="recipe"
-                @AddItem="AddItem"
-                @DropItem="DropItem"
-              />
+              <ItemCounter :ingredientId="ingredient.id" />
             </li>
           </ul>
         </div>
@@ -61,23 +56,16 @@ import { mapState, mapMutations } from "vuex";
 import AppDrag from "@/common/components/AppDrag";
 export default {
   name: "BuilderIngredientsSelector",
-  props: {
-    recipe: {
-      type: Object,
-      required: true,
-    },
-  },
   components: {
     RadioButton,
     ItemCounter,
     AppDrag,
   },
-  computed: mapState("Builder", ["pizza", "sauceId"]),
+  computed: mapState("Builder", ["pizza", "sauceId", "ingredients"]),
   data() {
     return {
       ingredientStatuses,
       sauceStatuses,
-      itemCount: null,
     };
   },
 
@@ -85,33 +73,6 @@ export default {
     ...mapMutations("Builder", ["updateSauceId"]),
     setSauce(sauceId) {
       this.updateSauceId(sauceId);
-    },
-    AddItem(ingredientId) {
-      var cnt = 0;
-      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
-        if (this.recipe.ingredients[i].ingredientId === ingredientId) {
-          cnt = this.recipe.ingredients[i].itemCount;
-          this.$emit("AddItemCount", i);
-        }
-      }
-      if (cnt === 0) {
-        this.$emit("AddNewItem", ingredientId);
-      }
-    },
-    DropItem(ingredientId) {
-      var cnt = 0;
-      var findedInd = -1;
-      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
-        if (this.recipe.ingredients[i].ingredientId === ingredientId) {
-          this.$emit("DropItemCount", i);
-
-          findedInd = i;
-          cnt = this.recipe.ingredients[i].itemCount;
-        }
-      }
-      if (findedInd > -1 && cnt === 0) {
-        this.$emit("DropItem", findedInd);
-      }
     },
   },
 };

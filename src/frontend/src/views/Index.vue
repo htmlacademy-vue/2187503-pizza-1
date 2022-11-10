@@ -9,27 +9,14 @@
 
         <BuilderSizeSelector />
 
-        <BuilderIngredientsSelector
-          :recipe="recipe"
-          @AddItemCount="AddItemCount"
-          @AddNewItem="AddNewItem"
-          @DropItemCount="DropItemCount"
-          @DropItem="DropItem"
-        />
+        <BuilderIngredientsSelector />
 
-        <BuilderPizzaView
-          :recipe="recipe"
-          @onCook="onCook"
-          @AddItemCount="AddItemCount"
-          @AddNewItem="AddNewItem"
-        />
+        <BuilderPizzaView @onCook="onCook" />
       </div>
     </form>
   </main>
 </template>
 <script>
-import misc from "@/static/misc.json";
-import user from "@/static/user.json";
 import BuilderDoughSelector from "@/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "@/builder/components/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/builder/components/BuilderIngredientsSelector";
@@ -42,36 +29,9 @@ export default {
     BuilderIngredientsSelector,
     BuilderPizzaView,
   },
-  data() {
-    return {
-      misc,
-      user,
-      recipe: {
-        ingredients: [],
-      },
-    };
-  },
   methods: {
     onCook(pizzaOrder) {
       this.$emit("onCook", pizzaOrder);
-    },
-    setIngredients(recipe) {
-      this.recipe = recipe;
-    },
-    AddItemCount(i) {
-      this.recipe.ingredients[i].itemCount += 1;
-    },
-    AddNewItem(ingredientId) {
-      this.recipe.ingredients.push({
-        ingredientId: ingredientId,
-        itemCount: 1,
-      });
-    },
-    DropItemCount(i) {
-      this.recipe.ingredients[i].itemCount -= 1;
-    },
-    DropItem(i) {
-      this.recipe.ingredients.splice(i, 1);
     },
   },
 };

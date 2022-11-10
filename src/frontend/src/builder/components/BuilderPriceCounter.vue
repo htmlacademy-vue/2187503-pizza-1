@@ -18,10 +18,6 @@ import doughStatuses from "@/common/enums/doughStatuses";
 export default {
   name: "BuilderPriceCounter",
   props: {
-    recipe: {
-      type: Object,
-      required: true,
-    },
     pizzaName: {
       type: String,
       required: true,
@@ -63,11 +59,11 @@ export default {
 
     getIngredientsPrice() {
       var ingredientPrice = 0;
-      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
+      for (var i = 0; i < this.ingredients.length; i = i + 1) {
         ingredientPrice =
           ingredientPrice +
-          this.calcPriceByIngredient(this.recipe.ingredients[i].ingredientId) *
-            this.recipe.ingredients[i].itemCount;
+          this.calcPriceByIngredient(this.ingredients[i].ingredientId) *
+            this.ingredients[i].itemCount;
       }
       return ingredientPrice;
     },
@@ -83,7 +79,13 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", ["pizza", "doughId", "sizeId", "sauceId"]),
+    ...mapState("Builder", [
+      "pizza",
+      "doughId",
+      "sizeId",
+      "sauceId",
+      "ingredients",
+    ]),
     price: function () {
       return (
         //мультипликатор размера х (стоимость теста + соус + ингредиенты).

@@ -15,7 +15,7 @@
       <div class="content__constructor">
         <div class="pizza" :class="pizzaFoundation">
           <div class="pizza__wrapper">
-            <div v-for="item in recipe.ingredients" :key="item.id">
+            <div v-for="item in ingredients" :key="item.id">
               <div
                 class="pizza__filling"
                 :class="calcIngredient(item, 1)"
@@ -33,11 +33,7 @@
         </div>
       </div>
 
-      <BuilderPriceCounter
-        :recipe="recipe"
-        :pizzaName="pizzaName"
-        @onCook="onCook"
-      />
+      <BuilderPriceCounter :pizzaName="pizzaName" @onCook="onCook" />
     </div>
   </AppDrop>
 </template>
@@ -48,18 +44,12 @@ import doughStatuses from "@/common/enums/doughStatuses";
 import sauceStatuses from "@/common/enums/sauceStatuses";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
 import AppDrop from "@/common/components/AppDrop";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "BuilderPizzaView",
   components: {
     BuilderPriceCounter,
     AppDrop,
-  },
-  props: {
-    recipe: {
-      type: Object,
-      required: true,
-    },
   },
   data() {
     return {
@@ -70,6 +60,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations("Builder", ["addItem"]),
     getIngredientCountStyle(itemCount, divNum) {
       var result = "";
       if (divNum === 1) {
@@ -92,22 +83,11 @@ export default {
       this.$emit("onCook", pizzaOrder);
     },
     moveIngredient(ingredientId) {
-      var findedInd = -1;
-      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
-        if (this.recipe.ingredients[i].ingredientId === ingredientId) {
-          findedInd = i;
-          if (this.recipe.ingredients[i].itemCount < 3) {
-            this.$emit("AddItemCount", i);
-          }
-        }
-      }
-      if (findedInd === -1) {
-        this.$emit("AddNewItem", ingredientId);
-      }
+      this.addItem(ingredientId);
     },
   },
   computed: {
-    ...mapState("Builder", ["doughId", "sauceId"]),
+    ...mapState("Builder", ["doughId", "sauceId", "ingredients"]),
     pizzaFoundation: function () {
       return {
         "pizza--foundation--big-creamy":
