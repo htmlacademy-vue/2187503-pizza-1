@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import doughStatuses from "@/common/enums/doughStatuses";
 export default {
   name: "BuilderPriceCounter",
@@ -30,43 +30,6 @@ export default {
     };
   },
   methods: {
-    getDoughPrice() {
-      var doughPrice = 0;
-      doughPrice = this.pizza.dough.find((el) => el.id === this.doughId).price;
-      return doughPrice;
-    },
-    getSaucePrice() {
-      var saucePrice = 0;
-      saucePrice = this.pizza.sauces.find((el) => el.id === this.sauceId).price;
-      return saucePrice;
-    },
-    getSizeCoeff() {
-      var multiplier = 0;
-
-      multiplier = this.pizza.sizes.find(
-        (el) => el.id === this.sizeId
-      ).multiplier;
-
-      return multiplier;
-    },
-    calcPriceByIngredient(ingredientId) {
-      var ingredientPrice = 0;
-      ingredientPrice = this.pizza.ingredients.find(
-        (el) => el.id === ingredientId
-      ).price;
-      return ingredientPrice;
-    },
-
-    getIngredientsPrice() {
-      var ingredientPrice = 0;
-      for (var i = 0; i < this.ingredients.length; i = i + 1) {
-        ingredientPrice =
-          ingredientPrice +
-          this.calcPriceByIngredient(this.ingredients[i].ingredientId) *
-            this.ingredients[i].itemCount;
-      }
-      return ingredientPrice;
-    },
     onCook() {
       if (this.pizzaName == null) {
         alert("Название пиццы обязательно для заполнения");
@@ -86,18 +49,13 @@ export default {
       "sauceId",
       "ingredients",
     ]),
+    ...mapGetters("Builder", ["getPrice", "getIngredientsPrice"]),
     price: function () {
-      return (
-        //мультипликатор размера х (стоимость теста + соус + ингредиенты).
-        this.getSizeCoeff() *
-        (this.getDoughPrice() +
-          this.getSaucePrice() +
-          this.getIngredientsPrice())
-      );
+      return this.getPrice;
     },
     buttonCookDisabled: function () {
       return (
-        this.getIngredientsPrice() === 0 ||
+        this.getIngredientsPrice === 0 ||
         this.pizzaName === null ||
         this.pizzaName === ""
       );
