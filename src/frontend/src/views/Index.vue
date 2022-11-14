@@ -11,7 +11,7 @@
 
         <BuilderIngredientsSelector />
 
-        <BuilderPizzaView @onCook="onCook" />
+        <BuilderPizzaView />
       </div>
     </form>
   </main>
@@ -28,11 +28,6 @@ export default {
     BuilderSizeSelector,
     BuilderIngredientsSelector,
     BuilderPizzaView,
-  },
-  methods: {
-    onCook(pizzaOrder) {
-      this.$emit("onCook", pizzaOrder);
-    },
   },
 };
 </script>

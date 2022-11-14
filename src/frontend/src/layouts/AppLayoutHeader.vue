@@ -11,7 +11,7 @@
       </a>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">{{ pizzaOrder.price }} ₽</router-link>
+      <router-link to="/cart">{{ getPrice }} ₽</router-link>
     </div>
     <div class="header__user">
       <router-link v-if="auth" to="/login" class="header__login"
@@ -24,13 +24,10 @@
   </header>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "AppLayoutHeader",
   props: {
-    pizzaOrder: {
-      type: Object,
-      required: true,
-    },
     auth: {
       type: Boolean,
       required: true,
@@ -41,5 +38,6 @@ export default {
       return this.auth;
     },
   },
+  computed: { ...mapGetters("Builder", ["getPrice"]) },
 };
 </script>

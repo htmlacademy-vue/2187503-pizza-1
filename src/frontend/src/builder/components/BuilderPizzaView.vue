@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <BuilderPriceCounter :pizzaName="pizzaName" @onCook="onCook" />
+      <BuilderPriceCounter :pizzaName="pizzaName" />
     </div>
   </AppDrop>
 </template>
@@ -78,9 +78,6 @@ export default {
         ingredientStatuses[ingredient.ingredientId] +
         this.getIngredientCountStyle(ingredient.itemCount, divNum)
       );
-    },
-    onCook(pizzaOrder) {
-      this.$emit("onCook", pizzaOrder);
     },
     moveIngredient(ingredientId) {
       this.addItem(ingredientId);

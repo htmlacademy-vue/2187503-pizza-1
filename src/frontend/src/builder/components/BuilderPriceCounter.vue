@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import doughStatuses from "@/common/enums/doughStatuses";
 export default {
   name: "BuilderPriceCounter",
@@ -26,22 +26,20 @@ export default {
   data() {
     return {
       doughStatuses,
-      pizzaOrder: { name: null, recipe: null, price: 0 },
     };
   },
   methods: {
+    ...mapActions("Cart", ["addPizzaOrder"]),
     onCook() {
       if (this.pizzaName == null) {
         alert("Название пиццы обязательно для заполнения");
       } else {
-        this.pizzaOrder.name = this.pizzaName;
-        this.pizzaOrder.recipe = this.recipe;
-        this.pizzaOrder.price = this.price;
-        this.$emit("onCook", this.pizzaOrder);
+        this.addPizzaOrder(this.pizzaName);
       }
     },
   },
   computed: {
+    ...mapState("Cart", ["pizzaOrders"]),
     ...mapState("Builder", [
       "pizza",
       "doughId",
