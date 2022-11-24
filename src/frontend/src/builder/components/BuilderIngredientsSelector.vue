@@ -51,7 +51,6 @@
 import RadioButton from "@/common/components/RadioButton";
 import ItemCounter from "@/common/components/ItemCounter.vue";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
-import sauceStatuses from "@/common/enums/sauceStatuses";
 import { mapState, mapMutations } from "vuex";
 import AppDrag from "@/common/components/AppDrag";
 export default {
@@ -61,11 +60,15 @@ export default {
     ItemCounter,
     AppDrag,
   },
-  computed: mapState("Builder", ["pizza", "sauceId", "ingredients"]),
+  computed: mapState("Builder", [
+    "pizza",
+    "sauceId",
+    "ingredients",
+    "sauceStatuses",
+  ]),
   data() {
     return {
       ingredientStatuses,
-      sauceStatuses,
     };
   },
 

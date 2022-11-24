@@ -1,55 +1,55 @@
 import jsonPizza from "@/static/pizza.json";
+import jsonSauceStatuses from "@/common/enums/sauceStatuses";
 
-const entity = "pizza";
 const module = "Builder";
-const namespace = { entity, module };
+const namespacePizza = { entity: "pizza", module };
+const namespaceSauceStatuses = { entity: "sauceStatuses", module };
+
+function getSizeCoeff(state) {
+  var multiplier = 0;
+
+  multiplier = state.pizza.sizes.find(
+    (el) => el.id === state.sizeId
+  ).multiplier;
+
+  return multiplier;
+}
+
+function getDoughPrice(state) {
+  var doughPrice = 0;
+  doughPrice = state.pizza.dough.find((el) => el.id === state.doughId).price;
+  return doughPrice;
+}
+function getSaucePrice(state) {
+  var saucePrice = 0;
+  saucePrice = state.pizza.sauces.find((el) => el.id === state.sauceId).price;
+  return saucePrice;
+}
+function calculateItemTax(state, ingredientId) {
+  var ingredientPrice = 0;
+  ingredientPrice = state.pizza.ingredients.find(
+    (el) => el.id === ingredientId
+  ).price;
+  return ingredientPrice;
+}
 
 export default {
   namespaced: true,
   state: {
     pizza: {},
+    sauceStatuses: {},
     doughId: 1,
     sizeId: 1,
     sauceId: 1,
     ingredients: [],
   },
   getters: {
-    getSizeCoeff(state) {
-      var multiplier = 0;
-
-      multiplier = state.pizza.sizes.find(
-        (el) => el.id === state.sizeId
-      ).multiplier;
-
-      return multiplier;
-    },
-    getDoughPrice(state) {
-      var doughPrice = 0;
-      doughPrice = state.pizza.dough.find(
-        (el) => el.id === state.doughId
-      ).price;
-      return doughPrice;
-    },
-    getSaucePrice(state) {
-      var saucePrice = 0;
-      saucePrice = state.pizza.sauces.find(
-        (el) => el.id === state.sauceId
-      ).price;
-      return saucePrice;
-    },
-    calculateItemTax: (state) => (ingredientId) => {
-      var ingredientPrice = 0;
-      ingredientPrice = state.pizza.ingredients.find(
-        (el) => el.id === ingredientId
-      ).price;
-      return ingredientPrice;
-    },
-    getIngredientsPrice(state, getters) {
+    getIngredientsPrice(state) {
       var ingredientPrice = 0;
       for (var i = 0; i < state.ingredients.length; i = i + 1) {
         ingredientPrice =
           ingredientPrice +
-          getters.calculateItemTax(state.ingredients[i].ingredientId) *
+          calculateItemTax(state, state.ingredients[i].ingredientId) *
             state.ingredients[i].itemCount;
       }
       return ingredientPrice;
@@ -57,11 +57,22 @@ export default {
     getPrice(state, getters) {
       return (
         //мультипликатор размера х (стоимость теста + соус + ингредиенты).
-        getters.getSizeCoeff *
-        (getters.getDoughPrice +
-          getters.getSaucePrice +
+        getSizeCoeff(state) *
+        (getDoughPrice(state) +
+          getSaucePrice(state) +
           getters.getIngredientsPrice)
       );
+    },
+    getSizeName: (state) => (sizeId) => {
+      return state.pizza.sizes.find((size) => size.id === sizeId).name;
+    },
+    getSauceName: (state) => (sauceId) => {
+      return state.pizza.sizes
+        .find((sauce) => sauce.id === sauceId)
+        .name.toLowerCase();
+    },
+    getIngredientString: (state) => (sauceId) => {
+      return state.pizza.sauces[sauceId].name.toLowerCase();
     },
   },
   mutations: {
@@ -113,8 +124,19 @@ export default {
       commit(
         "SET_ENTITY",
         {
-          ...namespace,
+          ...namespacePizza,
           value: pizza,
+        },
+        { root: true }
+      );
+    },
+    fetchSauceStatuses({ commit }) {
+      const sauceStatuses = jsonSauceStatuses;
+      commit(
+        "SET_ENTITY",
+        {
+          ...namespaceSauceStatuses,
+          value: sauceStatuses,
         },
         { root: true }
       );
