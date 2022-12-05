@@ -67,12 +67,21 @@ export default {
       return state.pizza.sizes.find((size) => size.id === sizeId).name;
     },
     getSauceName: (state) => (sauceId) => {
-      return state.pizza.sizes
+      return state.pizza.sauces
         .find((sauce) => sauce.id === sauceId)
         .name.toLowerCase();
     },
-    getIngredientString: (state) => (sauceId) => {
-      return state.pizza.sauces[sauceId].name.toLowerCase();
+    getIngredientsName: (state) => (ingredients) => {
+      var ingredientsName = [];
+      for (var i = 0; i < ingredients.length; i = i + 1) {
+        ingredientsName.push(
+          state.pizza.ingredients
+            .find((ingredient) => ingredient.id === ingredients[i].ingredientId)
+            .name.toLowerCase()
+        );
+      }
+
+      return ingredientsName.join(", ");
     },
   },
   mutations: {
@@ -84,6 +93,9 @@ export default {
     },
     updateSauceId(state, sauceId) {
       state.sauceId = sauceId;
+    },
+    updateIngredients(state, ingredients) {
+      state.ingredients = JSON.parse(JSON.stringify(ingredients));
     },
     addItem(state, ingredientId) {
       var cnt = 0;
