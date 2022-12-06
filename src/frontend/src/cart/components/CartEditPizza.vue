@@ -65,7 +65,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 export default {
-  name: "PizzaOrder",
+  name: "CartEditPizza",
   props: {
     pizzaOrder: { type: Object, required: true },
     pizzaOrderInd: {

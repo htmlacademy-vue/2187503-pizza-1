@@ -47,7 +47,7 @@ export default {
       "sauceId",
       "ingredients",
     ]),
-    ...mapGetters("Builder", ["getPrice", "getIngredientsPrice"]),
+    ...mapGetters("Builder", ["getPizzaPrice", "getIngredientsPrice"]),
     price: function () {
       return this.getPrice;
     },

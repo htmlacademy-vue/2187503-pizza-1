@@ -11,13 +11,13 @@
       </a>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">{{ getPrice }} ₽</router-link>
+      <router-link to="/cart">{{ getPizzaPrice + getMiscPrice }} ₽</router-link>
     </div>
     <div class="header__user">
-      <router-link v-if="auth" to="/login" class="header__login"
+      <router-link v-if="auth" key="is-auth" to="/login" class="header__login"
         ><span>Войти</span></router-link
       >
-      <router-link v-else to="/profile" class="header__login"
+      <router-link v-else key="is-not-auth" to="/profile" class="header__login"
         ><span>Войти</span></router-link
       >
     </div>
@@ -38,6 +38,9 @@ export default {
       return this.auth;
     },
   },
-  computed: { ...mapGetters("Builder", ["getPrice"]) },
+  computed: {
+    ...mapGetters("Builder", ["getPizzaPrice"]),
+    ...mapGetters("Cart", ["getMiscPrice"]),
+  },
 };
 </script>

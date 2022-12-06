@@ -54,7 +54,7 @@ export default {
       }
       return ingredientPrice;
     },
-    getPrice(state, getters) {
+    getPizzaPrice(state, getters) {
       return (
         //мультипликатор размера х (стоимость теста + соус + ингредиенты).
         getSizeCoeff(state) *

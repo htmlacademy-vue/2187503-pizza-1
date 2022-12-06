@@ -5,124 +5,32 @@
         <div class="cart__title">
           <h1 class="title title--big">Корзина</h1>
         </div>
-        <CartOrders />
+
+        <div
+          v-if="pizzaOrders.length === 0"
+          key="no-orders"
+          class="sheet cart__empty"
+        >
+          <p>В корзине нет ни одного товара</p>
+        </div>
+
+        <ul v-else key="has-orders" class="cart-list sheet">
+          <CartEditPizza
+            v-for="(pizzaOrder, index) in pizzaOrders"
+            :key="index"
+            :pizzaOrderInd="index"
+            :pizzaOrder="pizzaOrder"
+          />
+        </ul>
 
         <div class="cart__additional">
           <ul class="additional-list">
-            <li class="additional-list__item sheet">
-              <p class="additional-list__description">
-                <img
-                  src="img/cola.svg"
-                  width="39"
-                  height="60"
-                  alt="Coca-Cola 0,5 литра"
-                />
-                <span>Coca-Cola 0,5 литра</span>
-              </p>
-
-              <div class="additional-list__wrapper">
-                <div class="counter additional-list__counter">
-                  <button
-                    type="button"
-                    class="counter__button counter__button--minus"
-                  >
-                    <span class="visually-hidden">Меньше</span>
-                  </button>
-                  <input
-                    type="text"
-                    name="counter"
-                    class="counter__input"
-                    value="2"
-                  />
-                  <button
-                    type="button"
-                    class="counter__button counter__button--plus counter__button--orange"
-                  >
-                    <span class="visually-hidden">Больше</span>
-                  </button>
-                </div>
-
-                <div class="additional-list__price">
-                  <b>× 56 ₽</b>
-                </div>
-              </div>
-            </li>
-            <li class="additional-list__item sheet">
-              <p class="additional-list__description">
-                <img
-                  src="img/sauce.svg"
-                  width="39"
-                  height="60"
-                  alt="Острый соус"
-                />
-                <span>Острый соус</span>
-              </p>
-
-              <div class="additional-list__wrapper">
-                <div class="counter additional-list__counter">
-                  <button
-                    type="button"
-                    class="counter__button counter__button--minus"
-                  >
-                    <span class="visually-hidden">Меньше</span>
-                  </button>
-                  <input
-                    type="text"
-                    name="counter"
-                    class="counter__input"
-                    value="2"
-                  />
-                  <button
-                    type="button"
-                    class="counter__button counter__button--plus counter__button--orange"
-                  >
-                    <span class="visually-hidden">Больше</span>
-                  </button>
-                </div>
-
-                <div class="additional-list__price">
-                  <b>× 30 ₽</b>
-                </div>
-              </div>
-            </li>
-            <li class="additional-list__item sheet">
-              <p class="additional-list__description">
-                <img
-                  src="img/potato.svg"
-                  width="39"
-                  height="60"
-                  alt="Картошка из печи"
-                />
-                <span>Картошка из печи</span>
-              </p>
-
-              <div class="additional-list__wrapper">
-                <div class="counter additional-list__counter">
-                  <button
-                    type="button"
-                    class="counter__button counter__button--minus"
-                  >
-                    <span class="visually-hidden">Меньше</span>
-                  </button>
-                  <input
-                    type="text"
-                    name="counter"
-                    class="counter__input"
-                    value="2"
-                  />
-                  <button
-                    type="button"
-                    class="counter__button counter__button--plus counter__button--orange"
-                  >
-                    <span class="visually-hidden">Больше</span>
-                  </button>
-                </div>
-
-                <div class="additional-list__price">
-                  <b>× 56 ₽</b>
-                </div>
-              </div>
-            </li>
+            <CartEditMisc
+              v-for="(miscItem, index) in miscOrders"
+              :key="index"
+              :miscInd="index"
+              :miscItem="miscItem"
+            />
           </ul>
         </div>
 
@@ -197,11 +105,18 @@
   </form>
 </template>
 <script>
-import CartOrders from "@/cart/components/CartOrders";
+import CartEditPizza from "@/cart/components/CartEditPizza";
+import CartEditMisc from "@/cart/components/CartEditMisc";
+import { mapState } from "vuex";
 export default {
   name: "CartEdit",
   components: {
-    CartOrders,
+    CartEditPizza,
+    CartEditMisc,
   },
+  created() {
+    this.$store.commit("Cart/createMiscOrders");
+  },
+  computed: { ...mapState("Cart", ["pizzaOrders", "miscOrders"]) },
 };
 </script>
