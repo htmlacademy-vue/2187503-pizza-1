@@ -1,5 +1,9 @@
 <template>
-  <form action="test.html" method="post" class="layout-form">
+  <form
+    method="post"
+    class="layout-form"
+    @submit.prevent="$router.push({ path: `/popup` })"
+  >
     <main class="content cart">
       <div class="container">
         <div class="cart__title">
@@ -81,9 +85,7 @@
     </main>
     <section class="footer">
       <div class="footer__more">
-        <a href="#" class="button button--border button--arrow"
-          >Хочу еще одну</a
-        >
+        <a class="button button--border button--arrow">Хочу еще одну</a>
       </div>
       <p class="footer__text">
         Перейти к конструктору<br />чтоб собрать ещё одну пиццу
@@ -93,13 +95,7 @@
       </div>
 
       <div class="footer__submit">
-        <button
-          type="submit"
-          class="button"
-          @click="$router.push({ path: `/login` })"
-        >
-          Оформить заказ
-        </button>
+        <button type="submit" class="button">Оформить заказ</button>
       </div>
     </section>
   </form>

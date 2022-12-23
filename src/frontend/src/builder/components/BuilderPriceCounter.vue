@@ -1,6 +1,6 @@
 <template>
   <div class="content__result">
-    <p>Итого: {{ price }} ₽</p>
+    <p>Итого: {{ getPizzaPrice }} ₽</p>
     <button
       type="button"
       class="button"
@@ -48,9 +48,6 @@ export default {
       "ingredients",
     ]),
     ...mapGetters("Builder", ["getPizzaPrice", "getIngredientsPrice"]),
-    price: function () {
-      return this.getPrice;
-    },
     buttonCookDisabled: function () {
       return (
         this.getIngredientsPrice === 0 ||

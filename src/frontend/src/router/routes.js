@@ -37,4 +37,10 @@ export default [
     component: () => import("../views/Profile.vue"),
     meta: { layout: "AppLayoutDefault" },
   },
+  {
+    path: "/popup",
+    name: "Popup",
+    component: () => import("../views/Popup.vue"),
+    meta: { layout: "AppLayoutDefault" },
+  },
 ];

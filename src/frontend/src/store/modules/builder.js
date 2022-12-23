@@ -42,6 +42,7 @@ export default {
     sizeId: 1,
     sauceId: 1,
     ingredients: [],
+    userId: null,
   },
   getters: {
     getIngredientsPrice(state) {
@@ -128,6 +129,13 @@ export default {
       if (findedInd > -1 && cnt === 0) {
         state.ingredients.splice(findedInd, 1);
       }
+    },
+    clearPizzaData(state) {
+      (state.sauceStatuses = {}),
+        (state.doughId = 1),
+        (state.sizeId = 1),
+        (state.sauceId = 1),
+        (state.ingredients = []);
     },
   },
   actions: {
