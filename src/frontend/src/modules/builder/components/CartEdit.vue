@@ -43,10 +43,10 @@
             <label class="cart-form__select">
               <span class="cart-form__label">Получение заказа:</span>
 
-              <select name="test" class="select">
+              <select name="test" class="select" v-model="howGetOrder">
                 <option value="1">Заберу сам</option>
                 <option value="2">Новый адрес</option>
-                <option value="3">Дом</option>
+                <option v-if="userId != null" value="3">Дом</option>
               </select>
             </label>
 
@@ -55,7 +55,7 @@
               <input type="text" name="tel" placeholder="+7 999-999-99-99" />
             </label>
 
-            <div class="cart-form__address">
+            <div v-if="howGetOrder != 1" class="cart-form__address">
               <span class="cart-form__label">Новый адрес:</span>
 
               <div class="cart-form__input">
@@ -85,13 +85,16 @@
     </main>
     <section class="footer">
       <div class="footer__more">
-        <a class="button button--border button--arrow">Хочу еще одну</a>
+        <a class="button button--border button--arrow" @click="wantMore"
+          >Хочу еще одну</a
+        >
       </div>
+
       <p class="footer__text">
         Перейти к конструктору<br />чтоб собрать ещё одну пиццу
       </p>
       <div class="footer__price">
-        <b>Итого: 2 228 ₽</b>
+        <b>Итого: {{ getMiscPrice + getPizzaOrdersPrice }} ₽</b>
       </div>
 
       <div class="footer__submit">
@@ -103,9 +106,14 @@
 <script>
 import CartEditPizza from "@/cart/components/CartEditPizza";
 import CartEditMisc from "@/cart/components/CartEditMisc";
-import { mapState } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 export default {
   name: "CartEdit",
+  data() {
+    return {
+      howGetOrder: 1,
+    };
+  },
   components: {
     CartEditPizza,
     CartEditMisc,
@@ -113,6 +121,18 @@ export default {
   created() {
     this.$store.commit("Cart/createMiscOrders");
   },
-  computed: { ...mapState("Cart", ["pizzaOrders", "miscOrders"]) },
+  methods: {
+    ...mapMutations("Builder", ["clearPizzaData"]),
+    wantMore() {
+      this.clearPizzaData();
+      this.$router.push("/");
+    },
+  },
+  computed: {
+    ...mapState("Cart", ["pizzaOrders", "miscOrders"]),
+    ...mapState("Builder", ["userId"]),
+    ...mapGetters("Builder", ["getPizzaPrice"]),
+    ...mapGetters("Cart", ["getMiscPrice", "getPizzaOrdersPrice"]),
+  },
 };
 </script>

@@ -7,7 +7,8 @@
           type="text"
           name="pizza_name"
           placeholder="Введите название пиццы"
-          v-model="pizzaName"
+          :value="pizzaName"
+          @input="inputPizzaName"
           required
         />
       </label>
@@ -53,14 +54,13 @@ export default {
   },
   data() {
     return {
-      pizzaName: "",
       doughStatuses,
       sauceStatuses,
       ingredientStatuses,
     };
   },
   methods: {
-    ...mapMutations("Builder", ["addItem"]),
+    ...mapMutations("Builder", ["addItem", "updatePizzaName"]),
     getIngredientCountStyle(itemCount, divNum) {
       var result = "";
       if (divNum === 1) {
@@ -82,9 +82,12 @@ export default {
     moveIngredient(ingredientId) {
       this.addItem(ingredientId);
     },
+    inputPizzaName(e) {
+      this.updatePizzaName(e.target.value);
+    },
   },
   computed: {
-    ...mapState("Builder", ["doughId", "sauceId", "ingredients"]),
+    ...mapState("Builder", ["doughId", "sauceId", "ingredients", "pizzaName"]),
     pizzaFoundation: function () {
       return {
         "pizza--foundation--big-creamy":

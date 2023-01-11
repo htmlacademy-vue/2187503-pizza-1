@@ -11,7 +11,9 @@
       </a>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">{{ getPizzaPrice + getMiscPrice }} ₽</router-link>
+      <router-link to="/cart"
+        >{{ getMiscPrice + getPizzaOrdersPrice }} ₽</router-link
+      >
     </div>
     <div class="header__user">
       <router-link v-if="auth" key="is-auth" to="/login" class="header__login"
@@ -40,7 +42,7 @@ export default {
   },
   computed: {
     ...mapGetters("Builder", ["getPizzaPrice"]),
-    ...mapGetters("Cart", ["getMiscPrice"]),
+    ...mapGetters("Cart", ["getMiscPrice", "getPizzaOrdersPrice"]),
   },
 };
 </script>

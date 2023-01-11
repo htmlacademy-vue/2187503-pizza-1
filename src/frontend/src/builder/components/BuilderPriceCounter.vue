@@ -34,7 +34,10 @@ export default {
       if (this.pizzaName == null) {
         alert("Название пиццы обязательно для заполнения");
       } else {
-        this.addPizzaOrder(this.pizzaName);
+        this.addPizzaOrder({
+          pizzaName: this.pizzaName,
+          pizzaOrderInd: this.pizzaOrderInd,
+        });
       }
     },
   },
@@ -46,6 +49,7 @@ export default {
       "sizeId",
       "sauceId",
       "ingredients",
+      "pizzaOrderInd",
     ]),
     ...mapGetters("Builder", ["getPizzaPrice", "getIngredientsPrice"]),
     buttonCookDisabled: function () {

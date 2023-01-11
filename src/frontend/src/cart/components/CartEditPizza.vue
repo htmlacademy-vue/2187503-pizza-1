@@ -91,6 +91,8 @@ export default {
       "updateDoughId",
       "updateSizeId",
       "updateIngredients",
+      "updatePizzaName",
+      "updatePizzaOrder",
     ]),
     getDoughInfo(doughId) {
       if (doughId === 1) {
@@ -110,6 +112,8 @@ export default {
       this.updateSizeId(this.pizzaOrder.sizeId);
       this.updateSauceId(this.pizzaOrder.sauceId);
       this.updateIngredients(this.pizzaOrder.ingredients);
+      this.updatePizzaName(this.pizzaOrder.pizzaName);
+      this.updatePizzaOrder(this.pizzaOrderInd);
     },
   },
 };

@@ -20,8 +20,10 @@ export default {
   computed: { ...mapState("Builder", ["userId"]) },
   methods: {
     ...mapMutations("Builder", ["clearPizzaData"]),
+    ...mapMutations("Cart", ["clearPizzaOrderData"]),
     clearPizza() {
       this.clearPizzaData();
+      this.clearPizzaOrderData();
 
       if (this.userId != null) {
         this.$router.push({ path: `/orders` });

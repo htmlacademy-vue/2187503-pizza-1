@@ -22,10 +22,32 @@ export default {
       }
       return miscPrice;
     },
+    getPizzaOrdersPrice(state) {
+      var pizzaOrdersPrice = 0;
+      for (var i = 0; i < state.pizzaOrders.length; i = i + 1) {
+        pizzaOrdersPrice =
+          pizzaOrdersPrice +
+          state.pizzaOrders[i].price * state.pizzaOrders[i].count;
+      }
+      return pizzaOrdersPrice;
+    },
   },
   mutations: {
-    addPizzaOrder(state, pizzaOrder) {
-      state.pizzaOrders.push(JSON.parse(JSON.stringify(pizzaOrder)));
+    addPizzaOrder(state, { pizzaOrder, pizzaOrderInd }) {
+      if (pizzaOrderInd == null) {
+        state.pizzaOrders.push(JSON.parse(JSON.stringify(pizzaOrder)));
+      } else {
+        for (var i = 0; i < state.pizzaOrders.length; i = i + 1) {
+          if (pizzaOrderInd == i) {
+            state.pizzaOrders[i].pizzaName = pizzaOrder.pizzaName;
+            state.pizzaOrders[i].price = pizzaOrder.price;
+            state.pizzaOrders[i].doughId = pizzaOrder.doughId;
+            state.pizzaOrders[i].sizeId = pizzaOrder.sizeId;
+            state.pizzaOrders[i].sauceId = pizzaOrder.sauceId;
+            state.pizzaOrders[i].ingredients = pizzaOrder.ingredients;
+          }
+        }
+      }
     },
     addPizzaOrderCount(state, pizzaOrderInd) {
       state.pizzaOrders[pizzaOrderInd].count++;
@@ -54,9 +76,16 @@ export default {
         }
       }
     },
+    clearPizzaOrderData(state) {
+      state.pizzaOrders = [];
+      state.miscOrders = [];
+    },
   },
   actions: {
-    addPizzaOrder({ commit, rootState, rootGetters }, pizzaName) {
+    addPizzaOrder(
+      { commit, rootState, rootGetters },
+      { pizzaName, pizzaOrderInd }
+    ) {
       const pizzaOrder = {
         pizzaName: pizzaName,
         price: rootGetters["Builder/getPizzaPrice"],
@@ -67,7 +96,7 @@ export default {
         ingredients: rootState.Builder.ingredients,
       };
 
-      commit("addPizzaOrder", pizzaOrder);
+      commit("addPizzaOrder", { pizzaOrder, pizzaOrderInd });
     },
     fetchMisc({ commit }) {
       const misc = jsonMisc;

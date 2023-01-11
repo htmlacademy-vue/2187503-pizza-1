@@ -43,6 +43,8 @@ export default {
     sauceId: 1,
     ingredients: [],
     userId: null,
+    pizzaName: "",
+    pizzaOrderInd: null,
   },
   getters: {
     getIngredientsPrice(state) {
@@ -98,6 +100,12 @@ export default {
     updateIngredients(state, ingredients) {
       state.ingredients = JSON.parse(JSON.stringify(ingredients));
     },
+    updatePizzaName(state, pizzaName) {
+      state.pizzaName = pizzaName;
+    },
+    updatePizzaOrder(state, pizzaOrderInd) {
+      state.pizzaOrderInd = pizzaOrderInd;
+    },
     addItem(state, ingredientId) {
       var cnt = 0;
       for (var i = 0; i < state.ingredients.length; i = i + 1) {
@@ -131,11 +139,12 @@ export default {
       }
     },
     clearPizzaData(state) {
-      (state.sauceStatuses = {}),
-        (state.doughId = 1),
-        (state.sizeId = 1),
-        (state.sauceId = 1),
-        (state.ingredients = []);
+      state.sauceStatuses = {};
+      state.doughId = 1;
+      state.sizeId = 1;
+      state.sauceId = 1;
+      state.ingredients = [];
+      state.pizzaName = "";
     },
   },
   actions: {
