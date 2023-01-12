@@ -15,7 +15,7 @@
             <RadioButton
               name="sauce"
               :value="sauce.id"
-              :modelValue="recipe.sauceId"
+              :modelValue="sauceId"
               @change="setSauce"
             />
             <span>{{ sauce.name }}</span>
@@ -38,12 +38,7 @@
                   >{{ ingredient.name }}</span
                 >
               </AppDrag>
-              <ItemCounter
-                :ingredientId="ingredient.id"
-                :recipe="recipe"
-                @AddItem="AddItem"
-                @DropItem="DropItem"
-              />
+              <ItemCounter :ingredientId="ingredient.id" />
             </li>
           </ul>
         </div>
@@ -56,61 +51,31 @@
 import RadioButton from "@/common/components/RadioButton";
 import ItemCounter from "@/common/components/ItemCounter.vue";
 import ingredientStatuses from "@/common/enums/ingredientStatuses";
-import sauceStatuses from "@/common/enums/sauceStatuses";
-import pizza from "@/static/pizza.json";
+import { mapState, mapMutations } from "vuex";
 import AppDrag from "@/common/components/AppDrag";
 export default {
   name: "BuilderIngredientsSelector",
-  props: {
-    recipe: {
-      type: Object,
-      required: true,
-    },
-  },
   components: {
     RadioButton,
     ItemCounter,
     AppDrag,
   },
+  computed: mapState("Builder", [
+    "pizza",
+    "sauceId",
+    "ingredients",
+    "sauceStatuses",
+  ]),
   data() {
     return {
-      pizza,
       ingredientStatuses,
-      sauceStatuses,
-      itemCount: null,
     };
   },
 
   methods: {
+    ...mapMutations("Builder", ["updateSauceId"]),
     setSauce(sauceId) {
-      this.$emit("setSauce", sauceId);
-    },
-    AddItem(ingredientId) {
-      var cnt = 0;
-      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
-        if (this.recipe.ingredients[i].ingredientId === ingredientId) {
-          cnt = this.recipe.ingredients[i].itemCount;
-          this.$emit("AddItemCount", i);
-        }
-      }
-      if (cnt === 0) {
-        this.$emit("AddNewItem", ingredientId);
-      }
-    },
-    DropItem(ingredientId) {
-      var cnt = 0;
-      var findedInd = -1;
-      for (var i = 0; i < this.recipe.ingredients.length; i = i + 1) {
-        if (this.recipe.ingredients[i].ingredientId === ingredientId) {
-          this.$emit("DropItemCount", i);
-
-          findedInd = i;
-          cnt = this.recipe.ingredients[i].itemCount;
-        }
-      }
-      if (findedInd > -1 && cnt === 0) {
-        this.$emit("DropItem", findedInd);
-      }
+      this.updateSauceId(sauceId);
     },
   },
 };

@@ -1,10 +1,5 @@
 <template>
-  <component
-    :is="layout"
-    :auth="auth"
-    :pizzaOrder="pizzaOrder"
-    @onCook="onCook"
-  >
+  <component :is="layout" :auth="auth" :pizzaOrder="pizzaOrder">
     <slot />
   </component>
 </template>
@@ -22,11 +17,6 @@ export default {
     auth: {
       type: Boolean,
       required: true,
-    },
-  },
-  methods: {
-    onCook(pizzaOrder) {
-      this.pizzaOrder = pizzaOrder;
     },
   },
   computed: {

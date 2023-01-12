@@ -7,7 +7,7 @@ export default [
     children: [
       {
         path: "/loginModel",
-        name: "Login",
+        name: "LoginModel",
         component: () => import("../views/Login.vue"),
         meta: { layout: "AppLayoutMain" },
       },
@@ -23,7 +23,7 @@ export default [
     path: "/cart",
     name: "Cart",
     component: () => import("../views/Cart.vue"),
-    meta: { layout: "AppLayoutDefault" },
+    meta: { layout: "AppLayoutMain" },
   },
   {
     path: "/orders",
@@ -35,6 +35,12 @@ export default [
     path: "/profile",
     name: "Profile",
     component: () => import("../views/Profile.vue"),
+    meta: { layout: "AppLayoutDefault" },
+  },
+  {
+    path: "/popup",
+    name: "Popup",
+    component: () => import("../views/Popup.vue"),
     meta: { layout: "AppLayoutDefault" },
   },
 ];

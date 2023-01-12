@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <AppLayout :pizzaOrder="pizzaOrder" :auth="auth">
-      <router-view @onCook="onCook" />
+      <router-view />
     </AppLayout>
   </div>
 </template>
@@ -14,6 +14,10 @@ export default {
   components: {
     AppLayout,
   },
+  created() {
+    // Note: fetch initial data
+    this.$store.dispatch("init");
+  },
   data() {
     return {
       pizzaOrder: { name: null, recipe: null, price: 0 },
@@ -21,11 +25,6 @@ export default {
     };
   },
   computed: {},
-  methods: {
-    onCook(pizzaOrder) {
-      this.pizzaOrder = pizzaOrder;
-    },
-  },
 };
 </script>
 

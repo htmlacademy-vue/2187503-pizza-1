@@ -11,26 +11,25 @@
       </a>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">{{ pizzaOrder.price }} ₽</router-link>
+      <router-link to="/cart"
+        >{{ getMiscPrice + getPizzaOrdersPrice }} ₽</router-link
+      >
     </div>
     <div class="header__user">
-      <router-link v-if="auth" to="/login" class="header__login"
+      <router-link v-if="auth" key="is-auth" to="/login" class="header__login"
         ><span>Войти</span></router-link
       >
-      <router-link v-else to="/profile" class="header__login"
+      <router-link v-else key="is-not-auth" to="/profile" class="header__login"
         ><span>Войти</span></router-link
       >
     </div>
   </header>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "AppLayoutHeader",
   props: {
-    pizzaOrder: {
-      type: Object,
-      required: true,
-    },
     auth: {
       type: Boolean,
       required: true,
@@ -40,6 +39,10 @@ export default {
     pushOnEnter() {
       return this.auth;
     },
+  },
+  computed: {
+    ...mapGetters("Builder", ["getPizzaPrice"]),
+    ...mapGetters("Cart", ["getMiscPrice", "getPizzaOrdersPrice"]),
   },
 };
 </script>

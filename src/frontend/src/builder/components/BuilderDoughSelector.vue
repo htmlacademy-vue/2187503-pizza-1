@@ -16,7 +16,7 @@
             @change="setDough"
           />
 
-          <b>{{ dough.name }}</b>
+          <b>{{ dough.name }} </b>
           <span>{{ dough.description }}</span>
         </label>
       </div>
@@ -27,28 +27,23 @@
 <script>
 import RadioButton from "@/common/components/RadioButton";
 import doughStatuses from "@/common/enums/doughStatuses";
-import pizza from "@/static/pizza.json";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "BuilderDoughSelector",
-  props: {
-    doughId: {
-      type: Number,
-      required: true,
-    },
-  },
   components: {
     RadioButton,
   },
+  computed: mapState("Builder", ["pizza", "doughId"]),
   data() {
     return {
-      pizza,
       doughStatuses,
     };
   },
 
   methods: {
-    setDough(doughCurrent) {
-      this.$emit("setDough", doughCurrent);
+    ...mapMutations("Builder", ["updateDoughId"]),
+    setDough(doughId) {
+      this.updateDoughId(doughId);
     },
   },
 };

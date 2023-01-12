@@ -25,6 +25,7 @@
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "ItemCounter",
   data() {
@@ -35,23 +36,21 @@ export default {
       type: Number,
       required: true,
     },
-    recipe: {
-      type: Object,
-      required: true,
-    },
   },
   methods: {
+    ...mapMutations("Builder", ["addItem", "dropItem"]),
     AddItem() {
-      this.$emit("AddItem", this.ingredientId);
+      this.addItem(this.ingredientId);
     },
     DropItem() {
-      this.$emit("DropItem", this.ingredientId);
+      this.dropItem(this.ingredientId);
     },
   },
   computed: {
+    ...mapState("Builder", ["ingredients"]),
     itemCount: function () {
       var itemCount = 0;
-      this.recipe.ingredients.forEach((element) => {
+      this.ingredients.forEach((element) => {
         if (element.ingredientId === this.ingredientId) {
           itemCount = element.itemCount;
         }
