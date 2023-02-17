@@ -1,25 +1,59 @@
-import jsonUsers from '@/static/user.json';
-
-const entity = "users";
-const module = "Auth";
-const namespace = { entity, module };
-
 export default {
-  namespaced: true, // у модуля будет свой префикс
+  namespaced: true,
   state: {
-    users: []
+    isAuthenticated: false,
+    user: null,
   },
+
+  getters: {
+    getUserAttribute: (state) => (attr) => state.user ? state.user[attr] : "",
+  },
+
   actions: {
-    fetchUsers({ commit }) {
-      const users = jsonUsers;
+    async login({ commit, dispatch }, credentials) {
+      const data = await this.$api.auth.login(credentials);
+      this.$jwt.saveToken(data.token);
+      this.$api.auth.setAuthHeader();
+      dispatch("getMe");
+      // притер ругается что не используется commit
+      commit;
+    },
+
+    async logout({ commit }, sendRequest = true) {
+      if (sendRequest) {
+        await this.$api.auth.logout();
+      }
+      this.$jwt.destroyToken();
+      this.$api.auth.setAuthHeader();
       commit(
         "SET_ENTITY",
-        {
-          ...namespace,
-          value: users,
-        },
+        { module: "Auth", entity: "isAuthenticated", value: false },
         { root: true }
       );
+      commit(
+        "SET_ENTITY",
+        { module: "Auth", entity: "user", value: null },
+        { root: true }
+      );
+    },
+
+    async getMe({ commit, dispatch }) {
+      try {
+        const data = await this.$api.auth.getMe();
+        commit(
+          "SET_ENTITY",
+          { module: "Auth", entity: "isAuthenticated", value: true },
+          { root: true }
+        );
+        commit(
+          "SET_ENTITY",
+          { module: "Auth", entity: "user", value: data },
+          { root: true }
+        );
+      } catch {
+        // Note: in case of not proper login, i.e. token is expired
+        dispatch("logout", false);
+      }
     },
   },
 };

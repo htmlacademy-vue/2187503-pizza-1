@@ -1,5 +1,3 @@
-import jsonMisc from "@/static/misc.json";
-
 const module = "Cart";
 const namespaceMisc = { entity: "misc", module };
 
@@ -98,8 +96,8 @@ export default {
 
       commit("addPizzaOrder", { pizzaOrder, pizzaOrderInd });
     },
-    fetchMisc({ commit }) {
-      const misc = jsonMisc;
+    async fetchMisc({ commit }) {
+      const misc = await this.$api.misc.query();
       // получили справочник
       commit(
         "SET_ENTITY",

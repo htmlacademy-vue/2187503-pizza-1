@@ -16,19 +16,37 @@
       >
     </div>
     <div class="header__user">
-      <router-link v-if="auth" key="is-auth" to="/login" class="header__login"
+      <router-link
+        v-if="!isAuthenticated"
+        key="is-not-auth"
+        to="/login"
+        class="header__login"
         ><span>Войти</span></router-link
       >
-      <router-link v-else key="is-not-auth" to="/profile" class="header__login"
-        ><span>Войти</span></router-link
+      <router-link v-else key="is-auth" to="/profile" class="header__login"
+        ><a href="#">
+          <picture>
+            <img :src="user.avatar" :alt="user.name" width="32" height="32" />
+          </picture>
+          <span>{{ user.name }}</span>
+        </a></router-link
+      ><a
+        v-if="isAuthenticated"
+        href="#"
+        class="header__logout"
+        @click="$logout"
       >
+        <span>Выйти</span>
+      </a>
     </div>
   </header>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
+import { logout } from "@/common/mixins";
 export default {
   name: "AppLayoutHeader",
+  mixins: [logout],
   props: {
     auth: {
       type: Boolean,
@@ -41,8 +59,15 @@ export default {
     },
   },
   computed: {
+    ...mapState(["Auth"]),
     ...mapGetters("Builder", ["getPizzaPrice"]),
     ...mapGetters("Cart", ["getMiscPrice", "getPizzaOrdersPrice"]),
+    isAuthenticated() {
+      return this.Auth.isAuthenticated;
+    },
+    user() {
+      return this.Auth.user || {};
+    },
   },
 };
 </script>
