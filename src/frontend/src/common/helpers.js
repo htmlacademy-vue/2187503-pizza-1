@@ -1,17 +1,9 @@
 import resources from "@/common/enums/resources";
 import {
   AuthApiService,
-  //CrudApiService,
+  CrudApiService,
   ReadOnlyApiService,
 } from "@/services/api.service";
-/*import doughStatuses from "@/common/enums/doughStatuses";
-// получение
- export const getDoughStatus = (pizza) => {
-  return {
-    ...pizza,
-    doughStatus: pizza.Id ? doughStatuses[pizza.statusId] : "",
-  };
-}; */
 export const setAuth = (store) => {
   store.$api.auth.setAuthHeader();
   store.dispatch("Auth/getMe");
@@ -28,6 +20,6 @@ export const createResources = (notifier) => {
       notifier
     ),
     [resources.MISC]: new ReadOnlyApiService(resources.MISC, notifier),
-    //[resources.PIZZAORDER]: new CrudApiService(resources.PIZZAORDER, notifier),
+    [resources.ADDRESSES]: new CrudApiService(resources.ADDRESSES, notifier),
   };
 };

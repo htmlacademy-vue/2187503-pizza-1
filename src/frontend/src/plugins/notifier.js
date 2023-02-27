@@ -1,4 +1,4 @@
-//import notificationTypes from '@/common/enums/notificationTypes';
+import notificationTypes from "@/common/enums/notificationTypes";
 
 export default class Notifier {
   #store;
@@ -6,31 +6,31 @@ export default class Notifier {
     this.#store = store;
   }
 
-  /* info(text) {
-    this.#store.dispatch('createNotification', {
+  info(text) {
+    this.#store.dispatch("createNotification", {
       text,
-      type: notificationTypes.INFO
+      type: notificationTypes.INFO,
     });
   }
 
   success(text) {
-    this.#store.dispatch('createNotification', {
+    this.#store.dispatch("createNotification", {
       text,
-      type: notificationTypes.SUCCESS
+      type: notificationTypes.SUCCESS,
     });
   }
 
   error(text) {
-    this.#store.dispatch('createNotification', {
+    this.#store.dispatch("createNotification", {
       text,
-      type: notificationTypes.ERROR
+      type: notificationTypes.ERROR,
     });
   }
 
   warning(text) {
-    this.#store.dispatch('createNotification', {
+    this.#store.dispatch("createNotification", {
       text,
-      type: notificationTypes.WARNING
+      type: notificationTypes.WARNING,
     });
-  } */
+  }
 }
