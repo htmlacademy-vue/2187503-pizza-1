@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import OrdersEdit from "@/modules/builder/components/OrdersEdit";
+import OrdersEdit from "@/modules/orders/components/OrdersEdit";
 
 export default {
   name: "Orders",

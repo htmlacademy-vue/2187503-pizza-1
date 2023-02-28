@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import LoginEdit from "@/modules/builder/components/LoginEdit";
+import LoginEdit from "@/modules/login/components/LoginEdit";
 
 export default {
   name: "Login",

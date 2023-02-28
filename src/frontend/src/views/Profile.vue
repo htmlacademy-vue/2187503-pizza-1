@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ProfileEdit from "@/profile/components/ProfileEdit";
+import ProfileEdit from "@/modules/profile/components/ProfileEdit";
 
 export default {
   name: "Profile",
