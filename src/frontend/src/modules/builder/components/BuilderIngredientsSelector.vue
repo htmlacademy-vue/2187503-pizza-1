@@ -8,14 +8,14 @@
           <p>Основной соус:</p>
 
           <label
-            v-for="sauce in pizza.sauces"
+            v-for="sauce in pizzaParam.sauces"
             :key="sauce.id"
             class="radio ingredients__input"
           >
             <RadioButton
               name="sauce"
               :value="sauce.id"
-              :modelValue="sauceId"
+              :modelValue="pizza.sauceId"
               @change="setSauce"
             />
             <span>{{ sauce.name }}</span>
@@ -27,7 +27,7 @@
 
           <ul class="ingredients__list">
             <li
-              v-for="ingredient in pizza.ingredients"
+              v-for="ingredient in pizzaParam.ingredients"
               :key="ingredient.id"
               class="ingredients__item"
             >
@@ -60,12 +60,7 @@ export default {
     ItemCounter,
     AppDrag,
   },
-  computed: mapState("Builder", [
-    "pizza",
-    "sauceId",
-    "ingredients",
-    "sauceStatuses",
-  ]),
+  computed: mapState("Builder", ["pizzaParam", "pizza", "sauceStatuses"]),
   data() {
     return {
       ingredientStatuses,

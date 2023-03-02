@@ -1,39 +1,37 @@
 import jsonSauceStatuses from "@/common/enums/sauceStatuses";
 
 const module = "Builder";
-const namespacePizza = { entity: "pizza", module };
+const namespacePizza = { entity: "pizzaParam", module };
 const namespaceSauceStatuses = { entity: "sauceStatuses", module };
 
-function getSizeCoeff(state) {
+function getSizeCoeff(state, id) {
   var multiplier = 0;
 
-  if (Array.isArray(state.pizza.sizes)) {
-    multiplier = state.pizza.sizes.find(
-      (el) => el.id == state.sizeId
-    ).multiplier;
+  if (Array.isArray(state.pizzaParam.sizes)) {
+    multiplier = state.pizzaParam.sizes.find((el) => el.id == id).multiplier;
   }
 
   return multiplier;
 }
 
-function getDoughPrice(state) {
+function getDoughPrice(state, id) {
   var doughPrice = 0;
-  if (Array.isArray(state.pizza.dough)) {
-    doughPrice = state.pizza.dough.find((el) => el.id === state.doughId).price;
+  if (Array.isArray(state.pizzaParam.dough)) {
+    doughPrice = state.pizzaParam.dough.find((el) => el.id === id).price;
   }
   return doughPrice;
 }
-function getSaucePrice(state) {
+function getSaucePrice(state, id) {
   var saucePrice = 0;
-  if (Array.isArray(state.pizza.sauces)) {
-    saucePrice = state.pizza.sauces.find((el) => el.id === state.sauceId).price;
+  if (Array.isArray(state.pizzaParam.sauces)) {
+    saucePrice = state.pizzaParam.sauces.find((el) => el.id === id).price;
   }
   return saucePrice;
 }
-function calculateItemTax(state, ingredientId) {
+function calculateItemTax(state, id) {
   var ingredientPrice = 0;
-  ingredientPrice = state.pizza.ingredients.find(
-    (el) => el.id === ingredientId
+  ingredientPrice = state.pizzaParam.ingredients.find(
+    (el) => el.id === id
   ).price;
   return ingredientPrice;
 }
@@ -41,52 +39,58 @@ function calculateItemTax(state, ingredientId) {
 export default {
   namespaced: true,
   state: {
-    pizza: {},
+    pizzaParam: {},
     sauceStatuses: {},
-    doughId: 1,
-    sizeId: 1,
-    sauceId: 1,
-    ingredients: [],
-    userId: null,
-    pizzaName: "",
+    pizza: {
+      doughId: 1,
+      sizeId: 1,
+      sauceId: 1,
+      ingredients: [],
+      userId: null,
+      name: "",
+    },
     pizzaOrderInd: null,
   },
   getters: {
-    getIngredientsPrice(state) {
+    getIngredientsPrice: (state) => (ingredients) => {
       var ingredientPrice = 0;
-      for (var i = 0; i < state.ingredients.length; i = i + 1) {
+      for (var i = 0; i < ingredients.length; i = i + 1) {
         ingredientPrice =
           ingredientPrice +
-          calculateItemTax(state, state.ingredients[i].ingredientId) *
-            state.ingredients[i].quantity;
+          calculateItemTax(state, ingredients[i].ingredientId) *
+            ingredients[i].quantity;
       }
       return ingredientPrice;
     },
-    getPizzaPrice(state, getters) {
+
+    getPizzaPrice: (state, getters) => (pizza) => {
       return (
         //мультипликатор размера х (стоимость теста + соус + ингредиенты).
-        getSizeCoeff(state) *
-        (getDoughPrice(state) +
-          getSaucePrice(state) +
-          getters.getIngredientsPrice)
+
+        getSizeCoeff(state, pizza.sizeId) *
+        (getDoughPrice(state, pizza.doughId) +
+          getSaucePrice(state, pizza.sauceId) +
+          getters.getIngredientsPrice(state, pizza.ingredients))
       );
     },
+
     getSizeName: (state) => (sizeId) => {
-      return state.pizza.sizes.find((size) => size.id === sizeId).name;
+      return state.pizzaParam.sizes.find((size) => size.id === sizeId).name;
     },
     getSauceName: (state) => (sauceId) => {
-      return state.pizza.sauces
+      return state.pizzaParam.sauces
         .find((sauce) => sauce.id === sauceId)
         .name.toLowerCase();
     },
     getSizeMultiplier: (state) => (sizeId) => {
-      return state.pizza.sizes.find((size) => size.id === sizeId).multiplier;
+      return state.pizzaParam.sizes?.find((size) => size.id === sizeId)
+        .multiplier;
     },
     getIngredientsName: (state) => (ingredients) => {
       var ingredientsName = [];
       for (var i = 0; i < ingredients.length; i = i + 1) {
         ingredientsName.push(
-          state.pizza.ingredients
+          state.pizzaParam.ingredients
             .find((ingredient) => ingredient.id === ingredients[i].ingredientId)
             .name.toLowerCase()
         );
@@ -97,35 +101,35 @@ export default {
   },
   mutations: {
     updateDoughId(state, doughId) {
-      state.doughId = doughId;
+      state.pizza.doughId = doughId;
     },
     updateSizeId(state, sizeId) {
-      state.sizeId = sizeId;
+      state.pizza.sizeId = sizeId;
     },
     updateSauceId(state, sauceId) {
-      state.sauceId = sauceId;
+      state.pizza.sauceId = sauceId;
     },
     updateIngredients(state, ingredients) {
-      state.ingredients = JSON.parse(JSON.stringify(ingredients));
+      state.pizza.ingredients = JSON.parse(JSON.stringify(ingredients));
     },
     updatePizzaName(state, pizzaName) {
-      state.pizzaName = pizzaName;
+      state.pizza.name = pizzaName;
     },
     updatePizzaOrder(state, pizzaOrderInd) {
       state.pizzaOrderInd = pizzaOrderInd;
     },
     addItem(state, ingredientId) {
       var cnt = 0;
-      for (var i = 0; i < state.ingredients.length; i = i + 1) {
-        if (state.ingredients[i].ingredientId === ingredientId) {
-          cnt = state.ingredients[i].quantity;
-          if (state.ingredients[i].quantity < 3) {
-            state.ingredients[i].quantity += 1;
+      for (var i = 0; i < state.pizza.ingredients.length; i = i + 1) {
+        if (state.pizza.ingredients[i].ingredientId === ingredientId) {
+          cnt = state.pizza.ingredients[i].quantity;
+          if (state.pizza.ingredients[i].quantity < 3) {
+            state.pizza.ingredients[i].quantity += 1;
           }
         }
       }
       if (cnt === 0) {
-        state.ingredients.push({
+        state.pizza.ingredients.push({
           ingredientId: ingredientId,
           quantity: 1,
         });
@@ -134,40 +138,40 @@ export default {
     dropItem(state, ingredientId) {
       var cnt = 0;
       var findedInd = -1;
-      for (var i = 0; i < state.ingredients.length; i = i + 1) {
-        if (state.ingredients[i].ingredientId === ingredientId) {
-          state.ingredients[i].quantity -= 1;
+      for (var i = 0; i < state.pizza.ingredients.length; i = i + 1) {
+        if (state.pizza.ingredients[i].ingredientId === ingredientId) {
+          state.pizza.ingredients[i].quantity -= 1;
 
           findedInd = i;
-          cnt = state.ingredients[i].quantity;
+          cnt = state.pizza.ingredients[i].quantity;
         }
       }
       if (findedInd > -1 && cnt === 0) {
-        state.ingredients.splice(findedInd, 1);
+        state.pizza.ingredients.splice(findedInd, 1);
       }
     },
     clearPizzaData(state) {
       state.sauceStatuses = {};
-      state.doughId = 1;
-      state.sizeId = 1;
-      state.sauceId = 1;
-      state.ingredients = [];
-      state.pizzaName = "";
+      state.pizza.doughId = 1;
+      state.pizza.sizeId = 1;
+      state.pizza.sauceId = 1;
+      state.pizza.ingredients = [];
+      state.pizza.name = "";
     },
   },
   actions: {
     async fetchPizza({ commit }) {
-      const pizza = { dough: [], sizes: [], sauces: [], ingredients: [] };
-      pizza.dough = await this.$api.dough.query();
-      pizza.sizes = await this.$api.sizes.query();
-      pizza.sauces = await this.$api.sauces.query();
-      pizza.ingredients = await this.$api.ingredients.query();
+      const pizzaParam = { dough: [], sizes: [], sauces: [], ingredients: [] };
+      pizzaParam.dough = await this.$api.dough.query();
+      pizzaParam.sizes = await this.$api.sizes.query();
+      pizzaParam.sauces = await this.$api.sauces.query();
+      pizzaParam.ingredients = await this.$api.ingredients.query();
 
       commit(
         "SET_ENTITY",
         {
           ...namespacePizza,
-          value: pizza,
+          value: pizzaParam,
         },
         { root: true }
       );

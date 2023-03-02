@@ -1,0 +1,23 @@
+export default {
+  methods: {
+    $calcPrice(order) {
+      var miscPrice = 0;
+      for (var i = 0; i < order.misc.length; i = i + 1) {
+        miscPrice =
+          miscPrice +
+          this.$store.getters["Cart/getMiscById"](order.misc[i].miscId).price *
+            order.misc[i].quantity;
+      }
+
+      let pizzaPrice = 0;
+
+      for (var j = 0; j < order.pizzas.length; j = j + 1) {
+        pizzaPrice =
+          pizzaPrice +
+          this.$store.getters["Builder/getPizzaPrice"](order.pizzas[j]) *
+            order.pizzas[j].quantity;
+      }
+      return pizzaPrice + miscPrice;
+    },
+  },
+};

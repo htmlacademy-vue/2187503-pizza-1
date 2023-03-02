@@ -5,7 +5,7 @@
 
       <div class="sheet__content diameter">
         <label
-          v-for="size in pizza.sizes"
+          v-for="size in pizzaParam.sizes"
           :key="size.id"
           class="diameter__input"
           :class="`diameter__input diameter__input--${sizeStatuses[size.id]}`"
@@ -13,7 +13,7 @@
           <RadioButton
             name="diameter"
             :value="size.id"
-            :modelValue="sizeId"
+            :modelValue="pizza.sizeId"
             @change="setSize"
           />
 
@@ -38,7 +38,7 @@ export default {
       sizeStatuses,
     };
   },
-  computed: mapState("Builder", ["pizza", "sizeId"]),
+  computed: mapState("Builder", ["pizzaParam", "pizza"]),
   methods: {
     ...mapMutations("Builder", ["updateSizeId"]),
     setSize(sizeId) {

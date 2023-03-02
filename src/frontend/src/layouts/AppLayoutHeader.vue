@@ -11,7 +11,7 @@
       </a>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">{{ getOrderPrice }} ₽</router-link>
+      <router-link to="/cart">{{ $calcPrice(order) }} ₽</router-link>
     </div>
     <div class="header__user">
       <router-link
@@ -40,11 +40,12 @@
   </header>
 </template>
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 import { logout } from "@/common/mixins";
+import orderPrice from "@/common/mixins/orderPrice";
 export default {
   name: "AppLayoutHeader",
-  mixins: [logout],
+  mixins: [logout, orderPrice],
   props: {
     auth: {
       type: Boolean,
@@ -58,8 +59,7 @@ export default {
   },
   computed: {
     ...mapState(["Auth"]),
-    ...mapGetters("Builder", ["getPizzaPrice"]),
-    ...mapGetters("Cart", ["getOrderPrice"]),
+    ...mapState("Cart", ["order"]),
     isAuthenticated() {
       return this.Auth.isAuthenticated;
     },

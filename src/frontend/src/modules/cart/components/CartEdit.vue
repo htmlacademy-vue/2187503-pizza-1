@@ -90,7 +90,7 @@
         Перейти к конструктору<br />чтоб собрать ещё одну пиццу
       </p>
       <div class="footer__price">
-        <b>Итого: {{ getOrderPrice }} ₽ {{ order }}</b>
+        <b>Итого: {{ $calcPrice(order) }} ₽</b>
       </div>
 
       <div class="footer__submit">
@@ -102,10 +102,11 @@
 <script>
 import CartEditPizza from "@/cart/components/CartEditPizza";
 import CartEditMisc from "@/cart/components/CartEditMisc";
-import { priceCalc } from "@/common/mixins";
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+import orderPrice from "@/common/mixins/orderPrice";
 export default {
   name: "CartEdit",
+  mixins: [orderPrice],
   data() {
     return {
       howGetOrder: 1,
@@ -115,7 +116,6 @@ export default {
     CartEditPizza,
     CartEditMisc,
   },
-  mixins: [priceCalc],
   created() {
     this.$store.commit("Cart/addMiscToOrder");
   },
@@ -127,68 +127,7 @@ export default {
       //addressDelete: "delete",
     }),
     async addOrder() {
-      const order = {
-        userId: "e69085d7-8ac6-4bcd-9e02-0ef244b7a806",
-        phone: "+7 999-999-99-99",
-        address: { street: "", building: "", flat: "", comment: "" },
-        pizzas: [
-          {
-            name: "d",
-
-            quantity: 1,
-            doughId: 1,
-            sizeId: 1,
-            sauceId: 1,
-            ingredients: [{ ingredientId: 4, quantity: 1 }],
-          },
-        ],
-        misc: [
-          { miscId: 1, quantity: 0 },
-          { miscId: 2, quantity: 0 },
-          { miscId: 3, quantity: 1 },
-        ],
-      };
-
-      /*  const order = {
-        userId: "e69085d7-8ac6-4bcd-9e02-0ef244b7a806",
-        phone: "+7 999-999-99-99",
-        address: {
-          street: "Test",
-          building: "Test",
-          flat: "Test",
-          comment: "Test",
-        },
-        pizzas: [
-          {
-            name: "d",
-            quantity: 2,
-            doughId: 1,
-            sizeId: 1,
-            price:400,
-            sauceId: 1,
-            ingredients: [
-              {
-                ingredientId: 4,
-                quantity: 1,
-              },
-            ],
-          },
-        ],
-        misc: [],
-      }; */ /*
-       {
-          userId: "e69085d7-8ac6-4bcd-9e02-0ef244b7a806",
-          phone: "+7 999-999-99-99",
-          address: {
-            street: "string",
-            building: "string",
-            flat: "string",
-            comment: "string",
-          },
-          pizzas: [],
-          misc: [],
-        }; */
-      await this.orderPost(order);
+      await this.orderPost(this.order);
       //this.$router.push({ path: `/popup` });
     },
     wantMore() {
@@ -201,7 +140,6 @@ export default {
     ...mapState("Cart", ["order"]),
     ...mapState("Builder", ["userId"]),
     ...mapGetters("Builder", ["getPizzaPrice"]),
-    ...mapGetters("Cart", ["getOrderPrice"]),
     user() {
       return this.Auth.user || {};
     },

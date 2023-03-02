@@ -12,10 +12,10 @@ export default {
       userId: "e69085d7-8ac6-4bcd-9e02-0ef244b7a806",
       phone: "+7 999-999-99-99",
       address: {
-        street: "",
-        building: "",
-        flat: "",
-        comment: "",
+        street: "1",
+        building: "1",
+        flat: "1",
+        comment: "1",
       },
       pizzas: [],
       misc: [],
@@ -32,25 +32,6 @@ export default {
           return state.misc[i];
         }
       }
-    },
-    getOrderPrice(state, getters) {
-      var miscPrice = 0;
-      for (var i = 0; i < state.order.misc.length; i = i + 1) {
-        miscPrice =
-          miscPrice +
-          getters.getMiscById(state.order.misc[i].miscId).price *
-            state.order.misc[i].quantity;
-      }
-
-      var pizzaPrice = 0;
-      for (var j = 0; j < state.order.pizzas.length; j = j + 1) {
-        pizzaPrice =
-          pizzaPrice +
-          /* state.order.pizzas[j].price * */
-          state.order.pizzas[j].quantity;
-      }
-
-      return miscPrice + pizzaPrice;
     },
     getPizzasPrice(state) {
       var price = 0;
@@ -69,7 +50,6 @@ export default {
         for (var i = 0; i < state.order.pizzas.length; i = i + 1) {
           if (pizzaOrderInd == i) {
             state.order.pizzas[i].name = pizzaOrder.name;
-            state.order.pizzas[i].price = pizzaOrder.price;
             state.order.pizzas[i].doughId = pizzaOrder.doughId;
             state.order.pizzas[i].sizeId = pizzaOrder.sizeId;
             state.order.pizzas[i].sauceId = pizzaOrder.sauceId;
@@ -109,18 +89,14 @@ export default {
     },
   },
   actions: {
-    addPizzaToOrder(
-      { commit, rootState, rootGetters },
-      { pizzaName, pizzaOrderInd }
-    ) {
+    addPizzaToOrder({ commit, rootState }, { pizzaName, pizzaOrderInd }) {
       const pizzaOrder = {
         name: pizzaName,
-        price: rootGetters["Builder/getPizzaPrice"],
         quantity: 1,
-        doughId: rootState.Builder.doughId,
-        sizeId: rootState.Builder.sizeId,
-        sauceId: rootState.Builder.sauceId,
-        ingredients: rootState.Builder.ingredients,
+        doughId: rootState.Builder.pizza.doughId,
+        sizeId: rootState.Builder.pizza.sizeId,
+        sauceId: rootState.Builder.pizza.sauceId,
+        ingredients: rootState.Builder.pizza.ingredients,
       };
 
       commit("addPizzaToOrder", { pizzaOrder, pizzaOrderInd });

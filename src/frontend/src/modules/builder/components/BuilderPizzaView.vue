@@ -7,7 +7,7 @@
           type="text"
           name="pizza_name"
           placeholder="Введите название пиццы"
-          :value="pizzaName"
+          :value="pizza.name"
           @input="inputPizzaName"
           required
         />
@@ -16,7 +16,7 @@
       <div class="content__constructor">
         <div class="pizza" :class="pizzaFoundation">
           <div class="pizza__wrapper">
-            <div v-for="item in ingredients" :key="item.id">
+            <div v-for="item in pizza.ingredients" :key="item.id">
               <div
                 class="pizza__filling"
                 :class="calcIngredient(item, 1)"
@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <BuilderPriceCounter :pizzaName="pizzaName" />
+      <BuilderPriceCounter :pizzaName="pizza.name" />
     </div>
   </AppDrop>
 </template>
@@ -87,21 +87,21 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", ["doughId", "sauceId", "ingredients", "pizzaName"]),
+    ...mapState("Builder", ["pizza"]),
     pizzaFoundation: function () {
       return {
         "pizza--foundation--big-creamy":
-          doughStatuses[this.doughId] === "large" &&
-          sauceStatuses[this.sauceId] === "creamy",
+          doughStatuses[this.pizza.doughId] === "large" &&
+          sauceStatuses[this.pizza.sauceId] === "creamy",
         "pizza--foundation--big-tomato":
-          doughStatuses[this.doughId] === "large" &&
-          sauceStatuses[this.sauceId] === "tomato",
+          doughStatuses[this.pizza.doughId] === "large" &&
+          sauceStatuses[this.pizza.sauceId] === "tomato",
         "pizza--foundation--small-creamy":
-          doughStatuses[this.doughId] === "light" &&
-          sauceStatuses[this.sauceId] === "creamy",
+          doughStatuses[this.pizza.doughId] === "light" &&
+          sauceStatuses[this.pizza.sauceId] === "creamy",
         "pizza--foundation--small-tomato":
-          doughStatuses[this.doughId] === "light" &&
-          sauceStatuses[this.sauceId] === "tomato",
+          doughStatuses[this.pizza.doughId] === "light" &&
+          sauceStatuses[this.pizza.sauceId] === "tomato",
       };
     },
   },

@@ -4,7 +4,7 @@
       <h2 class="title title--small sheet__title">Выберите тесто</h2>
       <div class="sheet__content dough">
         <label
-          v-for="dough in pizza.dough"
+          v-for="dough in pizzaParam.dough"
           :key="dough.id"
           class="dough__input"
           :class="`dough__input--${doughStatuses[dough.id]}`"
@@ -12,7 +12,7 @@
           <RadioButton
             name="dought"
             :value="dough.id"
-            :modelValue="doughId"
+            :modelValue="pizza.doughId"
             @change="setDough"
           />
 
@@ -33,7 +33,7 @@ export default {
   components: {
     RadioButton,
   },
-  computed: mapState("Builder", ["pizza", "doughId"]),
+  computed: mapState("Builder", ["pizzaParam", "pizza"]),
   data() {
     return {
       doughStatuses,

@@ -46,7 +46,7 @@
     </div>
 
     <div class="cart-list__price">
-      <b>{{ pizzaOrder.price * pizzaOrder.quantity }}</b>
+      <b>{{ getPizzaPrice(pizzaOrder) * pizzaOrder.quantity }}</b>
     </div>
 
     <div class="cart-list__button">
@@ -78,6 +78,7 @@ export default {
       "getSizeName",
       "getSauceName",
       "getIngredientsName",
+      "getPizzaPrice",
     ]),
   },
   methods: {

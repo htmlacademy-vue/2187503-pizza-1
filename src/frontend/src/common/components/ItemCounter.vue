@@ -47,10 +47,10 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", ["ingredients"]),
+    ...mapState("Builder", ["pizza"]),
     itemCount: function () {
       var quantity = 0;
-      this.ingredients.forEach((element) => {
+      this.pizza.ingredients.forEach((element) => {
         if (element.ingredientId === this.ingredientId) {
           quantity = element.quantity;
         }

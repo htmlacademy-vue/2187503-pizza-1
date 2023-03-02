@@ -1,6 +1,6 @@
 <template>
   <div class="content__result">
-    <p>Итого: {{ getPizzaPrice }} ₽</p>
+    <p>Итого: {{ getPizzaPrice(pizza) }} ₽</p>
     <button
       type="button"
       class="button"
@@ -28,6 +28,7 @@ export default {
       doughStatuses,
     };
   },
+
   methods: {
     ...mapActions("Cart", ["addPizzaToOrder"]),
     onCook() {
@@ -42,18 +43,11 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", [
-      "pizza",
-      "doughId",
-      "sizeId",
-      "sauceId",
-      "ingredients",
-      "pizzaOrderInd",
-    ]),
+    ...mapState("Builder", ["pizza", "pizzaOrderInd"]),
     ...mapGetters("Builder", ["getPizzaPrice", "getIngredientsPrice"]),
     buttonCookDisabled: function () {
       return (
-        this.getIngredientsPrice === 0 ||
+        this.getIngredientsPrice(this.pizza.ingredients) === 0 ||
         this.pizzaName === null ||
         this.pizzaName === ""
       );
