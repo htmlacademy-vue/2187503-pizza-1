@@ -29,12 +29,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions("Cart", ["addPizzaOrder"]),
+    ...mapActions("Cart", ["addPizzaToOrder"]),
     onCook() {
       if (this.pizzaName == null) {
         alert("Название пиццы обязательно для заполнения");
       } else {
-        this.addPizzaOrder({
+        this.addPizzaToOrder({
           pizzaName: this.pizzaName,
           pizzaOrderInd: this.pizzaOrderInd,
         });
@@ -42,7 +42,6 @@ export default {
     },
   },
   computed: {
-    ...mapState("Cart", ["pizzaOrders"]),
     ...mapState("Builder", [
       "pizza",
       "doughId",

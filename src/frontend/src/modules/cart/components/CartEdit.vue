@@ -1,9 +1,5 @@
 <template>
-  <form
-    method="post"
-    class="layout-form"
-    @submit.prevent="$router.push({ path: `/popup` })"
-  >
+  <form method="post" class="layout-form" @submit.prevent="addOrder">
     <main class="content cart">
       <div class="container">
         <div class="cart__title">
@@ -11,7 +7,7 @@
         </div>
 
         <div
-          v-if="pizzaOrders.length === 0"
+          v-if="order.pizzas.length === 0"
           key="no-orders"
           class="sheet cart__empty"
         >
@@ -20,7 +16,7 @@
 
         <ul v-else key="has-orders" class="cart-list sheet">
           <CartEditPizza
-            v-for="(pizzaOrder, index) in pizzaOrders"
+            v-for="(pizzaOrder, index) in order.pizzas"
             :key="index"
             :pizzaOrderInd="index"
             :pizzaOrder="pizzaOrder"
@@ -30,7 +26,7 @@
         <div class="cart__additional">
           <ul class="additional-list">
             <CartEditMisc
-              v-for="(miscItem, index) in miscOrders"
+              v-for="(miscItem, index) in order.misc"
               :key="index"
               :miscInd="index"
               :miscItem="miscItem"
@@ -94,7 +90,7 @@
         Перейти к конструктору<br />чтоб собрать ещё одну пиццу
       </p>
       <div class="footer__price">
-        <b>Итого: {{ getMiscPrice + getPizzaOrdersPrice }} ₽</b>
+        <b>Итого: {{ getOrderPrice }} ₽ {{ order }}</b>
       </div>
 
       <div class="footer__submit">
@@ -106,7 +102,8 @@
 <script>
 import CartEditPizza from "@/cart/components/CartEditPizza";
 import CartEditMisc from "@/cart/components/CartEditMisc";
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { priceCalc } from "@/common/mixins";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "CartEdit",
   data() {
@@ -118,21 +115,96 @@ export default {
     CartEditPizza,
     CartEditMisc,
   },
+  mixins: [priceCalc],
   created() {
-    this.$store.commit("Cart/createMiscOrders");
+    this.$store.commit("Cart/addMiscToOrder");
   },
   methods: {
     ...mapMutations("Builder", ["clearPizzaData"]),
+    ...mapActions("Orders", {
+      orderPost: "post",
+      //addressPut: "put",
+      //addressDelete: "delete",
+    }),
+    async addOrder() {
+      const order = {
+        userId: "e69085d7-8ac6-4bcd-9e02-0ef244b7a806",
+        phone: "+7 999-999-99-99",
+        address: { street: "", building: "", flat: "", comment: "" },
+        pizzas: [
+          {
+            name: "d",
+
+            quantity: 1,
+            doughId: 1,
+            sizeId: 1,
+            sauceId: 1,
+            ingredients: [{ ingredientId: 4, quantity: 1 }],
+          },
+        ],
+        misc: [
+          { miscId: 1, quantity: 0 },
+          { miscId: 2, quantity: 0 },
+          { miscId: 3, quantity: 1 },
+        ],
+      };
+
+      /*  const order = {
+        userId: "e69085d7-8ac6-4bcd-9e02-0ef244b7a806",
+        phone: "+7 999-999-99-99",
+        address: {
+          street: "Test",
+          building: "Test",
+          flat: "Test",
+          comment: "Test",
+        },
+        pizzas: [
+          {
+            name: "d",
+            quantity: 2,
+            doughId: 1,
+            sizeId: 1,
+            price:400,
+            sauceId: 1,
+            ingredients: [
+              {
+                ingredientId: 4,
+                quantity: 1,
+              },
+            ],
+          },
+        ],
+        misc: [],
+      }; */ /*
+       {
+          userId: "e69085d7-8ac6-4bcd-9e02-0ef244b7a806",
+          phone: "+7 999-999-99-99",
+          address: {
+            street: "string",
+            building: "string",
+            flat: "string",
+            comment: "string",
+          },
+          pizzas: [],
+          misc: [],
+        }; */
+      await this.orderPost(order);
+      //this.$router.push({ path: `/popup` });
+    },
     wantMore() {
       this.clearPizzaData();
       this.$router.push("/");
     },
   },
   computed: {
-    ...mapState("Cart", ["pizzaOrders", "miscOrders"]),
+    ...mapState(["Auth"]),
+    ...mapState("Cart", ["order"]),
     ...mapState("Builder", ["userId"]),
     ...mapGetters("Builder", ["getPizzaPrice"]),
-    ...mapGetters("Cart", ["getMiscPrice", "getPizzaOrdersPrice"]),
+    ...mapGetters("Cart", ["getOrderPrice"]),
+    user() {
+      return this.Auth.user || {};
+    },
   },
 };
 </script>

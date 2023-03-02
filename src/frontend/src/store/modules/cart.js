@@ -1,106 +1,146 @@
 const module = "Cart";
 const namespaceMisc = { entity: "misc", module };
+const namespaceOrder = { entity: "order", module };
+
+import { SET_ENTITY, ADD_ENTITY } from "@/store/mutations-types";
 
 export default {
   namespaced: true,
+
   state: {
+    order: {
+      userId: "e69085d7-8ac6-4bcd-9e02-0ef244b7a806",
+      phone: "+7 999-999-99-99",
+      address: {
+        street: "",
+        building: "",
+        flat: "",
+        comment: "",
+      },
+      pizzas: [],
+      misc: [],
+    },
     misc: [],
-    pizzaOrders: [],
-    miscOrders: [],
   },
   getters: {
     getPizzaOrderByIndex: (state) => (index) => {
-      return state.pizzaOrders[index];
+      return state.order.pizzas[index];
     },
-    getMiscPrice(state) {
+    getMiscById: (state) => (id) => {
+      for (var i = 0; i < state.misc.length; i = i + 1) {
+        if (id === state.misc[i].id) {
+          return state.misc[i];
+        }
+      }
+    },
+    getOrderPrice(state, getters) {
       var miscPrice = 0;
-      for (var i = 0; i < state.miscOrders.length; i = i + 1) {
+      for (var i = 0; i < state.order.misc.length; i = i + 1) {
         miscPrice =
-          miscPrice + state.miscOrders[i].price * state.miscOrders[i].count;
+          miscPrice +
+          getters.getMiscById(state.order.misc[i].miscId).price *
+            state.order.misc[i].quantity;
       }
-      return miscPrice;
+
+      var pizzaPrice = 0;
+      for (var j = 0; j < state.order.pizzas.length; j = j + 1) {
+        pizzaPrice =
+          pizzaPrice +
+          /* state.order.pizzas[j].price * */
+          state.order.pizzas[j].quantity;
+      }
+
+      return miscPrice + pizzaPrice;
     },
-    getPizzaOrdersPrice(state) {
-      var pizzaOrdersPrice = 0;
-      for (var i = 0; i < state.pizzaOrders.length; i = i + 1) {
-        pizzaOrdersPrice =
-          pizzaOrdersPrice +
-          state.pizzaOrders[i].price * state.pizzaOrders[i].count;
+    getPizzasPrice(state) {
+      var price = 0;
+      for (var i = 0; i < state.order.pizzas.length; i = i + 1) {
+        price =
+          price + state.order.pizzas[i].price * state.order.pizzas[i].quantity;
       }
-      return pizzaOrdersPrice;
+      return price;
     },
   },
   mutations: {
-    addPizzaOrder(state, { pizzaOrder, pizzaOrderInd }) {
+    addPizzaToOrder(state, { pizzaOrder, pizzaOrderInd }) {
       if (pizzaOrderInd == null) {
-        state.pizzaOrders.push(JSON.parse(JSON.stringify(pizzaOrder)));
+        state.order.pizzas.push(JSON.parse(JSON.stringify(pizzaOrder)));
       } else {
-        for (var i = 0; i < state.pizzaOrders.length; i = i + 1) {
+        for (var i = 0; i < state.order.pizzas.length; i = i + 1) {
           if (pizzaOrderInd == i) {
-            state.pizzaOrders[i].pizzaName = pizzaOrder.pizzaName;
-            state.pizzaOrders[i].price = pizzaOrder.price;
-            state.pizzaOrders[i].doughId = pizzaOrder.doughId;
-            state.pizzaOrders[i].sizeId = pizzaOrder.sizeId;
-            state.pizzaOrders[i].sauceId = pizzaOrder.sauceId;
-            state.pizzaOrders[i].ingredients = pizzaOrder.ingredients;
+            state.order.pizzas[i].name = pizzaOrder.name;
+            state.order.pizzas[i].price = pizzaOrder.price;
+            state.order.pizzas[i].doughId = pizzaOrder.doughId;
+            state.order.pizzas[i].sizeId = pizzaOrder.sizeId;
+            state.order.pizzas[i].sauceId = pizzaOrder.sauceId;
+            state.order.pizzas[i].ingredients = pizzaOrder.ingredients;
           }
         }
       }
     },
     addPizzaOrderCount(state, pizzaOrderInd) {
-      state.pizzaOrders[pizzaOrderInd].count++;
+      state.order.pizzas[pizzaOrderInd].quantity++;
     },
     recducePizzaOrderCount(state, pizzaOrderInd) {
-      if (--state.pizzaOrders[pizzaOrderInd].count === 0) {
-        state.pizzaOrders.splice(pizzaOrderInd, 1);
+      if (--state.order.pizzas[pizzaOrderInd].quantity === 0) {
+        state.order.pizzas.splice(pizzaOrderInd, 1);
       }
     },
     addMiscInOrder(state, miscId) {
-      state.miscOrders.find((item) => item.id == miscId).count++;
+      state.order.misc.find((item) => item.miscId == miscId).quantity++;
     },
     reduceMiscInOrder(state, miscId) {
-      --state.miscOrders.find((item) => item.id == miscId).count;
+      --state.order.misc.find((item) => item.miscId == miscId).quantity;
     },
-    createMiscOrders(state) {
-      if (state.miscOrders.length === 0) {
+    addMiscToOrder(state) {
+      if (state.order.misc.length === 0) {
         for (var i = 0; i < state.misc.length; i = i + 1) {
           const miscObj = {
-            id: state.misc[i].id,
-            name: state.misc[i].name,
-            price: state.misc[i].price,
-            count: 0,
+            miscId: state.misc[i].id,
+            quantity: 0,
           };
-          state.miscOrders.push(miscObj);
+          state.order.misc.push(miscObj);
         }
       }
     },
     clearPizzaOrderData(state) {
-      state.pizzaOrders = [];
-      state.miscOrders = [];
+      state.order.pizzas = [];
+      state.order.misc = [];
     },
   },
   actions: {
-    addPizzaOrder(
+    addPizzaToOrder(
       { commit, rootState, rootGetters },
       { pizzaName, pizzaOrderInd }
     ) {
       const pizzaOrder = {
-        pizzaName: pizzaName,
+        name: pizzaName,
         price: rootGetters["Builder/getPizzaPrice"],
-        count: 1,
+        quantity: 1,
         doughId: rootState.Builder.doughId,
         sizeId: rootState.Builder.sizeId,
         sauceId: rootState.Builder.sauceId,
         ingredients: rootState.Builder.ingredients,
       };
 
-      commit("addPizzaOrder", { pizzaOrder, pizzaOrderInd });
+      commit("addPizzaToOrder", { pizzaOrder, pizzaOrderInd });
+    },
+    async post({ commit }, order) {
+      const data = await this.$api.order.post(order);
+      commit(
+        ADD_ENTITY,
+        {
+          ...namespaceOrder,
+          value: data,
+        },
+        { root: true }
+      );
     },
     async fetchMisc({ commit }) {
       const misc = await this.$api.misc.query();
       // получили справочник
       commit(
-        "SET_ENTITY",
+        SET_ENTITY,
         {
           ...namespaceMisc,
           value: misc,

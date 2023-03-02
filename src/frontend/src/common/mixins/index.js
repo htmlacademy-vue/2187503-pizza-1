@@ -1,3 +1,3 @@
 import logout from "@/common/mixins/logout";
-
-export { logout };
+import priceCalc from "@/common/mixins/priceCalc";
+export { logout, priceCalc };

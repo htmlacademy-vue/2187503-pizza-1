@@ -2,7 +2,6 @@ const entity = "addresses";
 const module = "Profile";
 const namespace = { entity, module };
 
-import { ADDRESSES_CONFIG } from "@/common/queryConfig";
 import {
   SET_ENTITY,
   ADD_ENTITY,
@@ -17,7 +16,7 @@ export default {
   },
   actions: {
     async fetchAddresses({ commit }) {
-      const addresses = await this.$api.addresses.query(ADDRESSES_CONFIG);
+      const addresses = await this.$api.addresses.query();
       commit(
         SET_ENTITY,
         {

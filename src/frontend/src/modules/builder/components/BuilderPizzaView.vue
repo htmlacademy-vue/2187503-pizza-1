@@ -61,13 +61,13 @@ export default {
   },
   methods: {
     ...mapMutations("Builder", ["addItem", "updatePizzaName"]),
-    getIngredientCountStyle(itemCount, divNum) {
+    getIngredientCountStyle(quantity, divNum) {
       var result = "";
       if (divNum === 1) {
         result = "";
-      } else if ((itemCount === 2 || itemCount === 3) && divNum === 2) {
+      } else if ((quantity === 2 || quantity === 3) && divNum === 2) {
         result = " pizza__filling--second";
-      } else if (itemCount === 3 && divNum === 3) {
+      } else if (quantity === 3 && divNum === 3) {
         result = " pizza__filling--third";
       }
       return result;
@@ -76,7 +76,7 @@ export default {
       return (
         "pizza__filling--" +
         ingredientStatuses[ingredient.ingredientId] +
-        this.getIngredientCountStyle(ingredient.itemCount, divNum)
+        this.getIngredientCountStyle(ingredient.quantity, divNum)
       );
     },
     moveIngredient(ingredientId) {

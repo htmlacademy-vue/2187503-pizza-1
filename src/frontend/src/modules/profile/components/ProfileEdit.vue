@@ -10,7 +10,9 @@
         />
       </a>
 
-      <a class="layout__link" href="#">История заказов {{ Auth.addresses }}</a>
+      <router-link class="layout__link" to="/orders"
+        >История заказов {{ Auth.addresses }}</router-link
+      >
       <a class="layout__link layout__link--active" href="#">Мои данные</a>
     </div>
 

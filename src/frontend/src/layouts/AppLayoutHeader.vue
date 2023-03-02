@@ -11,9 +11,7 @@
       </a>
     </div>
     <div class="header__cart">
-      <router-link to="/cart"
-        >{{ getMiscPrice + getPizzaOrdersPrice }} ₽</router-link
-      >
+      <router-link to="/cart">{{ getOrderPrice }} ₽</router-link>
     </div>
     <div class="header__user">
       <router-link
@@ -61,7 +59,7 @@ export default {
   computed: {
     ...mapState(["Auth"]),
     ...mapGetters("Builder", ["getPizzaPrice"]),
-    ...mapGetters("Cart", ["getMiscPrice", "getPizzaOrdersPrice"]),
+    ...mapGetters("Cart", ["getOrderPrice"]),
     isAuthenticated() {
       return this.Auth.isAuthenticated;
     },

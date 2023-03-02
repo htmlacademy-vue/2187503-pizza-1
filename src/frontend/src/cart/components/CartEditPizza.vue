@@ -6,7 +6,7 @@
         class="product__img"
         width="56"
         height="56"
-        :alt="pizzaOrder.pizzaName"
+        :alt="pizzaOrder.name"
       />
       <div class="product__text">
         <h2>{{ pizzaOrder.pizzaName }}</h2>
@@ -26,7 +26,7 @@
         type="button"
         class="counter__button counter__button--minus"
         @click="dropPizza"
-        :disabled="pizzaOrder.count == 0"
+        :disabled="pizzaOrder.quantity == 0"
       >
         <span class="visually-hidden">Меньше</span>
       </button>
@@ -34,7 +34,7 @@
         type="text"
         name="counter"
         class="counter__input"
-        :value="pizzaOrder.count"
+        :value="pizzaOrder.quantity"
       />
       <button
         type="button"
@@ -46,7 +46,7 @@
     </div>
 
     <div class="cart-list__price">
-      <b>{{ pizzaOrder.price * pizzaOrder.count }}</b>
+      <b>{{ pizzaOrder.price * pizzaOrder.quantity }}</b>
     </div>
 
     <div class="cart-list__button">
@@ -112,7 +112,7 @@ export default {
       this.updateSizeId(this.pizzaOrder.sizeId);
       this.updateSauceId(this.pizzaOrder.sauceId);
       this.updateIngredients(this.pizzaOrder.ingredients);
-      this.updatePizzaName(this.pizzaOrder.pizzaName);
+      this.updatePizzaName(this.pizzaOrder.name);
       this.updatePizzaOrder(this.pizzaOrderInd);
     },
   },

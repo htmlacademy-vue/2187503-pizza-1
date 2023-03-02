@@ -54,6 +54,7 @@ const actions = {
     dispatch("Builder/fetchSauceStatuses");
     dispatch("Cart/fetchMisc");
     dispatch("Profile/fetchAddresses");
+    dispatch("Orders/fetchOrders");
   },
 };
 

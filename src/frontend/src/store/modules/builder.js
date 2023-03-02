@@ -58,7 +58,7 @@ export default {
         ingredientPrice =
           ingredientPrice +
           calculateItemTax(state, state.ingredients[i].ingredientId) *
-            state.ingredients[i].itemCount;
+            state.ingredients[i].quantity;
       }
       return ingredientPrice;
     },
@@ -78,6 +78,9 @@ export default {
       return state.pizza.sauces
         .find((sauce) => sauce.id === sauceId)
         .name.toLowerCase();
+    },
+    getSizeMultiplier: (state) => (sizeId) => {
+      return state.pizza.sizes.find((size) => size.id === sizeId).multiplier;
     },
     getIngredientsName: (state) => (ingredients) => {
       var ingredientsName = [];
@@ -115,16 +118,16 @@ export default {
       var cnt = 0;
       for (var i = 0; i < state.ingredients.length; i = i + 1) {
         if (state.ingredients[i].ingredientId === ingredientId) {
-          cnt = state.ingredients[i].itemCount;
-          if (state.ingredients[i].itemCount < 3) {
-            state.ingredients[i].itemCount += 1;
+          cnt = state.ingredients[i].quantity;
+          if (state.ingredients[i].quantity < 3) {
+            state.ingredients[i].quantity += 1;
           }
         }
       }
       if (cnt === 0) {
         state.ingredients.push({
           ingredientId: ingredientId,
-          itemCount: 1,
+          quantity: 1,
         });
       }
     },
@@ -133,10 +136,10 @@ export default {
       var findedInd = -1;
       for (var i = 0; i < state.ingredients.length; i = i + 1) {
         if (state.ingredients[i].ingredientId === ingredientId) {
-          state.ingredients[i].itemCount -= 1;
+          state.ingredients[i].quantity -= 1;
 
           findedInd = i;
-          cnt = state.ingredients[i].itemCount;
+          cnt = state.ingredients[i].quantity;
         }
       }
       if (findedInd > -1 && cnt === 0) {

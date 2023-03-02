@@ -49,13 +49,13 @@ export default {
   computed: {
     ...mapState("Builder", ["ingredients"]),
     itemCount: function () {
-      var itemCount = 0;
+      var quantity = 0;
       this.ingredients.forEach((element) => {
         if (element.ingredientId === this.ingredientId) {
-          itemCount = element.itemCount;
+          quantity = element.quantity;
         }
       });
-      return itemCount;
+      return quantity;
     },
   },
 };
