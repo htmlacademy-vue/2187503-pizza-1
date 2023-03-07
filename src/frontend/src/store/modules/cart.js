@@ -58,6 +58,28 @@ export default {
         }
       }
     },
+    repeatOrder(state, order) {
+      order.orderPizzas.forEach((el) => {
+        let pizza = {
+          name: el.name,
+          doughId: el.doughId,
+          sizeId: el.sizeId,
+          sauceId: el.sauceId,
+          ingredients: el.ingredients,
+          quantity: el.quantity,
+        };
+        state.order.pizzas.push(JSON.parse(JSON.stringify(pizza)));
+      });
+      order.orderMisc.forEach((el) => {
+        /* let misc = {
+          miscId: el.miscId,
+          quantity: el.quantity,
+        };
+        state.order.misc.push(JSON.parse(JSON.stringify(misc))); */
+        state.order.misc.find((item) => item.miscId == el.miscId).quantity =
+          el.quantity;
+      });
+    },
     addPizzaOrderCount(state, pizzaOrderInd) {
       state.order.pizzas[pizzaOrderInd].quantity++;
     },
@@ -68,6 +90,18 @@ export default {
     },
     addMiscInOrder(state, miscId) {
       state.order.misc.find((item) => item.miscId == miscId).quantity++;
+    },
+    addAddressPhoneInOrder(state, { address, phone }) {
+      if (address != null) {
+        state.order.address.street = address.street;
+        state.order.address.building = address.building;
+        state.order.address.flat = address.flat;
+        state.order.address.comment = address.comment;
+        state.order.address.id = address.id;
+      } else {
+        state.order.address = null;
+      }
+      state.order.phone = phone;
     },
     reduceMiscInOrder(state, miscId) {
       --state.order.misc.find((item) => item.miscId == miscId).quantity;

@@ -1,21 +1,23 @@
 export default {
   methods: {
-    $calcPrice(order) {
+    $calcPrice(pizzas, misc) {
       var miscPrice = 0;
-      for (var i = 0; i < order.misc.length; i = i + 1) {
-        miscPrice =
-          miscPrice +
-          this.$store.getters["Cart/getMiscById"](order.misc[i].miscId).price *
-            order.misc[i].quantity;
+      if (Array.isArray(misc)) {
+        for (var i = 0; i < misc.length; i = i + 1) {
+          miscPrice =
+            miscPrice +
+            this.$store.getters["Cart/getMiscById"](misc[i].miscId).price *
+              misc[i].quantity;
+        }
       }
-
       let pizzaPrice = 0;
-
-      for (var j = 0; j < order.pizzas.length; j = j + 1) {
-        pizzaPrice =
-          pizzaPrice +
-          this.$store.getters["Builder/getPizzaPrice"](order.pizzas[j]) *
-            order.pizzas[j].quantity;
+      if (Array.isArray(pizzas)) {
+        for (var j = 0; j < pizzas.length; j = j + 1) {
+          pizzaPrice =
+            pizzaPrice +
+            this.$store.getters["Builder/getPizzaPrice"](pizzas[j]) *
+              pizzas[j].quantity;
+        }
       }
       return pizzaPrice + miscPrice;
     },

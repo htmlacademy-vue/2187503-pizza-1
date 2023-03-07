@@ -5,7 +5,7 @@ const namespacePizza = { entity: "pizzaParam", module };
 const namespaceSauceStatuses = { entity: "sauceStatuses", module };
 
 function getSizeCoeff(state, id) {
-  var multiplier = 0;
+  let multiplier = 0;
 
   if (Array.isArray(state.pizzaParam.sizes)) {
     multiplier = state.pizzaParam.sizes.find((el) => el.id == id).multiplier;
@@ -15,24 +15,34 @@ function getSizeCoeff(state, id) {
 }
 
 function getDoughPrice(state, id) {
-  var doughPrice = 0;
+  let doughPrice = 0;
   if (Array.isArray(state.pizzaParam.dough)) {
     doughPrice = state.pizzaParam.dough.find((el) => el.id === id).price;
   }
   return doughPrice;
 }
 function getSaucePrice(state, id) {
-  var saucePrice = 0;
+  let saucePrice = 0;
   if (Array.isArray(state.pizzaParam.sauces)) {
     saucePrice = state.pizzaParam.sauces.find((el) => el.id === id).price;
   }
   return saucePrice;
 }
 function calculateItemTax(state, id) {
-  var ingredientPrice = 0;
-  ingredientPrice = state.pizzaParam.ingredients.find(
+  let ingredientPrice = 0;
+  ingredientPrice = state.pizzaParam.ingredients?.find(
     (el) => el.id === id
   ).price;
+  return ingredientPrice;
+}
+function getIngredientsPrice(state, ingredients) {
+  let ingredientPrice = 0;
+  for (var i = 0; i < ingredients?.length; i = i + 1) {
+    ingredientPrice =
+      ingredientPrice +
+      calculateItemTax(state, ingredients[i].ingredientId) *
+        ingredients[i].quantity;
+  }
   return ingredientPrice;
 }
 
@@ -52,34 +62,26 @@ export default {
     pizzaOrderInd: null,
   },
   getters: {
-    getIngredientsPrice: (state) => (ingredients) => {
-      var ingredientPrice = 0;
-      for (var i = 0; i < ingredients.length; i = i + 1) {
-        ingredientPrice =
-          ingredientPrice +
-          calculateItemTax(state, ingredients[i].ingredientId) *
-            ingredients[i].quantity;
-      }
-      return ingredientPrice;
+    getIngredientsPrice: (state) => (pizza) => {
+      return getIngredientsPrice(state, pizza.ingredients);
     },
 
-    getPizzaPrice: (state, getters) => (pizza) => {
+    getPizzaPrice: (state) => (pizza) => {
       return (
         //мультипликатор размера х (стоимость теста + соус + ингредиенты).
-
         getSizeCoeff(state, pizza.sizeId) *
         (getDoughPrice(state, pizza.doughId) +
           getSaucePrice(state, pizza.sauceId) +
-          getters.getIngredientsPrice(state, pizza.ingredients))
+          getIngredientsPrice(state, pizza.ingredients))
       );
     },
 
     getSizeName: (state) => (sizeId) => {
-      return state.pizzaParam.sizes.find((size) => size.id === sizeId).name;
+      return state.pizzaParam.sizes?.find((size) => size.id === sizeId).name;
     },
     getSauceName: (state) => (sauceId) => {
       return state.pizzaParam.sauces
-        .find((sauce) => sauce.id === sauceId)
+        ?.find((sauce) => sauce.id === sauceId)
         .name.toLowerCase();
     },
     getSizeMultiplier: (state) => (sizeId) => {
@@ -87,11 +89,13 @@ export default {
         .multiplier;
     },
     getIngredientsName: (state) => (ingredients) => {
-      var ingredientsName = [];
-      for (var i = 0; i < ingredients.length; i = i + 1) {
+      let ingredientsName = [];
+      for (var i = 0; i < ingredients?.length; i = i + 1) {
         ingredientsName.push(
           state.pizzaParam.ingredients
-            .find((ingredient) => ingredient.id === ingredients[i].ingredientId)
+            ?.find(
+              (ingredient) => ingredient.id === ingredients[i].ingredientId
+            )
             .name.toLowerCase()
         );
       }

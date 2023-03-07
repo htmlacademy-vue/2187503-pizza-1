@@ -17,15 +17,20 @@
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "Popup",
-  computed: { ...mapState("Builder", ["userId"]) },
+  computed: {
+    ...mapState(["Auth"]),
+    isAuthenticated() {
+      return this.Auth.isAuthenticated;
+    },
+  },
+
   methods: {
     ...mapMutations("Builder", ["clearPizzaData"]),
     ...mapMutations("Cart", ["clearPizzaOrderData"]),
     clearPizza() {
       this.clearPizzaData();
       this.clearPizzaOrderData();
-
-      if (this.userId != null) {
+      if (this.isAuthenticated) {
         this.$router.push({ path: `/orders` });
       } else {
         this.$router.push({ path: `/` });

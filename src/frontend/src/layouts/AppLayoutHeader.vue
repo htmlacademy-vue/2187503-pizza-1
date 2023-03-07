@@ -1,17 +1,19 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <a href="index.html" class="logo">
+      <router-link to="/">
         <img
           src="img/logo.svg"
           alt="V!U!E! Pizza logo"
           width="90"
           height="40"
         />
-      </a>
+      </router-link>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">{{ $calcPrice(order) }} ₽</router-link>
+      <router-link to="/cart"
+        >{{ $calcPrice(order.pizzas, order.misc) }} ₽</router-link
+      >
     </div>
     <div class="header__user">
       <router-link

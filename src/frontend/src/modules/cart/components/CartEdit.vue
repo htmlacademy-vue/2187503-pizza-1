@@ -38,40 +38,77 @@
           <div class="cart-form">
             <label class="cart-form__select">
               <span class="cart-form__label">Получение заказа:</span>
-
-              <select name="test" class="select" v-model="howGetOrder">
-                <option value="1">Заберу сам</option>
-                <option value="2">Новый адрес</option>
-                <option v-if="userId != null" value="3">Дом</option>
+              <select name="test" class="select" v-model="selectedAddress">
+                <option :value="{ number: 1, address: null }">
+                  Заберу сам
+                </option>
+                <option
+                  :value="{
+                    number: 2,
+                    address: { strret: null, building: null, flat: null },
+                  }"
+                >
+                  Новый адрес
+                </option>
+                <option
+                  v-show="isAuthenticated"
+                  v-for="(address, index) in addresses"
+                  :value="{ number: index + 3, address: address }"
+                  :key="index"
+                >
+                  {{ address.name }}
+                </option>
               </select>
             </label>
 
             <label class="input input--big-label">
               <span>Контактный телефон:</span>
-              <input type="text" name="tel" placeholder="+7 999-999-99-99" />
+              <input
+                type="text"
+                name="tel"
+                placeholder="+7 999-999-99-99"
+                v-model="phone"
+              />
             </label>
 
-            <div v-if="howGetOrder != 1" class="cart-form__address">
-              <span class="cart-form__label">Новый адрес:</span>
+            <div v-if="selectedAddress.number != 1" class="cart-form__address">
+              <span v-if="selectedAddress.number === 2" class="cart-form__label"
+                >Новый адрес:</span
+              >
 
               <div class="cart-form__input">
                 <label class="input">
                   <span>Улица*</span>
-                  <input type="text" name="street" />
+                  <input
+                    type="text"
+                    name="street"
+                    v-model="selectedAddress.address.street"
+                    :readonly="selectedAddress.number > 2"
+                  />
                 </label>
               </div>
 
               <div class="cart-form__input cart-form__input--small">
                 <label class="input">
                   <span>Дом*</span>
-                  <input type="text" name="house" />
+                  <input
+                    type="text"
+                    name="house"
+                    v-model="selectedAddress.address.building"
+                    :readonly="selectedAddress.number > 2"
+                  />
                 </label>
               </div>
 
               <div class="cart-form__input cart-form__input--small">
                 <label class="input">
                   <span>Квартира</span>
-                  <input type="text" name="apartment" />
+                  <input
+                    type="text"
+                    name="apartment"
+                    v-model="selectedAddress.address.flat"
+                    :readonly="selectedAddress.number > 2"
+                  />
                 </label>
               </div>
             </div>
@@ -90,7 +127,7 @@
         Перейти к конструктору<br />чтоб собрать ещё одну пиццу
       </p>
       <div class="footer__price">
-        <b>Итого: {{ $calcPrice(order) }} ₽</b>
+        <b>Итого: {{ $calcPrice(order.pizzas, order.misc) }} ₽</b>
       </div>
 
       <div class="footer__submit">
@@ -102,6 +139,7 @@
 <script>
 import CartEditPizza from "@/cart/components/CartEditPizza";
 import CartEditMisc from "@/cart/components/CartEditMisc";
+
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import orderPrice from "@/common/mixins/orderPrice";
 export default {
@@ -109,7 +147,8 @@ export default {
   mixins: [orderPrice],
   data() {
     return {
-      howGetOrder: 1,
+      selectedAddress: { number: 1, address: null },
+      phone: null,
     };
   },
   components: {
@@ -121,14 +160,17 @@ export default {
   },
   methods: {
     ...mapMutations("Builder", ["clearPizzaData"]),
+    ...mapMutations("Cart", ["addAddressPhoneInOrder"]),
     ...mapActions("Orders", {
       orderPost: "post",
-      //addressPut: "put",
-      //addressDelete: "delete",
     }),
     async addOrder() {
+      this.addAddressPhoneInOrder({
+        address: this.selectedAddress.address,
+        phone: this.phone,
+      });
       await this.orderPost(this.order);
-      //this.$router.push({ path: `/popup` });
+      this.$router.push({ path: `/popup` });
     },
     wantMore() {
       this.clearPizzaData();
@@ -137,9 +179,13 @@ export default {
   },
   computed: {
     ...mapState(["Auth"]),
+    ...mapState("Profile", ["addresses"]),
     ...mapState("Cart", ["order"]),
     ...mapState("Builder", ["userId"]),
     ...mapGetters("Builder", ["getPizzaPrice"]),
+    isAuthenticated() {
+      return this.Auth.isAuthenticated;
+    },
     user() {
       return this.Auth.user || {};
     },

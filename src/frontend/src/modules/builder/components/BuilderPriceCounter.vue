@@ -47,7 +47,7 @@ export default {
     ...mapGetters("Builder", ["getPizzaPrice", "getIngredientsPrice"]),
     buttonCookDisabled: function () {
       return (
-        this.getIngredientsPrice(this.pizza.ingredients) === 0 ||
+        this.getIngredientsPrice(this.pizza) === 0 ||
         this.pizzaName === null ||
         this.pizzaName === ""
       );
