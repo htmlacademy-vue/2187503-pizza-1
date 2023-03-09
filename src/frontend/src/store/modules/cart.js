@@ -65,17 +65,31 @@ export default {
           doughId: el.doughId,
           sizeId: el.sizeId,
           sauceId: el.sauceId,
-          ingredients: el.ingredients,
+          ingredients: [],
           quantity: el.quantity,
         };
+        el.ingredients.forEach((elIngredient) => {
+          pizza.ingredients.push(
+            JSON.parse(
+              JSON.stringify({
+                ingredientId: elIngredient.ingredientId,
+                quantity: elIngredient.quantity,
+              })
+            )
+          );
+        });
         state.order.pizzas.push(JSON.parse(JSON.stringify(pizza)));
       });
+      if (state.order.misc.length === 0) {
+        for (var i = 0; i < state.misc.length; i = i + 1) {
+          const miscObj = {
+            miscId: state.misc[i].id,
+            quantity: 0,
+          };
+          state.order.misc.push(miscObj);
+        }
+      }
       order.orderMisc.forEach((el) => {
-        /* let misc = {
-          miscId: el.miscId,
-          quantity: el.quantity,
-        };
-        state.order.misc.push(JSON.parse(JSON.stringify(misc))); */
         state.order.misc.find((item) => item.miscId == el.miscId).quantity =
           el.quantity;
       });
