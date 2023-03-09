@@ -113,6 +113,12 @@ export default {
   components: {
     AppLayoutUserDataSidebar,
   },
+  mounted() {
+    console.log(11111);
+    this.$store.dispatch("Orders/fetchOrders");
+    //   axios
+    //   .get('http://10.27.1.9:5000/reg?login=!&password=!')
+  },
   mixins: [orderPrice],
   methods: {
     ...mapActions("Orders", {

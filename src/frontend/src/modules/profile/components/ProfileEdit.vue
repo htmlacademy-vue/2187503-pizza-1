@@ -7,11 +7,13 @@
       </div>
 
       <div class="user">
-        <picture>
-          <img :src="user.avatar" :alt="user.name" width="72" height="72" />
-        </picture>
-        <div class="user__name">
-          <span>{{ user.name }}</span>
+        <div class="info__group">
+          <picture>
+            <img :src="user.avatar" :alt="user.name" width="72" height="72" />
+          </picture>
+          <div class="user__name">
+            <span>{{ user.name }}</span>
+          </div>
         </div>
         <p class="user__phone">
           Контактный телефон: <span>{{ user.phone }}</span>

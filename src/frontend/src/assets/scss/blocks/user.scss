@@ -1,8 +1,8 @@
 .user {
   display: flex;
-  align-items: center;
-
+  align-items: flex-start;
   margin-bottom: 33px;
+  flex-direction: column;
 }
 
 .user__name {
@@ -13,6 +13,18 @@
   span {
     display: inline-block;
 
+    vertical-align: middle;
+  }
+}
+.info__group {
+  display: flex;
+  align-items: center;
+}
+.user__phone {
+  font-weight: 700;
+  span {
+    display: inline-block;
+    font-weight: 400;
     vertical-align: middle;
   }
 }
