@@ -2,7 +2,7 @@
   <li class="cart-list__item">
     <div class="product cart-list__product">
       <img
-        src="img/product.svg"
+        src="../../img/product.svg"
         class="product__img"
         width="56"
         height="56"

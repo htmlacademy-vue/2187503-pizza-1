@@ -34,7 +34,7 @@
               <AppDrag :transfer-data="ingredient.id">
                 <span
                   class="filling"
-                  :class="`filling--${ingredientStatuses[ingredient.id]}`"
+                  :class="`filling--${ingredientStatuses[ingredient.name]}`"
                   >{{ ingredient.name }}</span
                 >
               </AppDrag>

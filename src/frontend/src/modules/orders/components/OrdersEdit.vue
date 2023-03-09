@@ -48,7 +48,7 @@
           <li class="order__item">
             <div class="product">
               <img
-                src="img/product.svg"
+                src="../../../img/product.svg"
                 class="product__img"
                 width="56"
                 height="56"
@@ -83,7 +83,7 @@
         >
           <li>
             <img
-              src="img/cola.svg"
+              :src="getMiscById(misc.miscId).image"
               width="20"
               height="30"
               :alt="getMiscById(misc.miscId).name"

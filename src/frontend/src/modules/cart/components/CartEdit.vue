@@ -131,7 +131,13 @@
       </div>
 
       <div class="footer__submit">
-        <button type="submit" class="button">Оформить заказ</button>
+        <button
+          type="submit"
+          class="button"
+          :disabled="order.pizzas.length == 0"
+        >
+          Оформить заказ
+        </button>
       </div>
     </section>
   </form>

@@ -1,15 +1,16 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <router-link to="/">
+      <router-link class="logo" to="/">
         <img
-          src="img/logo.svg"
+          src="../img/logo.svg"
           alt="V!U!E! Pizza logo"
           width="90"
           height="40"
         />
       </router-link>
     </div>
+
     <div class="header__cart">
       <router-link to="/cart"
         >{{ $calcPrice(order.pizzas, order.misc) }} ₽</router-link
@@ -23,19 +24,12 @@
         class="header__login"
         ><span>Войти</span></router-link
       >
-      <router-link v-else key="is-auth" to="/profile" class="header__login"
-        ><a href="#">
-          <picture>
-            <img :src="user.avatar" :alt="user.name" width="32" height="32" />
-          </picture>
-          <span>{{ user.name }}</span>
-        </a></router-link
-      ><a
-        v-if="isAuthenticated"
-        href="#"
-        class="header__logout"
-        @click="$logout"
-      >
+      <router-link v-else key="is-auth" to="/profile" class="header__login">
+        <picture>
+          <img :src="user.avatar" :alt="user.name" width="32" height="32" />
+        </picture>
+        <span>{{ user.name }}</span> </router-link
+      ><a v-if="isAuthenticated" class="header__logout" @click="$logout">
         <span>Выйти</span>
       </a>
     </div>
@@ -48,6 +42,7 @@ import orderPrice from "@/common/mixins/orderPrice";
 export default {
   name: "AppLayoutHeader",
   mixins: [logout, orderPrice],
+
   props: {
     auth: {
       type: Boolean,
@@ -71,3 +66,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.header__user {
+  display: flex;
+  align-items: center;
+}
+</style>

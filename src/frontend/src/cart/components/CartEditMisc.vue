@@ -2,7 +2,7 @@
   <li class="additional-list__item sheet">
     <p class="additional-list__description">
       <img
-        src="img/cola.svg"
+        :src="getMiscById(miscItem.miscId).image"
         width="39"
         height="60"
         :alt="getMiscById(miscItem.miscId).name"
@@ -45,6 +45,11 @@
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "CartEditMisc",
+  data() {
+    return {
+      imgPerUrl: "../../",
+    };
+  },
   props: {
     miscItem: { type: Object, required: true },
     miscInd: {

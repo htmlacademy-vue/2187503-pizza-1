@@ -10,13 +10,11 @@ export default {
   },
 
   actions: {
-    async login({ commit, dispatch }, credentials) {
+    async login({ dispatch }, credentials) {
       const data = await this.$api.auth.login(credentials);
       this.$jwt.saveToken(data.token);
       this.$api.auth.setAuthHeader();
       dispatch("getMe");
-      // притер ругается что не используется commit
-      commit;
     },
 
     async logout({ commit }, sendRequest = true) {
