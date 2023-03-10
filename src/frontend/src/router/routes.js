@@ -29,13 +29,13 @@ export default [
     path: "/orders",
     name: "Orders",
     component: () => import("../views/Orders.vue"),
-    meta: { layout: "AppLayoutDefault" },
+    meta: { layout: "AppLayoutMain" },
   },
   {
     path: "/profile",
     name: "Profile",
     component: () => import("../views/Profile.vue"),
-    meta: { layout: "AppLayoutDefault" },
+    meta: { layout: "AppLayoutMain" },
   },
   {
     path: "/popup",

@@ -1,8 +1,13 @@
 <template>
   <li class="additional-list__item sheet">
     <p class="additional-list__description">
-      <img src="img/cola.svg" width="39" height="60" :alt="miscItem.name" />
-      <span>{{ miscItem.name }}</span>
+      <img
+        :src="getMiscById(miscItem.miscId).image"
+        width="39"
+        height="60"
+        :alt="getMiscById(miscItem.miscId).name"
+      />
+      <span>{{ getMiscById(miscItem.miscId).name }}</span>
     </p>
 
     <div class="additional-list__wrapper">
@@ -11,7 +16,7 @@
           type="button"
           class="counter__button counter__button--minus"
           @click="dropMisc"
-          :disabled="miscItem.count == 0"
+          :disabled="miscItem.quantity == 0"
         >
           <span class="visually-hidden">Меньше</span>
         </button>
@@ -19,7 +24,7 @@
           type="text"
           name="counter"
           class="counter__input"
-          :value="miscItem.count"
+          :value="miscItem.quantity"
         />
         <button
           type="button"
@@ -31,7 +36,7 @@
       </div>
 
       <div class="additional-list__price">
-        <b>× {{ miscItem.price }} ₽</b>
+        <b>× {{ getMiscById(miscItem.miscId).price }} ₽</b>
       </div>
     </div>
   </li>
@@ -40,6 +45,11 @@
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "CartEditMisc",
+  data() {
+    return {
+      imgPerUrl: "../../",
+    };
+  },
   props: {
     miscItem: { type: Object, required: true },
     miscInd: {
@@ -53,6 +63,7 @@ export default {
       "getSauceName",
       "getIngredientsName",
     ]),
+    ...mapGetters("Cart", ["getMiscById"]),
   },
   methods: {
     ...mapMutations("Cart", [
@@ -74,10 +85,10 @@ export default {
       }
     },
     addMisc() {
-      this.addMiscInOrder(this.miscItem.id);
+      this.addMiscInOrder(this.miscItem.miscId);
     },
     dropMisc() {
-      this.reduceMiscInOrder(this.miscItem.id);
+      this.reduceMiscInOrder(this.miscItem.miscId);
     },
     changePizzaOrder() {
       this.updateDoughId(this.pizzaOrder.doughId);
