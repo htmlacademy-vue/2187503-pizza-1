@@ -76,12 +76,8 @@
           </li>
         </ul>
 
-        <ul
-          v-for="misc in order.orderMisc"
-          :key="'C' + misc.id"
-          class="order__additional"
-        >
-          <li>
+        <ul class="order__additional">
+          <li v-for="misc in order.orderMisc" :key="'C' + misc.id">
             <img
               :src="getMiscById(misc.miscId).image"
               width="20"
@@ -114,10 +110,7 @@ export default {
     AppLayoutUserDataSidebar,
   },
   mounted() {
-    console.log(11111);
     this.$store.dispatch("Orders/fetchOrders");
-    //   axios
-    //   .get('http://10.27.1.9:5000/reg?login=!&password=!')
   },
   mixins: [orderPrice],
   methods: {

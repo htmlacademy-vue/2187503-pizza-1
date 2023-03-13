@@ -12,24 +12,46 @@
           required
         />
       </label>
-
       <div class="content__constructor">
         <div class="pizza" :class="pizzaFoundation">
           <div class="pizza__wrapper">
-            <div v-for="item in pizza.ingredients" :key="item.id">
+            <transition-group name="list" tag="div">
               <div
-                class="pizza__filling"
-                :class="calcIngredient(item, 1)"
-              ></div>
+                v-for="item in pizza.ingredients.filter(
+                  (item) => item.quantity >= 1
+                )"
+                :key="item.ingredientId"
+                :class="
+                  `pizza__filling pizza__filling--` + calcIngredient(item)
+                "
+              />
+            </transition-group>
+            <transition-group name="list" tag="div">
               <div
-                class="pizza__filling"
-                :class="calcIngredient(item, 2)"
-              ></div>
+                v-for="item in pizza.ingredients.filter(
+                  (item) => item.quantity >= 2
+                )"
+                :key="item.ingredientId"
+                :class="
+                  `pizza__filling pizza__filling--` +
+                  calcIngredient(item) +
+                  ` pizza__filling--second`
+                "
+              />
+            </transition-group>
+            <transition-group name="list" tag="div">
               <div
-                class="pizza__filling"
-                :class="calcIngredient(item, 3)"
-              ></div>
-            </div>
+                v-for="item in pizza.ingredients.filter(
+                  (item) => item.quantity === 3
+                )"
+                :key="item.ingredientId"
+                :class="
+                  `pizza__filling pizza__filling--` +
+                  calcIngredient(item) +
+                  ` pizza__filling--third`
+                "
+              />
+            </transition-group>
           </div>
         </div>
       </div>
@@ -61,23 +83,14 @@ export default {
   },
   methods: {
     ...mapMutations("Builder", ["addItem", "updatePizzaName"]),
-    getIngredientCountStyle(quantity, divNum) {
-      var result = "";
-      if (divNum === 1) {
-        result = "";
-      } else if ((quantity === 2 || quantity === 3) && divNum === 2) {
-        result = " pizza__filling--second";
-      } else if (quantity === 3 && divNum === 3) {
-        result = " pizza__filling--third";
-      }
-      return result;
-    },
-    calcIngredient(ingredient, divNum) {
-      return (
-        "pizza__filling--" +
-        ingredientStatuses[ingredient.ingredientId] +
-        this.getIngredientCountStyle(ingredient.quantity, divNum)
-      );
+    calcIngredient(ingredient) {
+      let inrgedientNameEng =
+        ingredientStatuses[
+          this.pizzaParam.ingredients.find(
+            (el) => el.id == ingredient.ingredientId
+          ).name
+        ];
+      return inrgedientNameEng;
     },
     moveIngredient(ingredientId) {
       this.addItem(ingredientId);
@@ -87,7 +100,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", ["pizza"]),
+    ...mapState("Builder", ["pizza", "pizzaParam"]),
     pizzaFoundation: function () {
       return {
         "pizza--foundation--big-creamy":
@@ -107,3 +120,17 @@ export default {
   },
 };
 </script>
+<style>
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+</style>

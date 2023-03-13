@@ -45,11 +45,6 @@
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "CartEditMisc",
-  data() {
-    return {
-      imgPerUrl: "../../",
-    };
-  },
   props: {
     miscItem: { type: Object, required: true },
     miscInd: {
