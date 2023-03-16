@@ -11,6 +11,7 @@
         v-for="order in orders"
         :key="'A' + order.id"
         class="sheet order"
+        data-test="orders"
       >
         <div class="order__wrapper">
           <div class="order__number">
@@ -29,12 +30,18 @@
               type="button"
               class="button button--border"
               @click="deleteOrder(order.id)"
+              data-test="deleteOrder"
             >
               Удалить
             </button>
           </div>
           <div class="order__button">
-            <button type="button" class="button" @click="repeatOrder(order)">
+            <button
+              type="button"
+              class="button"
+              @click="repeatOrder(order)"
+              data-test="repeatOrder"
+            >
               Повторить
             </button>
           </div>
@@ -44,6 +51,7 @@
           v-for="pizza in order.orderPizzas"
           :key="'B' + pizza.id"
           class="order__list"
+          data-test="orders-pizzas"
         >
           <li class="order__item">
             <div class="product">
@@ -77,7 +85,11 @@
         </ul>
 
         <ul class="order__additional">
-          <li v-for="misc in order.orderMisc" :key="'C' + misc.id">
+          <li
+            v-for="misc in order.orderMisc"
+            :key="'C' + misc.id"
+            data-test="orders-misc"
+          >
             <img
               :src="getMiscById(misc.miscId).image"
               width="20"
@@ -92,7 +104,7 @@
         </ul>
 
         <p class="order__address">
-          Адрес доставки: {{ order.orderAddress?.name }} Телефон:
+          Адрес доставки: {{ getOrderName }} Телефон:
           {{ order.phone }}
         </p>
       </section>
@@ -102,7 +114,7 @@
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import AppLayoutUserDataSidebar from "@/layouts/AppLayoutUserDataSidebar";
-import orderPrice from "@/common/mixins/orderPrice";
+import { orderPrice } from "@/common/mixins";
 
 export default {
   name: "OrdersEdit",
@@ -117,7 +129,6 @@ export default {
     ...mapActions("Orders", {
       orderDelete: "delete",
     }),
-    ...mapActions("Cart", ["addPizzaToOrder"]),
     ...mapMutations("Cart", ["repeatOrder"]),
     async deleteOrder(id) {
       await this.orderDelete(id);
@@ -128,6 +139,9 @@ export default {
       } else if (doughId === 2) {
         return "на толстом тесте";
       }
+    },
+    getOrderName() {
+      return this.order.orderAddress?.name;
     },
   },
   computed: {

@@ -1,2 +1,3 @@
 import logout from "@/common/mixins/logout";
-export { logout };
+import orderPrice from "@/common/mixins/orderPrice";
+export { logout, orderPrice };

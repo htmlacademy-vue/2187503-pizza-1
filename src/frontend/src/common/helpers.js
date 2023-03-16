@@ -1,4 +1,6 @@
 import resources from "@/common/enums/resources";
+import { SET_ENTITY } from "@/store/mutations-types";
+import user from "@/static/user";
 import {
   AuthApiService,
   CrudApiService,
@@ -23,4 +25,17 @@ export const createResources = (notifier) => {
     [resources.ADDRESSES]: new CrudApiService(resources.ADDRESSES, notifier),
     [resources.ORDERS]: new CrudApiService(resources.ORDERS, notifier),
   };
+};
+
+export const authenticateUser = (store) => {
+  store.commit(SET_ENTITY, {
+    module: "Auth",
+    entity: "user",
+    value: user,
+  });
+  store.commit(SET_ENTITY, {
+    module: "Auth",
+    entity: "isAuthenticated",
+    value: true,
+  });
 };

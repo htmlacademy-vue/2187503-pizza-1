@@ -9,12 +9,14 @@
           :key="size.id"
           class="diameter__input"
           :class="`diameter__input diameter__input--${sizeStatuses[size.id]}`"
+          data-test="sizeList"
         >
           <RadioButton
             name="diameter"
             :value="size.id"
             :modelValue="pizza.sizeId"
             @change="setSize"
+            data-test="set-size"
           />
 
           <span>{{ size.name }}</span>

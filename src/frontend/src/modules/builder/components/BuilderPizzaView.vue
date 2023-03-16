@@ -24,6 +24,7 @@
                 :class="
                   `pizza__filling pizza__filling--` + calcIngredient(item)
                 "
+                data-test="pizza-filling-1"
               />
             </transition-group>
             <transition-group name="list" tag="div">
@@ -37,6 +38,7 @@
                   calcIngredient(item) +
                   ` pizza__filling--second`
                 "
+                data-test="pizza-filling-2"
               />
             </transition-group>
             <transition-group name="list" tag="div">
@@ -50,6 +52,7 @@
                   calcIngredient(item) +
                   ` pizza__filling--third`
                 "
+                data-test="pizza-filling-3"
               />
             </transition-group>
           </div>

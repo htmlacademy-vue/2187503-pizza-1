@@ -28,6 +28,7 @@
         :isNew="false"
         @update="addressPut($event)"
         @delete="deleteAddress"
+        data-test="ProfileAddressesSelector"
       />
 
       <div class="layout__button">
@@ -35,6 +36,7 @@
           type="button"
           @click="ShowNewAddressForm"
           class="button button--border"
+          data-test="ShowNewAddressForm"
         >
           Добавить новый адрес
         </button>
@@ -45,6 +47,7 @@
           :isNew="true"
           @create="addNewAddress"
           @update="addressPut($event)"
+          data-test="ProfileAddressesSelectorNew"
         />
       </div>
     </div>
@@ -62,12 +65,15 @@ export default {
       showNew: false,
     };
   },
-
+  mounted() {
+    this.fetchAddresses;
+  },
   methods: {
     ...mapActions("Profile", {
       addressPost: "post",
       addressPut: "put",
       addressDelete: "delete",
+      fetchAddresses: "fetchAddresses",
     }),
     async addNewAddress(address) {
       this.showNew = false;

@@ -8,11 +8,13 @@
           :key="dough.id"
           class="dough__input"
           :class="`dough__input--${doughStatuses[dough.id]}`"
+          data-test="doughList"
         >
           <RadioButton
             name="dought"
             :value="dough.id"
             :modelValue="pizza.doughId"
+            data-test="set-dough"
             @change="setDough"
           />
 

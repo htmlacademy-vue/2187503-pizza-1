@@ -11,12 +11,14 @@
             v-for="sauce in pizzaParam.sauces"
             :key="sauce.id"
             class="radio ingredients__input"
+            data-test="sauceList"
           >
             <RadioButton
               name="sauce"
               :value="sauce.id"
               :modelValue="pizza.sauceId"
               @change="setSauce"
+              data-test="set-sauce"
             />
             <span>{{ sauce.name }}</span>
           </label>
@@ -30,6 +32,7 @@
               v-for="ingredient in pizzaParam.ingredients"
               :key="ingredient.id"
               class="ingredients__item"
+              data-test="ingredientList"
             >
               <AppDrag :transfer-data="ingredient.id">
                 <span
