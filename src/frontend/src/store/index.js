@@ -19,7 +19,7 @@ const state = () => ({
   notifications: [],
 });
 
-const mutations = {
+export const mutations = {
   [SET_ENTITY](state, { module, entity, value }) {
     module ? (state[module][entity] = value) : (state[entity] = value);
   },

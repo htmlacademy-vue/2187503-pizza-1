@@ -6,6 +6,7 @@
       class="button"
       :disabled="buttonCookDisabled"
       @click="onCook()"
+      data-test="onCook"
     >
       Готовьте!
     </button>
@@ -26,6 +27,7 @@ export default {
   data() {
     return {
       doughStatuses,
+      test: 3,
     };
   },
 

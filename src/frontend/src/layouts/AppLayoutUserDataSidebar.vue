@@ -18,6 +18,6 @@
 
 <script>
 export default {
-  name: "AppLayoutMainSidebar",
+  name: "AppLayoutUserDataSidebar",
 };
 </script>

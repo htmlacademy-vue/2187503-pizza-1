@@ -20,6 +20,7 @@
             :key="index"
             :pizzaOrderInd="index"
             :pizzaOrder="pizzaOrder"
+            data-test="CartEditPizza"
           />
         </ul>
 
@@ -30,6 +31,7 @@
               :key="index"
               :miscInd="index"
               :miscItem="miscItem"
+              data-test="CartEditMisc"
             />
           </ul>
         </div>
@@ -38,7 +40,12 @@
           <div class="cart-form">
             <label class="cart-form__select">
               <span class="cart-form__label">Получение заказа:</span>
-              <select name="test" class="select" v-model="selectedAddress">
+              <select
+                name="test"
+                class="select"
+                v-model="selectedAddress"
+                data-test="select-address"
+              >
                 <option :value="{ number: 1, address: null }">
                   Заберу сам
                 </option>
@@ -147,7 +154,7 @@ import CartEditPizza from "@/cart/components/CartEditPizza";
 import CartEditMisc from "@/cart/components/CartEditMisc";
 
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
-import orderPrice from "@/common/mixins/orderPrice";
+import { orderPrice } from "@/common/mixins";
 export default {
   name: "CartEdit",
   mixins: [orderPrice],

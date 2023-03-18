@@ -22,14 +22,26 @@
         key="is-not-auth"
         to="/login"
         class="header__login"
+        data-test="header-user"
         ><span>Войти</span></router-link
       >
-      <router-link v-else key="is-auth" to="/profile" class="header__login">
+      <router-link
+        v-else
+        key="is-auth"
+        to="/profile"
+        class="header__login"
+        data-test="header__login"
+      >
         <picture>
           <img :src="user.avatar" :alt="user.name" width="32" height="32" />
         </picture>
         <span>{{ user.name }}</span> </router-link
-      ><a v-if="isAuthenticated" class="header__logout" @click="$logout">
+      ><a
+        v-if="isAuthenticated"
+        class="header__logout"
+        @click="$logout"
+        data-test="header__logout"
+      >
         <span>Выйти</span>
       </a>
     </div>
@@ -38,7 +50,7 @@
 <script>
 import { mapState } from "vuex";
 import { logout } from "@/common/mixins";
-import orderPrice from "@/common/mixins/orderPrice";
+import { orderPrice } from "@/common/mixins";
 export default {
   name: "AppLayoutHeader",
   mixins: [logout, orderPrice],

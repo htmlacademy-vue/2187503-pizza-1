@@ -1,8 +1,8 @@
 <template>
   <div class="sign-form">
-    <a href="#" class="close close--white">
-      <span class="visually-hidden">Закрыть форму авторизации</span>
-    </a>
+    <router-link class="close close--white" to="/" data-test="button-close"
+      ><span class="visually-hidden">Закрыть форму авторизации</span>
+    </router-link>
     <div class="sign-form__title">
       <h1 class="title title--small">Авторизуйтесь на сайте</h1>
     </div>
@@ -18,6 +18,7 @@
             class="input"
             placeholder="E-mail"
             :error-text="validations.email.error"
+            data-test="email-component"
           />
         </label>
       </div>
@@ -32,6 +33,7 @@
             class="input"
             placeholder="Пароль"
             :error-text="validations.password.error"
+            data-test="password-component"
           />
         </label>
       </div>
