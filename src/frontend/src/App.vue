@@ -1,29 +1,40 @@
 <template>
   <div id="app">
-    <div class="main">
-      <div class="main__wrapper">
-        <div class="main__header">
-          <img
-            src="@/assets/img/logo.svg"
-            width="300"
-            height="47"
-            alt="V!U!E! Pizza"
-          />
-        </div>
-        <h1>Добро пожаловать!</h1>
-        <p>
-          Это проект V!U!E! Pizza для обучения на профессиональном
-          онлайн‑курсе<br />
-          <b>«Vue.js для опытных разработчиков».</b>
-        </p>
-      </div>
-    </div>
+    <AppLayout :pizzaOrder="pizzaOrder" :auth="auth">
+      <router-view />
+    </AppLayout>
+    <AppNotifications />
   </div>
 </template>
 
 <script>
+import AppLayout from "@/layouts/AppLayout";
+import AppNotifications from "@/common/components/AppNotifications";
+import { setAuth } from "@/common/helpers";
+
 export default {
   name: "App",
+  components: {
+    AppLayout,
+    AppNotifications,
+  },
+  created() {
+    window.onerror = function (msg, url, line, col, error) {
+      console.error(error);
+    };
+    if (this.$jwt.getToken()) {
+      setAuth(this.$store);
+    }
+    // Note: fetch initial data
+    this.$store.dispatch("init");
+  },
+  data() {
+    return {
+      pizzaOrder: { name: null, recipe: null, price: 0 },
+      auth: false,
+    };
+  },
+  computed: {},
 };
 </script>
 
