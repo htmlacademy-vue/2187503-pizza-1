@@ -6,7 +6,7 @@
       class="button"
       :disabled="buttonCookDisabled"
       @click="onCook()"
-      data-test="onCook"
+      data-test="on-cook"
     >
       Готовьте!
     </button>

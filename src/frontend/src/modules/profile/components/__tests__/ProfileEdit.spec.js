@@ -90,7 +90,7 @@ describe("ProfileEdit", () => {
 
   it("updates ProfileAddressesSelector", async () => {
     addAddress(store);
-    createComponent({ localVue, store, mocks, stubs, mocks });
+    createComponent({ localVue, store, mocks, stubs });
     await flushPromises();
     const profileAddressesSelector = wrapper.find(
       '[data-test="ProfileAddressesSelector"]'
@@ -101,7 +101,7 @@ describe("ProfileEdit", () => {
 
   it("delete ProfileAddressesSelector", async () => {
     addAddress(store);
-    createComponent({ localVue, store, mocks, stubs, mocks });
+    createComponent({ localVue, store, mocks, stubs });
     await flushPromises();
     const profileAddressesSelector = wrapper.find(
       '[data-test="ProfileAddressesSelector"]'
@@ -111,8 +111,10 @@ describe("ProfileEdit", () => {
   });
 
   it("click ShowNewAddressForm button", async () => {
-    createComponent({ localVue, store, mocks, stubs, mocks });
-    const showNewAddressForm = wrapper.find('[data-test="ShowNewAddressForm"]');
+    createComponent({ localVue, store, mocks, stubs });
+    const showNewAddressForm = wrapper.find(
+      '[data-test="show-new-address-form"]'
+    );
     await showNewAddressForm.trigger("click");
 
     const profileAddressesSelectorNew = wrapper.find(

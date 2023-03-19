@@ -51,14 +51,14 @@ describe("BuilderDoughSelector", () => {
   it("renders pizzaParam.dough", () => {
     addPizzaParam(store);
     createComponent({ localVue, store, propsData });
-    const doughList = wrapper.findAll('[data-test="doughList"]');
+    const doughList = wrapper.findAll('[data-test="dough-list"]');
     expect(Array.from(doughList).length).toEqual(pizzaParam.dough.length);
   });
 
   it("renders doughStauses", () => {
     addPizzaParam(store);
     createComponent({ localVue, store, propsData });
-    const filter = wrapper.find('[data-test="doughList"]');
+    const filter = wrapper.find('[data-test="dough-list"]');
     expect(filter.attributes("class")).toContain(
       `dough__input--${doughStatuses[pizzaParam.dough[0].id]}`
     );

@@ -1,6 +1,6 @@
 <template>
   <transition name="slide" mode="out-in">
-    <component :is="layout" :auth="auth" :pizzaOrder="pizzaOrder">
+    <component :is="layout" :auth="auth" :pizza-order="pizzaOrder">
       <slot />
     </component>
   </transition>
@@ -16,6 +16,7 @@ export default {
       type: Object,
       required: true,
     },
+
     auth: {
       type: Boolean,
       required: true,

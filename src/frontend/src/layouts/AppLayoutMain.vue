@@ -1,6 +1,6 @@
 <template>
   <div class="app-layout-main">
-    <AppLayoutHeader :auth="auth" :pizzaOrder="pizzaOrder" />
+    <AppLayoutHeader :auth="auth" :pizza-order="pizzaOrder" />
     <div class="content">
       <slot />
     </div>
@@ -19,6 +19,7 @@ export default {
       type: Object,
       required: true,
     },
+
     auth: {
       type: Boolean,
       required: true,

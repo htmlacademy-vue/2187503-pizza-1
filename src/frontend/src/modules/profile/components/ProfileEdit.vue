@@ -24,7 +24,7 @@
         v-for="(address, addressNumber) in addresses"
         :key="address.id"
         :address="address"
-        :addressNumber="addressNumber + 1"
+        :address-number="addressNumber + 1"
         :isNew="false"
         @update="addressPut($event)"
         @delete="deleteAddress"
@@ -36,7 +36,7 @@
           type="button"
           @click="ShowNewAddressForm"
           class="button button--border"
-          data-test="ShowNewAddressForm"
+          data-test="show-new-address-form"
         >
           Добавить новый адрес
         </button>

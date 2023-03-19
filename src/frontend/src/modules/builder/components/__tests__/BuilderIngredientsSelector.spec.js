@@ -50,14 +50,14 @@ describe("BuilderIngredientsSelector", () => {
   it("renders pizzaParam.sauces", () => {
     addPizzaParam(store);
     createComponent({ localVue, store, propsData });
-    const sauceList = wrapper.findAll('[data-test="sauceList"]');
+    const sauceList = wrapper.findAll('[data-test="sauce-list"]');
     expect(Array.from(sauceList).length).toEqual(pizzaParam.sauces.length);
   });
 
   it("renders pizzaParam.sauces", () => {
     addPizzaParam(store);
     createComponent({ localVue, store, propsData });
-    const ingredientList = wrapper.findAll('[data-test="ingredientList"]');
+    const ingredientList = wrapper.findAll('[data-test="ingredient-list"]');
     expect(Array.from(ingredientList).length).toEqual(
       pizzaParam.ingredients.length
     );

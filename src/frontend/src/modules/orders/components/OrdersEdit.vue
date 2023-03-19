@@ -30,7 +30,7 @@
               type="button"
               class="button button--border"
               @click="deleteOrder(order.id)"
-              data-test="deleteOrder"
+              data-test="delete-order"
             >
               Удалить
             </button>
@@ -40,7 +40,7 @@
               type="button"
               class="button"
               @click="repeatOrder(order)"
-              data-test="repeatOrder"
+              data-test="repeat-order"
             >
               Повторить
             </button>

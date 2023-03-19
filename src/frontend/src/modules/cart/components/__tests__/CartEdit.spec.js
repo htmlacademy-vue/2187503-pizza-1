@@ -66,8 +66,6 @@ describe("CartEdit", () => {
     $store: {},
   };
 
-  const stubs = ["router-link"];
-
   const createComponent = (options) => {
     wrapper = mount(CartEdit, options);
   };
@@ -93,14 +91,14 @@ describe("CartEdit", () => {
   it("renders cartEditPizza", () => {
     addOrder(store);
     createComponent({ localVue, store, propsData });
-    const cartEditPizza = wrapper.findAll('[data-test="CartEditPizza"]');
+    const cartEditPizza = wrapper.findAll('[data-test="cart-edit-pizza"]');
     expect(Array.from(cartEditPizza).length).toEqual(order.pizzas.length);
   });
 
   it("renders cartEditMisc", () => {
     addOrder(store);
     createComponent({ localVue, store, propsData });
-    const cartEditMisc = wrapper.findAll('[data-test="CartEditMisc"]');
+    const cartEditMisc = wrapper.findAll('[data-test="cart-edit-misc"]');
     expect(Array.from(cartEditMisc).length).toEqual(order.misc.length);
   });
 

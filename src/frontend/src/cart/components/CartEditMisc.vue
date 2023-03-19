@@ -47,6 +47,7 @@ export default {
   name: "CartEditMisc",
   props: {
     miscItem: { type: Object, required: true },
+
     miscInd: {
       type: Number,
       required: true,
