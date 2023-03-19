@@ -68,6 +68,7 @@ export default {
   name: "CartEditPizza",
   props: {
     pizzaOrder: { type: Object, required: true },
+
     pizzaOrderInd: {
       type: Number,
       required: true,

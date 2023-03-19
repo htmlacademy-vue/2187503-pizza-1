@@ -30,7 +30,7 @@
         key="is-auth"
         to="/profile"
         class="header__login"
-        data-test="header__login"
+        data-test="header-login"
       >
         <picture>
           <img :src="user.avatar" :alt="user.name" width="32" height="32" />
@@ -40,7 +40,7 @@
         v-if="isAuthenticated"
         class="header__logout"
         @click="$logout"
-        data-test="header__logout"
+        data-test="header-logout"
       >
         <span>Выйти</span>
       </a>

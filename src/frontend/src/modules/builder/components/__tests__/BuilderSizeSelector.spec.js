@@ -51,14 +51,14 @@ describe("BuilderSizeSelector", () => {
   it("renders pizzaParam.size", () => {
     addPizzaParam(store);
     createComponent({ localVue, store, propsData });
-    const sizeList = wrapper.findAll('[data-test="sizeList"]');
+    const sizeList = wrapper.findAll('[data-test="size-list"]');
     expect(Array.from(sizeList).length).toEqual(pizzaParam.sizes.length);
   });
 
   it("renders sizeStauses", () => {
     addPizzaParam(store);
     createComponent({ localVue, store, propsData });
-    const filter = wrapper.find('[data-test="sizeList"]');
+    const filter = wrapper.find('[data-test="size-list"]');
     expect(filter.attributes("class")).toContain(
       `diameter__input diameter__input--${sizeStatuses[pizzaParam.sizes[0].id]}`
     );

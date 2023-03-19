@@ -86,7 +86,7 @@ describe("BuilderPriceCounter", () => {
 
   it("displays onCook button", () => {
     createComponent({ localVue, store, propsData });
-    const button = wrapper.find('[data-test="onCook"]');
+    const button = wrapper.find('[data-test="on-cook"]');
     expect(button.exists()).toBeTruthy();
     expect(button.text()).toBe("Готовьте!");
   });
@@ -96,7 +96,7 @@ describe("BuilderPriceCounter", () => {
     addPizzaData(store);
     addPizzaParam(store);
     createComponent({ localVue, store, mocks, propsData });
-    const button = wrapper.find('[data-test="onCook"]');
+    const button = wrapper.find('[data-test="on-cook"]');
     await button.trigger("click");
     expect(actions.Cart.addPizzaToOrder).toHaveBeenCalledWith(
       expect.any(Object), // The Vuex context

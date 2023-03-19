@@ -145,7 +145,7 @@ describe("OrdersEdit", () => {
     createComponent({ localVue, stubs, mocks, store, propsData });
     const spyOnAction = jest.spyOn(wrapper.vm, "orderDelete");
     await flushPromises();
-    await wrapper.find('[data-test="deleteOrder"]').trigger("click");
+    await wrapper.find('[data-test="delete-order"]').trigger("click");
     expect(spyOnAction).toHaveBeenCalled();
   });
 
@@ -156,7 +156,7 @@ describe("OrdersEdit", () => {
     createComponent({ localVue, store, stubs, mocks });
     const spyOnMutation = jest.spyOn(wrapper.vm, "repeatOrder");
 
-    const repeatOrder = wrapper.find('[data-test="repeatOrder"]');
+    const repeatOrder = wrapper.find('[data-test="repeat-order"]');
     await repeatOrder.trigger("click");
     expect(spyOnMutation).toHaveBeenCalled();
   });

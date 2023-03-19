@@ -108,10 +108,12 @@ export default {
       type: Object,
       required: true,
     },
+
     addressNumber: {
       type: Number,
       required: false,
     },
+
     isNew: {
       type: Boolean,
       required: true,

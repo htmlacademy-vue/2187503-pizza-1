@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppLayout :pizzaOrder="pizzaOrder" :auth="auth">
+    <AppLayout :pizza-order="pizzaOrder" :auth="auth">
       <router-view />
     </AppLayout>
     <AppNotifications />

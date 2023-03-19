@@ -18,9 +18,9 @@
           <CartEditPizza
             v-for="(pizzaOrder, index) in order.pizzas"
             :key="index"
-            :pizzaOrderInd="index"
-            :pizzaOrder="pizzaOrder"
-            data-test="CartEditPizza"
+            :pizza-order-ind="index"
+            :pizza-order="pizzaOrder"
+            data-test="cart-edit-pizza"
           />
         </ul>
 
@@ -29,9 +29,9 @@
             <CartEditMisc
               v-for="(miscItem, index) in order.misc"
               :key="index"
-              :miscInd="index"
-              :miscItem="miscItem"
-              data-test="CartEditMisc"
+              :misc-ind="index"
+              :misc-item="miscItem"
+              data-test="cart-edit-misc"
             />
           </ul>
         </div>

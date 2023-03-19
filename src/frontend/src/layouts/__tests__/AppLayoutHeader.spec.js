@@ -72,20 +72,20 @@ describe("AppLayoutHeader", () => {
   it("render header__login", async () => {
     authenticateUser(store);
     createComponent({ localVue, store, mocks, stubs, propsData });
-    const headerLogin = wrapper.find('[data-test="header__login"]');
+    const headerLogin = wrapper.find('[data-test="header-login"]');
     expect(headerLogin.html()).toContain('to="/profile"');
   });
 
   it("renders header exists button Logout", () => {
     createComponent({ localVue, store, mocks, stubs, propsData });
-    const headerLogout = wrapper.find('[data-test="header__logout"]');
+    const headerLogout = wrapper.find('[data-test="header-logout"]');
     expect(headerLogout.exists()).toBeFalsy();
   });
 
   it("renders header exists button Logout", () => {
     authenticateUser(store);
     createComponent({ localVue, store, mocks, stubs, propsData });
-    const headerLogout = wrapper.find('[data-test="header__logout"]');
+    const headerLogout = wrapper.find('[data-test="header-logout"]');
     expect(headerLogout.exists()).toBeTruthy();
     expect(headerLogout.find("span").text()).toBe("Выйти");
   });
@@ -93,7 +93,7 @@ describe("AppLayoutHeader", () => {
   it("call button Logout", async () => {
     authenticateUser(store);
     createComponent({ localVue, store, mocks, stubs, propsData });
-    const headerLogout = wrapper.find('[data-test="header__logout"]');
+    const headerLogout = wrapper.find('[data-test="header-logout"]');
     await headerLogout.trigger("click");
     expect(actions.Auth.logout).toHaveBeenCalled();
     expect(mocks.$notifier.success).toHaveBeenCalled();
@@ -105,7 +105,7 @@ describe("AppLayoutHeader", () => {
 /*
   + v-if="!isAuthenticated" key="is-not-auth"
   + <router-link v-else key="is-auth" to="/profile"
-  + v-if="isAuthenticated" class="header__logout"
+  + v-if="isAuthenticated" class="header-logout"
   + @click="$logout"
  */
 

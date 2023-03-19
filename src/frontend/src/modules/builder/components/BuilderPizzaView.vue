@@ -59,7 +59,7 @@
         </div>
       </div>
 
-      <BuilderPriceCounter :pizzaName="pizza.name" />
+      <BuilderPriceCounter :pizza-name="pizza.name" />
     </div>
   </AppDrop>
 </template>

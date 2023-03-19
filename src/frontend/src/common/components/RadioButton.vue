@@ -20,10 +20,12 @@ export default {
       type: String,
       required: true,
     },
+
     modelValue: {
       type: Number,
       required: true,
     },
+
     value: {
       type: Number,
       required: true,
